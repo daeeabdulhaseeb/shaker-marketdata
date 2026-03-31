@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Home — Shaker Ventures Intel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0f14;--surface:#151820;--surface2:#1c2030;--border:#252a38;
+  --accent:#e8b84b;--accent2:#4b7be8;--danger:#e84b4b;--success:#4be87a;
+  --warn:#e8944b;--text:#e8eaf0;--text2:#8892a4;--text3:#505868;
+  --sidebar-w:220px;--radius:10px;
+  --font-head:'Syne',sans-serif;--font-body:'DM Sans',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:14px;display:flex;min-height:100vh}
+.sidebar{width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100}
+.sidebar-logo{display:flex;align-items:center;gap:10px;padding:20px 16px;border-bottom:1px solid var(--border)}
+.logo-mark{width:34px;height:34px;background:var(--accent);color:#000;font-family:var(--font-head);font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:center;border-radius:8px;flex-shrink:0}
+.logo-text{font-family:var(--font-head);font-weight:700;font-size:13px;line-height:1.3}
+.logo-text small{font-size:10px;color:var(--text2);font-weight:400}
+.nav-links{list-style:none;padding:12px 8px;flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:2px}
+.nav-link{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:7px;color:var(--text2);text-decoration:none;font-size:13px;transition:all 0.15s}
+.nav-icon{font-size:14px}
+.nav-link:hover{background:var(--surface2);color:var(--text)}
+.nav-link.active{background:rgba(232,184,75,0.12);color:var(--accent);font-weight:500}
+.sidebar-footer{padding:14px 16px;border-top:1px solid var(--border);font-size:11px;color:var(--text3)}
+.main-content{margin-left:var(--sidebar-w);flex:1;padding:28px 32px}
+.page-header{margin-bottom:24px}
+.page-header h1{font-family:var(--font-head);font-weight:700;font-size:24px}
+.page-header p{color:var(--text2);margin-top:4px;font-size:13px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-bottom:24px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+.stat-label{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.stat-value{font-family:var(--font-head);font-size:28px;font-weight:700}
+.stat-value.accent{color:var(--accent)}.stat-value.danger{color:var(--danger)}.stat-value.success{color:var(--success)}.stat-value.warn{color:var(--warn)}
+.table-wrapper{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.table-toolbar{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.search-input{background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-size:13px;padding:7px 12px;border-radius:6px;outline:none;width:240px}
+.search-input:focus{border-color:var(--accent)}
+.filter-select{background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-size:12px;padding:7px 10px;border-radius:6px;outline:none;cursor:pointer}
+.table-count{margin-left:auto;font-size:11px;color:var(--text2)}
+.table-scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;padding:10px 14px;font-family:var(--font-head);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--surface2)}
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.badge-strong{background:rgba(75,232,122,.15);color:var(--success)}
+.badge-likely{background:rgba(232,148,75,.15);color:var(--warn)}
+.badge-none{background:rgba(232,75,75,.15);color:var(--danger)}
+.badge-default{background:var(--surface2);color:var(--text2)}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <span class="logo-mark">S</span>
+    <span class="logo-text">Shaker<br><small>Ventures Intel</small></span>
+  </div>
+  <div class="nav-links"><a href="index.html" class="nav-link active"><span class="nav-icon">🏠</span>Home</a>
+<a href="market.html" class="nav-link "><span class="nav-icon">📊</span>Market Overview</a>
+<a href="coverage.html" class="nav-link "><span class="nav-icon">⚠️</span>Coverage Gaps</a>
+<a href="customers.html" class="nav-link "><span class="nav-icon">👥</span>Customer Mapping</a>
+<a href="leakage.html" class="nav-link "><span class="nav-icon">🔥</span>SE Leakage</a>
+<a href="research.html" class="nav-link "><span class="nav-icon">📋</span>Research List</a>
+<a href="pipeline_xref.html" class="nav-link "><span class="nav-icon">🔗</span>Pipeline X-Ref</a></div>
+  <div class="sidebar-footer">Updated: 31 Mar 2026, 08:35</div>
+</nav>
+<main class="main-content">
+
+<div class="page-header"><h1>Ventures Intelligence Platform</h1><p>Weekly cross-reference analysis — last updated 31 Mar 2026, 08:35</p></div>
+<div class="stats-grid"><div class="stat-card"><div class="stat-label">Ventures Projects</div><div class="stat-value ">19876</div></div><div class="stat-card"><div class="stat-label">Pipeline Matched</div><div class="stat-value success">9293</div></div><div class="stat-card"><div class="stat-label">Needs Review</div><div class="stat-value warn">10173</div></div><div class="stat-card"><div class="stat-label">Coverage Gaps</div><div class="stat-value danger">410</div></div><div class="stat-card"><div class="stat-label">SE Leakage</div><div class="stat-value danger">355</div></div><div class="stat-card"><div class="stat-label">New Customers</div><div class="stat-value accent">55</div></div></div>
+<p style="color:var(--text2);font-size:13px">Use the sidebar to navigate between views. Data refreshes each time the Python script is run.</p>
+</main>
+<script>
+function esc(v){if(v===null||v===undefined)return'—';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function matchBadge(t){const m={strong:'badge-strong',likely:'badge-likely',none:'badge-none'};const l={strong:'Matched',likely:'Review',none:'Gap'};return`<span class="badge ${m[t]||'badge-default'}">${l[t]||t}</span>`}
+function statusBadge(v){if(!v)return'—';return`<span class="badge badge-default">${esc(v)}</span>`}
+function renderTable(tbodyId,rows,cols){
+  const tb=document.getElementById(tbodyId);
+  if(!tb)return;
+  if(!rows||!rows.length){tb.innerHTML='<tr><td colspan="'+cols.length+'" style="text-align:center;color:var(--text2);padding:40px">No records</td></tr>';return}
+  tb.innerHTML=rows.map(r=>`<tr>${cols.map(c=>`<td>${c.render?c.render(r[c.key],r):esc(r[c.key])}</td>`).join('')}</tr>`).join('')
+}
+function initTable(tbodyId,countId,data,cols,searchFields,filterDefs){
+  let rows=[...data];
+  function applyFilters(){
+    rows=[...data];
+    const searchEl=document.getElementById('search');
+    if(searchEl&&searchEl.value){const t=searchEl.value.toLowerCase();rows=rows.filter(r=>searchFields.some(f=>r[f]&&String(r[f]).toLowerCase().includes(t)))}
+    filterDefs.forEach(fd=>{const el=document.getElementById(fd.id);if(el&&el.value)rows=rows.filter(r=>r[fd.field]===el.value)});
+    renderTable(tbodyId,rows,cols);
+    const ce=document.getElementById(countId);
+    if(ce)ce.textContent=rows.length+' of '+data.length;
+  }
+  const searchEl=document.getElementById('search');
+  if(searchEl)searchEl.addEventListener('input',applyFilters);
+  filterDefs.forEach(fd=>{const el=document.getElementById(fd.id);if(el)el.addEventListener('change',applyFilters)});
+  applyFilters();
+}
+</script>
+</body>
+</html>
