@@ -64,33 +64,313 @@ tr:hover td{background:var(--surface2)}
   <div class="nav-links"><a href="index.html" class="nav-link "><span class="nav-icon">🏠</span>Home</a>
 <a href="market.html" class="nav-link active"><span class="nav-icon">📊</span>Market Overview</a>
 <a href="coverage.html" class="nav-link "><span class="nav-icon">⚠️</span>Coverage Gaps</a>
-<a href="customers.html" class="nav-link "><span class="nav-icon">👥</span>Customer Mapping</a>
 <a href="leakage.html" class="nav-link "><span class="nav-icon">🔥</span>SE Leakage</a>
 <a href="research.html" class="nav-link "><span class="nav-icon">📋</span>Research List</a>
 <a href="pipeline_xref.html" class="nav-link "><span class="nav-icon">🔗</span>Pipeline X-Ref</a></div>
-  <div class="sidebar-footer">Updated: 31 Mar 2026, 14:54</div>
+  <div class="sidebar-footer">Updated: 01 Apr 2026, 13:35</div>
 </nav>
 <main class="main-content">
 
-<div class="page-header"><h1>Market Overview</h1><p>All active SCAVO projects in Saudi Arabia</p></div>
-<div class="table-wrapper">
-<div class="table-toolbar">
-  <input class="search-input" id="search" placeholder="Search project, client, contractor...">
-  <select class="filter-select" id="fStatus"><option value="">All Statuses</option><option value="Cancelled">Cancelled</option><option value="Completed">Completed</option><option value="Concept Stage">Concept Stage</option><option value="Construction">Construction</option><option value="Design">Design</option><option value="Feasibility Study">Feasibility Study</option><option value="On Hold">On Hold</option><option value="Tender for Construction">Tender for Construction</option><option value="Tender for Consultancy">Tender for Consultancy</option></select>
-  <select class="filter-select" id="fCity"><option value="">All Cities</option><option value="Al Baha Province">Al Baha Province</option><option value="Al Jouf Province">Al Jouf Province</option><option value="Aqaba">Aqaba</option><option value="Assir Province">Assir Province</option><option value="Baghdad">Baghdad</option><option value="Cairo Governorate">Cairo Governorate</option><option value="Eastern Province">Eastern Province</option><option value="Egypt - Saudi">Egypt - Saudi</option><option value="Hail Province">Hail Province</option><option value="Jizan Province">Jizan Province</option><option value="KwaZulu-Natal">KwaZulu-Natal</option><option value="Madina Province">Madina Province</option><option value="Makkah Province">Makkah Province</option><option value="Najran Province">Najran Province</option><option value="Northern Governorate">Northern Governorate</option><option value="Northern Province">Northern Province</option><option value="Northern Region">Northern Region</option><option value="Qassim Province">Qassim Province</option><option value="Riyadh Province">Riyadh Province</option><option value="South Sinai Governorate">South Sinai Governorate</option><option value="Tabouk Province">Tabouk Province</option></select>
-  <span class="table-count" id="rowCount"></span>
+<div class="page-header">
+  <h1>Market Overview</h1>
+  <p>Active SCAVO projects &mdash; Saudi Arabia</p>
 </div>
-<div class="table-scroll"><table>
-<thead><tr><th>Project</th><th>Status</th><th>City</th><th>Industry Type</th><th>Client</th><th>Contractor</th><th>MEP Contractor</th><th>Value (US$M)</th><th>HVAC (US$M)</th></tr></thead>
-<tbody id="tb"></tbody></table></div></div>
+
+<!-- Page-level filters -->
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+  <span style="font-size:11px;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-right:4px">Filters</span>
+  <input class="search-input" id="search" placeholder="Client / Contractor / MEP..." style="width:200px">
+  <select class="filter-select" id="fIndustry"><option value="">All Industries</option><option value="Buildings">Buildings</option><option value="Industrial">Industrial</option><option value="Infrastructure">Infrastructure</option><option value="Oil & Gas">Oil & Gas</option><option value="Power & Water">Power & Water</option></select>
+  <select class="filter-select" id="fRegion"><option value="">All Regions</option><option value="Central">Central</option><option value="East">East</option><option value="Unknown">Unknown</option><option value="West">West</option></select>
+  <select class="filter-select" id="fStatus"><option value="">All Statuses</option><option value="Cancelled">Cancelled</option><option value="Completed">Completed</option><option value="Concept Stage">Concept Stage</option><option value="Construction">Construction</option><option value="Design">Design</option><option value="Feasibility Study">Feasibility Study</option><option value="On Hold">On Hold</option><option value="Tender for Construction">Tender for Construction</option><option value="Tender for Consultancy">Tender for Consultancy</option></select>
+  <input class="filter-select" id="fStartFrom" type="date" title="Construction Start From" style="width:130px">
+  <input class="filter-select" id="fStartTo" type="date" title="Construction Start To" style="width:130px">
+  <input class="filter-select" id="fCAFrom" type="date" title="Contr. Appointed From" style="width:130px">
+  <input class="filter-select" id="fCATo" type="date" title="Contr. Appointed To" style="width:130px">
+  <input class="filter-select" id="fCAEFrom" type="date" title="Expected Award From" style="width:130px">
+  <input class="filter-select" id="fCAETo" type="date" title="Expected Award To" style="width:130px">
+  <button onclick="clearFilters()" style="background:transparent;border:1px solid var(--border);color:var(--text2);padding:7px 12px;border-radius:6px;font-size:11px;cursor:pointer">Clear</button>
+</div>
+
+<!-- KPI Cards -->
+<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px" id="kpiRow">
+  <div class="stat-card">
+    <div class="stat-label">Total Projects</div>
+    <div class="stat-value" id="kpi-total">11,032</div>
+    <div style="font-size:11px;color:var(--text2);margin-top:4px" id="kpi-total-hvac">SAR 340K</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Active Projects</div>
+    <div class="stat-value success" id="kpi-active">7,304</div>
+    <div style="font-size:11px;color:var(--text2);margin-top:4px" id="kpi-active-hvac">SAR 232K</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">In Construction</div>
+    <div class="stat-value accent" id="kpi-construction">2,739</div>
+    <div style="font-size:11px;color:var(--text2);margin-top:4px" id="kpi-construction-hvac">SAR 66K</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Contr. Appointed (90d)</div>
+    <div class="stat-value warn" id="kpi-ca">6</div>
+    <div style="font-size:11px;color:var(--text2);margin-top:4px" id="kpi-ca-hvac">SAR 0K</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Expected Award (90d)</div>
+    <div class="stat-value" style="color:var(--accent2)" id="kpi-cae">148</div>
+    <div style="font-size:11px;color:var(--text2);margin-top:4px" id="kpi-cae-hvac">SAR 9K</div>
+  </div>
+</div>
+
+<!-- Charts Row -->
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px">
+  <div class="table-wrapper" style="padding:16px">
+    <div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.05em;font-weight:600;margin-bottom:12px">Projects &amp; HVAC by Region (SAR M)</div>
+    <div style="position:relative;height:200px"><canvas id="regionChart"></canvas></div>
+  </div>
+  <div class="table-wrapper" style="padding:16px">
+    <div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.05em;font-weight:600;margin-bottom:12px">Projects by Status</div>
+    <div style="position:relative;height:200px"><canvas id="statusChart"></canvas></div>
+  </div>
+</div>
+
+<!-- Trend Chart -->
+<div class="table-wrapper" style="padding:16px;margin-bottom:20px">
+  <div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.05em;font-weight:600;margin-bottom:12px">Project Trend by Construction Start Year (2020&#8211;2031)</div>
+  <div style="position:relative;height:180px"><canvas id="trendChart"></canvas></div>
+</div>
+
+<!-- Pipeline Coverage -->
+<div class="table-wrapper" style="padding:20px;margin-bottom:20px">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+    <div>
+      <div style="font-family:var(--font-head);font-size:15px;font-weight:700">Pipeline Coverage</div>
+      <div style="color:var(--text2);font-size:12px;margin-top:2px">How much of the market have we quoted?</div>
+    </div>
+    <a href="pipeline_xref.html" style="background:var(--accent);color:#000;padding:7px 14px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none">View Pipeline X-Ref &#8594;</a>
+  </div>
+  <div style="display:grid;grid-template-columns:180px 1fr;gap:24px;align-items:center">
+    <div style="position:relative;width:180px;height:180px">
+      <div style="position:absolute;width:180px;height:180px;border-radius:50%;background:rgba(232,75,75,0.08);border:2px solid rgba(232,75,75,0.25);top:0;left:0"></div>
+      <div style="position:absolute;border-radius:50%;background:rgba(75,232,122,0.12);border:2px solid rgba(75,232,122,0.4);top:50%;left:50%;transform:translate(-50%,-50%);width:94px;height:94px;display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:2">
+        <span style="font-size:10px;color:var(--success);font-weight:600">STRONG</span>
+        <span style="font-size:18px;font-weight:700;color:var(--success)">5,115</span>
+      </div>
+      <div style="position:absolute;border-radius:50%;background:rgba(232,148,75,0.15);border:2px solid rgba(232,148,75,0.5);top:50%;left:50%;transform:translate(-50%,-50%);width:66px;height:66px;z-index:3"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+      <div style="background:rgba(232,75,75,0.06);border:1px solid rgba(232,75,75,0.2);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:10px;color:var(--danger);text-transform:uppercase;margin-bottom:6px">Total Ventures</div>
+        <div style="font-family:var(--font-head);font-size:24px;font-weight:700" id="cov-total">11,032</div>
+        <div style="font-size:11px;color:var(--text2);margin-top:4px" id="cov-total-hvac">SAR 340K</div>
+      </div>
+      <div style="background:rgba(75,232,122,0.06);border:1px solid rgba(75,232,122,0.2);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:10px;color:var(--success);text-transform:uppercase;margin-bottom:6px">Strong Match</div>
+        <div style="font-family:var(--font-head);font-size:24px;font-weight:700;color:var(--success)" id="cov-strong">5,115</div>
+        <div style="font-size:11px;color:var(--text2);margin-top:4px" id="cov-strong-hvac">SAR 122K</div>
+      </div>
+      <div style="background:rgba(232,148,75,0.06);border:1px solid rgba(232,148,75,0.2);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:10px;color:var(--warn);text-transform:uppercase;margin-bottom:6px">Likely Match</div>
+        <div style="font-family:var(--font-head);font-size:24px;font-weight:700;color:var(--warn)" id="cov-likely">5,701</div>
+        <div style="font-size:11px;color:var(--text2);margin-top:4px" id="cov-likely-hvac">SAR 131K</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Coverage Gap -->
+<div class="table-wrapper" style="padding:20px;margin-bottom:20px">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+    <div>
+      <div style="font-family:var(--font-head);font-size:15px;font-weight:700">Coverage Gap Analysis</div>
+      <div style="color:var(--text2);font-size:12px;margin-top:2px">Of unquoted projects, how many involve our existing customers?</div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <div style="display:flex;gap:3px;background:var(--surface2);padding:3px;border-radius:6px">
+        <button onclick="showGap('confirmed')" id="btn-confirmed" style="padding:5px 10px;border-radius:4px;border:none;font-size:11px;font-weight:600;cursor:pointer;background:var(--accent);color:#000">Confirmed Gaps</button>
+        <button onclick="showGap('likely')" id="btn-likely" style="padding:5px 10px;border-radius:4px;border:none;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:var(--text2)">Include Likely</button>
+      </div>
+      <a href="coverage.html" style="background:var(--surface2);color:var(--text);padding:7px 14px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;border:1px solid var(--border)">View Details &#8594;</a>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:220px 1fr;gap:20px;align-items:center">
+    <div style="position:relative;height:220px"><canvas id="gapChart"></canvas></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div style="background:rgba(232,148,75,0.06);border:1px solid rgba(232,148,75,0.2);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:10px;color:var(--warn);text-transform:uppercase;margin-bottom:6px">Known Customers</div>
+        <div style="font-family:var(--font-head);font-size:24px;font-weight:700;color:var(--warn)" id="gap-known">176</div>
+        <div style="font-size:11px;color:var(--text2);margin-top:4px" id="gap-known-hvac">SAR 86K</div>
+      </div>
+      <div style="background:rgba(232,75,75,0.06);border:1px solid rgba(232,75,75,0.2);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:10px;color:var(--danger);text-transform:uppercase;margin-bottom:6px">Unknown</div>
+        <div style="font-family:var(--font-head);font-size:24px;font-weight:700;color:var(--danger)" id="gap-unknown">40</div>
+        <div style="font-size:11px;color:var(--text2);margin-top:4px" id="gap-unknown-hvac">SAR 1K</div>
+      </div>
+      <div style="grid-column:span 2;background:var(--surface2);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:10px;color:var(--text2);text-transform:uppercase;margin-bottom:6px">Total Gap Projects</div>
+        <div style="font-family:var(--font-head);font-size:24px;font-weight:700" id="gap-total">216</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Table -->
+<div class="table-wrapper">
+  <div style="padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center">
+    <span style="font-size:11px;color:var(--text2)" id="rowCount"></span>
+    <span style="font-size:11px;color:var(--text3);margin-left:8px">(showing max 300 rows)</span>
+  </div>
+  <div class="table-scroll"><table>
+    <thead><tr>
+      <th>Project</th><th>Region</th><th>Status</th><th>Industry</th><th>Client</th>
+      <th>Contractor</th><th>MEP Contractor</th><th>HVAC (SAR M)</th>
+      <th>Contr. Appointed</th><th>Exp. Award</th><th>Constr. Start</th>
+    </tr></thead>
+    <tbody id="tb"></tbody>
+  </table></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
-const COLS=[
-  {key:"Name"},{key:"Project Status",render:function(v){return statusBadge(v)}},{key:"City/Province"},
-  {key:"Industry Type"},{key:"Client"},{key:"Contractor"},{key:"MEP Contractor"},
-  {key:"Project Value (US$ Mn)"},{key:"Hvac"}
-];
-fetch('data_market.json').then(r=>r.json()).then(function(DATA){
-  initTable('tb','rowCount',DATA,COLS,['Name','Client','Contractor','MEP Contractor'],[{id:'fStatus',field:'Project Status'},{id:'fCity',field:'City/Province'}]);
+var ALL_DATA = [];
+var regionChart, statusChart, trendChart, gapChart;
+var gapMode = "confirmed";
+
+var GAP_CONFIRMED = { known:176, unknown:40, total:216, knownHvac:"SAR 86K", unknownHvac:"SAR 1K" };
+var GAP_LIKELY = { known:5031, unknown:886, total:5917, knownHvac:"SAR 200K", unknownHvac:"SAR 17K" };
+
+var CHART_OPTS = {
+  responsive:true, maintainAspectRatio:false,
+  plugins:{ legend:{ labels:{ color:"#8892a4", font:{ size:11 } } } },
+  scales:{ x:{ ticks:{ color:"#8892a4" }, grid:{ color:"#252a38" } }, y:{ ticks:{ color:"#8892a4" }, grid:{ color:"#252a38" } } }
+};
+
+function sarFmt(v) {
+  if(!v) return "—";
+  if(v>=1e9) return "SAR "+( v/1e9).toFixed(1)+"B";
+  if(v>=1e6) return "SAR "+(v/1e6).toFixed(1)+"M";
+  return "SAR "+(v/1e3).toFixed(0)+"K";
+}
+
+function showGap(mode) {
+  gapMode = mode;
+  var d = mode==="confirmed" ? GAP_CONFIRMED : GAP_LIKELY;
+  document.getElementById("btn-confirmed").style.background = mode==="confirmed"?"var(--accent)":"transparent";
+  document.getElementById("btn-confirmed").style.color = mode==="confirmed"?"#000":"var(--text2)";
+  document.getElementById("btn-likely").style.background = mode==="likely"?"var(--accent)":"transparent";
+  document.getElementById("btn-likely").style.color = mode==="likely"?"#000":"var(--text2)";
+  document.getElementById("gap-known").textContent = d.known.toLocaleString();
+  document.getElementById("gap-unknown").textContent = d.unknown.toLocaleString();
+  document.getElementById("gap-total").textContent = d.total.toLocaleString();
+  document.getElementById("gap-known-hvac").textContent = d.knownHvac;
+  document.getElementById("gap-unknown-hvac").textContent = d.unknownHvac;
+  gapChart.data.datasets[0].data = [d.known, d.unknown];
+  gapChart.update();
+}
+
+function clearFilters() {
+  ["search","fIndustry","fRegion","fStatus","fStartFrom","fStartTo","fCAFrom","fCATo","fCAEFrom","fCAETo"].forEach(function(id) {
+    var el = document.getElementById(id);
+    if(el) el.tagName==="INPUT" ? el.value="" : el.selectedIndex=0;
+  });
+  applyFilters();
+}
+
+function applyFilters() {
+  var rows = ALL_DATA.slice();
+  var s = (document.getElementById("search")||{}).value||"";
+  var ind = (document.getElementById("fIndustry")||{}).value||"";
+  var reg = (document.getElementById("fRegion")||{}).value||"";
+  var stat = (document.getElementById("fStatus")||{}).value||"";
+  var sf = (document.getElementById("fStartFrom")||{}).value||"";
+  var st = (document.getElementById("fStartTo")||{}).value||"";
+  var caf = (document.getElementById("fCAFrom")||{}).value||"";
+  var cat = (document.getElementById("fCATo")||{}).value||"";
+  var caef = (document.getElementById("fCAEFrom")||{}).value||"";
+  var caet = (document.getElementById("fCAETo")||{}).value||"";
+
+  if(s) rows=rows.filter(function(r){return["Client","Contractor","MEP Contractor"].some(function(f){return r[f]&&String(r[f]).toLowerCase().includes(s.toLowerCase());});});
+  if(ind) rows=rows.filter(function(r){return r["Industry"]===ind;});
+  if(reg) rows=rows.filter(function(r){return r["Region"]===reg;});
+  if(stat) rows=rows.filter(function(r){return r["Project Status"]===stat;});
+  if(sf) rows=rows.filter(function(r){return r["Construction Start"]&&r["Construction Start"]>=sf;});
+  if(st) rows=rows.filter(function(r){return r["Construction Start"]&&r["Construction Start"]<=st;});
+  if(caf) rows=rows.filter(function(r){return r["Contractor Appointed"]&&r["Contractor Appointed"]>=caf;});
+  if(cat) rows=rows.filter(function(r){return r["Contractor Appointed"]&&r["Contractor Appointed"]<=cat;});
+  if(caef) rows=rows.filter(function(r){return r["Contractor Appointed Expected"]&&r["Contractor Appointed Expected"]>=caef;});
+  if(caet) rows=rows.filter(function(r){return r["Contractor Appointed Expected"]&&r["Contractor Appointed Expected"]<=caet;});
+
+  var count = rows.length;
+  document.getElementById("rowCount").textContent = count.toLocaleString()+" of "+ALL_DATA.length.toLocaleString()+" projects";
+
+  var COLS = [
+    {key:"Name"},
+    {key:"Region",render:function(v){return v?'<span class="badge badge-default">'+esc(v)+'</span>':'';}},
+    {key:"Project Status",render:function(v){return statusBadge(v);}},
+    {key:"Industry"},{key:"Client"},{key:"Contractor"},{key:"MEP Contractor"},
+    {key:"Hvac_SAR",render:function(v){return v?parseFloat(v).toFixed(1):'—';}},
+    {key:"Contractor Appointed"},{key:"Contractor Appointed Expected"},{key:"Construction Start"}
+  ];
+  renderTable("tb", rows.slice(0,300), COLS);
+}
+
+window.addEventListener("DOMContentLoaded", function() {
+  regionChart = new Chart(document.getElementById("regionChart"), {
+    type:"bar",
+    data:{
+      labels:["Unknown", "Central", "West", "East"],
+      datasets:[
+        {label:"Projects",data:[3278, 3077, 2659, 2018],backgroundColor:"rgba(232,184,75,0.7)",borderRadius:4,yAxisID:"y"},
+        {label:"HVAC (SAR M)",data:[0.1, 0.1, 0.1, 0.0],backgroundColor:"rgba(75,123,232,0.5)",borderRadius:4,yAxisID:"y1"}
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:"#8892a4",font:{size:11}}}},scales:{x:{ticks:{color:"#8892a4"},grid:{color:"#252a38"}},y:{ticks:{color:"#8892a4"},grid:{color:"#252a38"},position:"left"},y1:{ticks:{color:"#4b7be8"},grid:{display:false},position:"right"}}}
+  });
+
+  statusChart = new Chart(document.getElementById("statusChart"), {
+    type:"doughnut",
+    data:{
+      labels:["Cancelled", "Completed", "Construction", "Tender for Construction", "Design", "Feasibility Study", "On Hold"],
+      datasets:[{data:[3728, 3637, 2262, 477, 441, 246, 169],backgroundColor:["rgba(75,232,122,0.8)","rgba(232,184,75,0.8)","rgba(75,123,232,0.8)","rgba(232,148,75,0.8)","rgba(148,75,232,0.8)","rgba(75,232,232,0.8)","rgba(232,75,148,0.8)"],borderWidth:0}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"right",labels:{color:"#8892a4",font:{size:10},boxWidth:10}}}}
+  });
+
+  trendChart = new Chart(document.getElementById("trendChart"), {
+    type:"bar",
+    data:{
+      labels:[2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031],
+      datasets:[{
+        label:"Projects",
+        data:[81, 182, 406, 901, 3465, 720, 733, 421, 192, 56, 4, 0],
+        backgroundColor:function(ctx){
+          var yr = [2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031][ctx.dataIndex];
+          return yr <= new Date().getFullYear() ? "rgba(232,184,75,0.8)" : "rgba(75,123,232,0.5)";
+        },
+        borderRadius:4
+      }]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:"#8892a4",autoSkip:false},grid:{color:"#252a38"}},y:{ticks:{color:"#8892a4"},grid:{color:"#252a38"}}}}
+  });
+
+  gapChart = new Chart(document.getElementById("gapChart"), {
+    type:"doughnut",
+    data:{
+      labels:["Known Customers","Unknown"],
+      datasets:[{data:[176,40],backgroundColor:["rgba(232,148,75,0.8)","rgba(232,75,75,0.8)"],borderWidth:0}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom",labels:{color:"#8892a4",font:{size:11},boxWidth:10}}}}
+  });
+
+  var FILTER_IDS = ["search","fIndustry","fRegion","fStatus","fStartFrom","fStartTo","fCAFrom","fCATo","fCAEFrom","fCAETo"];
+  FILTER_IDS.forEach(function(id) {
+    var el = document.getElementById(id);
+    if(el) el.addEventListener(el.tagName==="INPUT"?"input":"change", applyFilters);
+  });
+
+  fetch("data_market.json").then(function(r){return r.json();}).then(function(data){
+    ALL_DATA = data;
+    applyFilters();
+  });
 });
 </script>
 </main>
