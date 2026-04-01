@@ -67,13 +67,13 @@ tr:hover td{background:var(--surface2)}
 <a href="leakage.html" class="nav-link "><span class="nav-icon">🔥</span>SE Leakage</a>
 <a href="research.html" class="nav-link "><span class="nav-icon">📋</span>Research List</a>
 <a href="pipeline_xref.html" class="nav-link "><span class="nav-icon">🔗</span>Pipeline X-Ref</a></div>
-  <div class="sidebar-footer">Updated: 01 Apr 2026, 15:40</div>
+  <div class="sidebar-footer">Updated: 01 Apr 2026, 16:35</div>
 </nav>
 <main class="main-content">
 
 <div class="page-header">
   <h1>Market Overview</h1>
-  <p>Active SCAVO projects &mdash; Saudi Arabia &mdash; 01 Apr 2026, 15:40</p>
+  <p>Active SCAVO projects &mdash; Saudi Arabia &mdash; 01 Apr 2026, 16:35</p>
 </div>
 
 <!-- Active filter tags -->
@@ -134,11 +134,11 @@ tr:hover td{background:var(--surface2)}
 
 <!-- KPI Cards -->
 <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px">
-  <div class="stat-card" style="cursor:pointer" onclick="setVisualFilter('total',null,null)"><div class="stat-label">Total Projects</div><div class="stat-value" id="kpi-total">—</div><div style="font-size:11px;color:var(--text2);margin-top:4px" id="kpi-total-hvac">—</div></div>
-  <div class="stat-card" style="cursor:pointer" onclick="setVisualFilter('active',null,null)"><div class="stat-label">Active Projects</div><div class="stat-value success" id="kpi-active">—</div><div style="font-size:11px;color:var(--text2);margin-top:4px" id="kpi-active-hvac">—</div></div>
-  <div class="stat-card" style="cursor:pointer" onclick="setVisualFilter('status','Project Status','Construction')"><div class="stat-label">In Construction</div><div class="stat-value accent" id="kpi-construction">—</div><div style="font-size:11px;color:var(--text2);margin-top:4px" id="kpi-construction-hvac">—</div></div>
-  <div class="stat-card"><div class="stat-label">Contr. Appointed (90d)</div><div class="stat-value warn" id="kpi-ca">—</div><div style="font-size:11px;color:var(--text2);margin-top:4px" id="kpi-ca-hvac">—</div></div>
-  <div class="stat-card"><div class="stat-label">Expected Award (90d)</div><div class="stat-value" style="color:var(--accent2)" id="kpi-cae">—</div><div style="font-size:11px;color:var(--text2);margin-top:4px" id="kpi-cae-hvac">—</div></div>
+  <div class="stat-card" style="cursor:pointer" ondblclick="clearAllFilters()" onclick="clearAllFilters()" title="Click to reset all filters"><div class="stat-label">Total Projects</div><div class="stat-value" id="kpi-total">—</div><div style="font-size:11px;color:var(--text2);margin-top:4px" id="kpi-total-hvac">—</div></div>
+  <div class="stat-card" style="cursor:pointer" onclick="filterActive()" ondblclick="filterActive()" title="Click to filter active projects"><div class="stat-label">Active Projects</div><div class="stat-value success" id="kpi-active">—</div><div style="font-size:11px;color:var(--text2);margin-top:4px" id="kpi-active-hvac">—</div></div>
+  <div class="stat-card" style="cursor:pointer" onclick="filterKPI('construction')" ondblclick="filterKPI('construction')" title="Click to filter In Construction"><div class="stat-label">In Construction</div><div class="stat-value accent" id="kpi-construction">—</div><div style="font-size:11px;color:var(--text2);margin-top:4px" id="kpi-construction-hvac">—</div></div>
+  <div class="stat-card" style="cursor:pointer" onclick="filterKPI('ca90')" title="Click to filter Contractor Appointed last 90d"><div class="stat-label">Contr. Appointed (90d)</div><div class="stat-value warn" id="kpi-ca">—</div><div style="font-size:11px;color:var(--text2);margin-top:4px" id="kpi-ca-hvac">—</div></div>
+  <div class="stat-card" style="cursor:pointer" onclick="filterKPI('cae90')" title="Click to filter Expected Award next 90d"><div class="stat-label">Expected Award (90d)</div><div class="stat-value" style="color:var(--accent2)" id="kpi-cae">—</div><div style="font-size:11px;color:var(--text2);margin-top:4px" id="kpi-cae-hvac">—</div></div>
 </div>
 
 <!-- Charts Row -->
@@ -170,22 +170,22 @@ tr:hover td{background:var(--surface2)}
     <a href="pipeline_xref.html" style="background:var(--accent);color:#000;padding:7px 14px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none">View Pipeline X-Ref &#8594;</a>
   </div>
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
-    <div class="stat-card pipeline-card" id="pc-total" style="cursor:pointer;border:2px solid transparent;transition:border 0.15s" onclick="setPipelineFilter('total')">
+    <div class="stat-card pipeline-card" id="pc-total" style="cursor:pointer;border:2px solid transparent;transition:border 0.15s" onclick="setPipelineFilter('total')" ondblclick="setPipelineFilter(null)">
       <div class="stat-label">Total Projects in Ventures</div>
       <div class="stat-value" id="pc-total-count">—</div>
       <div style="font-size:11px;color:var(--text2);margin-top:4px" id="pc-total-hvac">—</div>
     </div>
-    <div class="stat-card pipeline-card" id="pc-strong" style="cursor:pointer;border:2px solid transparent;transition:border 0.15s;background:rgba(75,232,122,0.06)" onclick="setPipelineFilter('strong')">
+    <div class="stat-card pipeline-card" id="pc-strong" style="cursor:pointer;border:2px solid transparent;transition:border 0.15s;background:rgba(75,232,122,0.06)" onclick="setPipelineFilter('strong')" ondblclick="setPipelineFilter(null)">
       <div class="stat-label" style="color:var(--success)">Quoted Projects</div>
       <div class="stat-value success" id="pc-strong-count">—</div>
       <div style="font-size:11px;color:var(--text2);margin-top:4px" id="pc-strong-hvac">—</div>
     </div>
-    <div class="stat-card pipeline-card" id="pc-likely" style="cursor:pointer;border:2px solid transparent;transition:border 0.15s;background:rgba(232,148,75,0.06)" onclick="setPipelineFilter('likely')">
+    <div class="stat-card pipeline-card" id="pc-likely" style="cursor:pointer;border:2px solid transparent;transition:border 0.15s;background:rgba(232,148,75,0.06)" onclick="setPipelineFilter('likely')" ondblclick="setPipelineFilter(null)">
       <div class="stat-label" style="color:var(--warn)">Likely Quoted</div>
       <div class="stat-value warn" id="pc-likely-count">—</div>
       <div style="font-size:11px;color:var(--text2);margin-top:4px" id="pc-likely-hvac">—</div>
     </div>
-    <div class="stat-card pipeline-card" id="pc-none" style="cursor:pointer;border:2px solid transparent;transition:border 0.15s;background:rgba(232,75,75,0.06)" onclick="setPipelineFilter('none')">
+    <div class="stat-card pipeline-card" id="pc-none" style="cursor:pointer;border:2px solid transparent;transition:border 0.15s;background:rgba(232,75,75,0.06)" onclick="setPipelineFilter('none')" ondblclick="setPipelineFilter(null)">
       <div class="stat-label" style="color:var(--danger)">No Match (Coverage Gap)</div>
       <div class="stat-value danger" id="pc-none-count">—</div>
       <div style="font-size:11px;color:var(--text2);margin-top:4px" id="pc-none-hvac">—</div>
@@ -209,7 +209,7 @@ tr:hover td{background:var(--surface2)}
     <button onclick="setEntity('mep')" id="etog-mep" style="padding:6px 14px;border-radius:4px;border:none;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:var(--text2)">MEP Contractors</button>
   </div>
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px">
-    <div id="cg-known" class="cg-card" onclick="setContractorFilter('known')" style="background:rgba(75,232,122,0.06);border:2px solid rgba(75,232,122,0.4);border-radius:10px;padding:16px;text-align:center;cursor:pointer;transition:all 0.15s">
+    <div id="cg-known" class="cg-card" onclick="setContractorFilter('known')" ondblclick="setContractorFilter(null)" style="background:rgba(75,232,122,0.06);border:2px solid rgba(75,232,122,0.4);border-radius:10px;padding:16px;text-align:center;cursor:pointer;transition:all 0.15s">
       <div style="font-size:11px;font-weight:600;color:var(--success);margin-bottom:8px">Known Customers</div>
       <div style="font-family:var(--font-head);font-size:28px;font-weight:700;color:var(--success)" id="cg-known-count">—</div>
       <div style="font-size:11px;color:var(--text2);margin-top:2px">customers in vCust</div>
@@ -218,7 +218,7 @@ tr:hover td{background:var(--surface2)}
         <span id="cg-known-hvac">—</span>
       </div>
     </div>
-    <div id="cg-likely" class="cg-card" onclick="setContractorFilter('likely')" style="background:rgba(232,148,75,0.06);border:2px solid rgba(232,148,75,0.3);border-radius:10px;padding:16px;text-align:center;cursor:pointer;transition:all 0.15s">
+    <div id="cg-likely" class="cg-card" onclick="setContractorFilter('likely')" ondblclick="setContractorFilter(null)" style="background:rgba(232,148,75,0.06);border:2px solid rgba(232,148,75,0.3);border-radius:10px;padding:16px;text-align:center;cursor:pointer;transition:all 0.15s">
       <div style="font-size:11px;font-weight:600;color:var(--warn);margin-bottom:8px">Likely Known (Please Review)</div>
       <div style="font-family:var(--font-head);font-size:28px;font-weight:700;color:var(--warn)" id="cg-likely-count">—</div>
       <div style="font-size:11px;color:var(--text2);margin-top:2px">possible vCust matches</div>
@@ -227,7 +227,7 @@ tr:hover td{background:var(--surface2)}
         <span id="cg-likely-hvac">—</span>
       </div>
     </div>
-    <div id="cg-unknown" class="cg-card" onclick="setContractorFilter('unknown')" style="background:rgba(232,75,75,0.06);border:2px solid rgba(232,75,75,0.2);border-radius:10px;padding:16px;text-align:center;cursor:pointer;transition:all 0.15s">
+    <div id="cg-unknown" class="cg-card" onclick="setContractorFilter('unknown')" ondblclick="setContractorFilter(null)" style="background:rgba(232,75,75,0.06);border:2px solid rgba(232,75,75,0.2);border-radius:10px;padding:16px;text-align:center;cursor:pointer;transition:all 0.15s">
       <div style="font-size:11px;font-weight:600;color:var(--danger);margin-bottom:8px">Unknown (New Opportunities)</div>
       <div style="font-family:var(--font-head);font-size:28px;font-weight:700;color:var(--danger)" id="cg-unknown-count">—</div>
       <div style="font-size:11px;color:var(--text2);margin-top:2px">not in vCust</div>
@@ -259,7 +259,7 @@ tr:hover td{background:var(--surface2)}
         <tr>
           <th>Project</th><th>Region</th><th>Status</th><th>Industry</th><th>Client</th>
           <th>Contractor</th><th>MEP Contractor</th><th>HVAC (SAR M)</th><th>Size</th>
-          <th>Contr. Appointed</th><th>Exp. Award</th><th>Constr. Start</th>
+          <th>Contr. Appointed</th><th>Exp. Award</th><th>Constr. Start</th><th>In Pipeline</th>
         </tr>
       </thead>
       <tbody id="tb"></tbody>
@@ -278,6 +278,7 @@ tr:hover td{background:var(--surface2)}
 var ALL_DATA = [];
 var VISUAL_FILTERS = {};
 var PIPELINE_FILTER = null;
+var ACTIVE_ONLY = false;
 var CONTRACTOR_FILTER = null;
 var ENTITY_TYPE = "all";
 var CUR_YEAR = 2026;
@@ -488,19 +489,33 @@ function updateCharts(rows) {
   trendChart.update();
 }
 
+function highlightEntity(val, matchType) {
+  if(!val) return "—";
+  if(matchType==="strong") return '<span style="background:rgba(75,232,122,0.15);color:var(--success);padding:1px 5px;border-radius:3px;font-weight:500">'+esc(val)+'</span>';
+  if(matchType==="likely") return '<span style="background:rgba(232,148,75,0.15);color:var(--warn);padding:1px 5px;border-radius:3px;font-weight:500">'+esc(val)+'</span>';
+  return esc(val);
+}
+
 function updateTable(rows) {
   var COLS = [
     {key:"Name"},
-    {key:"Region",render:function(v){return v?'<span class="badge badge-default">'+esc(v)+'</span>':'—';}},
+    {key:"Region",render:function(v){return v?'<span class="badge badge-default">'+esc(v)+'</span>':"—";}},
     {key:"Project Status",render:function(v){return statusBadge(v);}},
-    {key:"Industry"},{key:"Client"},{key:"Contractor"},{key:"MEP Contractor"},
-    {key:"Hvac_SAR",render:function(v){return v?parseFloat(v).toFixed(1):'—';}},
+    {key:"Industry"},
+    {key:"Client",render:function(v,r){return highlightEntity(v,r["cr2_client_match_type"]);}},
+    {key:"Contractor",render:function(v,r){return highlightEntity(v,r["cr2_contractor_match_type"]);}},
+    {key:"MEP Contractor",render:function(v,r){return highlightEntity(v,r["cr2_mep_match_type"]);}},
+    {key:"Hvac_SAR",render:function(v){return v?parseFloat(v).toFixed(1):"—";}},
     {key:"Project Size"},
-    {key:"Contractor Appointed"},{key:"Contractor Appointed Expected"},{key:"Construction Start"}
+    {key:"Contractor Appointed"},{key:"Contractor Appointed Expected"},{key:"Construction Start"},
+    {key:"cr1_pipeline_name",render:function(v,r){
+      if(!v) return "—";
+      return '<span style="font-size:10px">'+esc(v)+'<br><span style="color:var(--text2);font-size:9px">'+esc(r["cr1_quotation_no"]||"")+'</span></span>';
+    }}
   ];
   renderTable("tb", rows.slice(0,50), COLS);
   var totalHvac = rows.reduce(function(s,r){return s+(parseFloat(r["Hvac_SAR"])||0);},0);
-  document.getElementById("tfoot").innerHTML = '<tr style="background:var(--surface2);font-weight:600"><td colspan="7" style="padding:10px 14px;color:var(--text2);font-size:11px">Totals ('+rows.length.toLocaleString()+' projects)</td><td style="padding:10px 14px">'+totalHvac.toFixed(1)+'</td><td colspan="4" style="padding:10px 14px"></td></tr>';
+  document.getElementById("tfoot").innerHTML = '<tr style="background:var(--surface2);font-weight:600"><td colspan="7" style="padding:10px 14px;color:var(--text2);font-size:11px">Totals ('+rows.length.toLocaleString()+' projects)</td><td style="padding:10px 14px">'+totalHvac.toFixed(1)+'</td><td colspan="5" style="padding:10px 14px"></td></tr>';
   document.getElementById("rowCount").textContent = "Showing 50 of "+rows.length.toLocaleString()+" projects";
 }
 
@@ -548,6 +563,7 @@ function clearAllFilters() {
   });
   CONTRACTOR_FILTER = null;
   PIPELINE_FILTER = null;
+  ACTIVE_ONLY = false;
   highlightCGCard(null);
   highlightPCCard(null);
   updateAll();
@@ -578,6 +594,30 @@ function setPipelineFilter(type) {
 }
 
 function setVisualFilter(type, field, value) {
+  updateAll();
+}
+
+function filterActive() {
+  var el = document.getElementById("fStatus");
+  if(el) { el.value = ""; }
+  ACTIVE_ONLY = !ACTIVE_ONLY;
+  updateAll();
+}
+
+function filterKPI(type) {
+  var today = new Date().toISOString().split("T")[0];
+  var d90past = new Date(); d90past.setDate(d90past.getDate()-90);
+  var d90fut = new Date(); d90fut.setDate(d90fut.getDate()+90);
+  if(type==="construction") {
+    var el = document.getElementById("fStatus");
+    if(el) el.value = el.value==="Construction" ? "" : "Construction";
+  } else if(type==="ca90") {
+    document.getElementById("fCAFrom").value = d90past.toISOString().split("T")[0];
+    document.getElementById("fCATo").value = today;
+  } else if(type==="cae90") {
+    document.getElementById("fCAEFrom").value = today;
+    document.getElementById("fCAETo").value = d90fut.toISOString().split("T")[0];
+  }
   updateAll();
 }
 
