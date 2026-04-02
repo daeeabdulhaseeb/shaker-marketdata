@@ -67,13 +67,13 @@ tr:hover td{background:var(--surface2)}
 <a href="leakage.html" class="nav-link "><span class="nav-icon">🔥</span>SE Leakage</a>
 <a href="research.html" class="nav-link "><span class="nav-icon">📋</span>Research List</a>
 <a href="pipeline_xref.html" class="nav-link "><span class="nav-icon">🔗</span>Pipeline X-Ref</a></div>
-  <div class="sidebar-footer">Updated: 02 Apr 2026, 10:17</div>
+  <div class="sidebar-footer">Updated: 02 Apr 2026, 11:20</div>
 </nav>
 <main class="main-content">
 
 <div class="page-header">
   <h1>Market Overview</h1>
-  <p>Active SCAVO projects &mdash; Saudi Arabia &mdash; 02 Apr 2026, 10:17</p>
+  <p>Active SCAVO projects &mdash; Saudi Arabia &mdash; 02 Apr 2026, 11:20</p>
 </div>
 
 <!-- Active filter tags -->
@@ -176,17 +176,17 @@ tr:hover td{background:var(--surface2)}
       <div style="font-size:11px;color:var(--text2);margin-top:4px" id="pc-total-hvac">—</div>
     </div>
     <div class="stat-card pipeline-card" id="pc-strong" style="cursor:pointer;border:2px solid transparent;transition:border 0.15s;background:rgba(75,232,122,0.06)" onclick="setPipelineFilter('strong')" ondblclick="setPipelineFilter(null)">
-      <div class="stat-label" style="color:var(--success)">Quoted Projects</div>
+      <div class="stat-label" style="color:var(--success)">Likely Quoted</div>
       <div class="stat-value success" id="pc-strong-count">—</div>
       <div style="font-size:11px;color:var(--text2);margin-top:4px" id="pc-strong-hvac">—</div>
     </div>
     <div class="stat-card pipeline-card" id="pc-likely" style="cursor:pointer;border:2px solid transparent;transition:border 0.15s;background:rgba(232,148,75,0.06)" onclick="setPipelineFilter('likely')" ondblclick="setPipelineFilter(null)">
-      <div class="stat-label" style="color:var(--warn)">Likely Quoted</div>
+      <div class="stat-label" style="color:var(--warn)">Maybe Quoted</div>
       <div class="stat-value warn" id="pc-likely-count">—</div>
       <div style="font-size:11px;color:var(--text2);margin-top:4px" id="pc-likely-hvac">—</div>
     </div>
     <div class="stat-card pipeline-card" id="pc-none" style="cursor:pointer;border:2px solid transparent;transition:border 0.15s;background:rgba(232,75,75,0.06)" onclick="setPipelineFilter('none')" ondblclick="setPipelineFilter(null)">
-      <div class="stat-label" style="color:var(--danger)">No Match (Coverage Gap)</div>
+      <div class="stat-label" style="color:var(--danger)">No Match</div>
       <div class="stat-value danger" id="pc-none-count">—</div>
       <div style="font-size:11px;color:var(--text2);margin-top:4px" id="pc-none-hvac">—</div>
     </div>
@@ -709,7 +709,7 @@ window.addEventListener("DOMContentLoaded", function() {
 </main>
 <script>
 function esc(v){if(v===null||v===undefined)return'—';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-function matchBadge(t){const m={strong:'badge-strong',likely:'badge-likely',none:'badge-none'};const l={strong:'Matched',likely:'Review',none:'Gap'};return`<span class="badge ${m[t]||'badge-default'}">${l[t]||t}</span>`}
+function matchBadge(t){const m={strong:'badge-strong',likely:'badge-likely',none:'badge-none'};const l={strong:'Likely Quoted',likely:'Maybe Quoted',none:'No Match'};return`<span class="badge ${m[t]||'badge-default'}">${l[t]||t}</span>`}
 function statusBadge(v){if(!v)return'—';return`<span class="badge badge-default">${esc(v)}</span>`}
 function renderTable(tbodyId,rows,cols){
   const tb=document.getElementById(tbodyId);

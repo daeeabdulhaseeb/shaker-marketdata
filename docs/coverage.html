@@ -67,13 +67,13 @@ tr:hover td{background:var(--surface2)}
 <a href="leakage.html" class="nav-link "><span class="nav-icon">🔥</span>SE Leakage</a>
 <a href="research.html" class="nav-link "><span class="nav-icon">📋</span>Research List</a>
 <a href="pipeline_xref.html" class="nav-link "><span class="nav-icon">🔗</span>Pipeline X-Ref</a></div>
-  <div class="sidebar-footer">Updated: 02 Apr 2026, 10:17</div>
+  <div class="sidebar-footer">Updated: 02 Apr 2026, 11:20</div>
 </nav>
 <main class="main-content">
 
 <div class="page-header">
   <h1>Contractors Gap Analysis</h1>
-  <p>Ventures entities (clients, contractors, MEP) matched against SAP customer master &mdash; 02 Apr 2026, 10:17</p>
+  <p>Ventures entities (clients, contractors, MEP) matched against SAP customer master &mdash; 02 Apr 2026, 11:20</p>
 </div>
 
 <div id="activeTags" style="display:flex;gap:6px;flex-wrap:wrap;min-height:24px;margin-bottom:10px;align-items:center">
@@ -137,29 +137,29 @@ tr:hover td{background:var(--surface2)}
 <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:22px">
   <div onclick="jumpToSection('known')" style="background:rgba(75,232,122,0.06);border:1.5px solid rgba(75,232,122,0.4);border-radius:var(--radius);padding:16px;cursor:pointer;transition:opacity .15s" id="card-known">
     <div style="font-size:10px;font-weight:600;color:var(--success);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">&#10003; Known customers</div>
-    <div style="font-family:var(--font-head);font-size:30px;font-weight:700;color:var(--success)" id="card-known-count">231</div>
+    <div style="font-family:var(--font-head);font-size:30px;font-weight:700;color:var(--success)" id="card-known-count">949</div>
     <div style="font-size:11px;color:var(--text2);margin-top:2px">unique entities in vCust</div>
     <div style="border-top:1px solid rgba(75,232,122,0.2);margin-top:10px;padding-top:8px;display:flex;justify-content:space-between;font-size:10px;color:var(--text2)">
-      <span id="card-known-proj">464 projects</span>
-      <span id="card-known-hvac">SAR 15.2B</span>
+      <span id="card-known-proj">2149 projects</span>
+      <span id="card-known-hvac">SAR 49.4B</span>
     </div>
   </div>
   <div onclick="jumpToSection('likely')" style="background:rgba(232,148,75,0.06);border:1.5px solid rgba(232,148,75,0.35);border-radius:var(--radius);padding:16px;cursor:pointer;transition:opacity .15s" id="card-likely">
     <div style="font-size:10px;font-weight:600;color:var(--warn);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">&#9888; Likely known &mdash; please review</div>
-    <div style="font-family:var(--font-head);font-size:30px;font-weight:700;color:var(--warn)" id="card-likely-count">1225</div>
+    <div style="font-family:var(--font-head);font-size:30px;font-weight:700;color:var(--warn)" id="card-likely-count">1318</div>
     <div style="font-size:11px;color:var(--text2);margin-top:2px">possible vCust matches</div>
     <div style="border-top:1px solid rgba(232,148,75,0.2);margin-top:10px;padding-top:8px;display:flex;justify-content:space-between;font-size:10px;color:var(--text2)">
-      <span id="card-likely-proj">2495 projects</span>
-      <span id="card-likely-hvac">SAR 56.7B</span>
+      <span id="card-likely-proj">2524 projects</span>
+      <span id="card-likely-hvac">SAR 118.9B</span>
     </div>
   </div>
   <div onclick="jumpToSection('unknown')" style="background:rgba(232,75,75,0.06);border:1.5px solid rgba(232,75,75,0.25);border-radius:var(--radius);padding:16px;cursor:pointer;transition:opacity .15s" id="card-unknown">
     <div style="font-size:10px;font-weight:600;color:var(--danger);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">&#10005; Unknown &mdash; new opportunities</div>
-    <div style="font-family:var(--font-head);font-size:30px;font-weight:700;color:var(--danger)" id="card-unknown-count">4266</div>
+    <div style="font-family:var(--font-head);font-size:30px;font-weight:700;color:var(--danger)" id="card-unknown-count">3455</div>
     <div style="font-size:11px;color:var(--text2);margin-top:2px">not found in vCust</div>
     <div style="border-top:1px solid rgba(232,75,75,0.2);margin-top:10px;padding-top:8px;display:flex;justify-content:space-between;font-size:10px;color:var(--text2)">
-      <span id="card-unknown-proj">12687 projects</span>
-      <span id="card-unknown-hvac">SAR 326.2B</span>
+      <span id="card-unknown-proj">10973 projects</span>
+      <span id="card-unknown-hvac">SAR 229.8B</span>
     </div>
   </div>
 </div>
@@ -266,7 +266,7 @@ var KNOWN_DATA   = [];
 var LIKELY_DATA  = [];
 var UNKNOWN_DATA = [];
 var TEAM_OPTS = '<option value="">— assign team —</option>';
-var SE_OPTS   = '<option value="">— assign SE —</option><option value="ABDUL KAFI MOHAMMAD KENTAR">ABDUL KAFI MOHAMMAD KENTAR</option><option value="Abdallah Khaleel">Abdallah Khaleel</option><option value="Abdullah Alaaeddin Katta">Abdullah Alaaeddin Katta</option><option value="Abdulrahman Rafat Khalil Abu Qarn">Abdulrahman Rafat Khalil Abu Qarn</option><option value="Adnan Atef Azem">Adnan Atef Azem</option><option value="Ahmed Elkorany">Ahmed Elkorany</option><option value="Ahmed Hassanien">Ahmed Hassanien</option><option value="Ahmed Taha">Ahmed Taha</option><option value="Anas Ayyadat">Anas Ayyadat</option><option value="Asher Afzal Ali Khan">Asher Afzal Ali Khan</option><option value="Assem Faisal Abdulazeem">Assem Faisal Abdulazeem</option><option value="Basel Talal Mousa Dahabra">Basel Talal Mousa Dahabra</option><option value="El Sayed Samir Mahmoud Mohamed">El Sayed Samir Mahmoud Mohamed</option><option value="Fareed Sharaf Aldeen Ali Swalmeh">Fareed Sharaf Aldeen Ali Swalmeh</option><option value="Hamza Mohammed Marwan AlBandaqji">Hamza Mohammed Marwan AlBandaqji</option><option value="Hazem Tarek Muhamed Yusuf">Hazem Tarek Muhamed Yusuf</option><option value="Lina Awad">Lina Awad</option><option value="Mahammed Fatoh Eahea Walle">Mahammed Fatoh Eahea Walle</option><option value="Mahmoud Bassam Mahmoud Yamin">Mahmoud Bassam Mahmoud Yamin</option><option value="Mohamed Abdalla">Mohamed Abdalla</option><option value="Mohamed Elhaiek">Mohamed Elhaiek</option><option value="Mohamed Gamal Nagib Farahat">Mohamed Gamal Nagib Farahat</option><option value="Mohamed Ghali Mohammed Majed Alsheerazi">Mohamed Ghali Mohammed Majed Alsheerazi</option><option value="Mohammad Ismail Jaber Alramahi">Mohammad Ismail Jaber Alramahi</option><option value="Mohammed Ahmed Tawfik Ibrahim">Mohammed Ahmed Tawfik Ibrahim</option><option value="Mohammed Bawazir">Mohammed Bawazir</option><option value="Mohammed Ghadi">Mohammed Ghadi</option><option value="Mohammed Hamzah Mohammed Amuhaini">Mohammed Hamzah Mohammed Amuhaini</option><option value="Mohammed N M Alnaouq">Mohammed N M Alnaouq</option><option value="OMAR SELIMAN SABAAWI">OMAR SELIMAN SABAAWI</option><option value="Raad Abdulrahman Raad">Raad Abdulrahman Raad</option><option value="Rami Bukur">Rami Bukur</option><option value="SAEED HASAN ALGHIZZAWI">SAEED HASAN ALGHIZZAWI</option><option value="Yazan Abu Saa">Yazan Abu Saa</option><option value="Yousef Hussein Ali Aljedi">Yousef Hussein Ali Aljedi</option><option value="Zia ul Rahman Mohammed">Zia ul Rahman Mohammed</option>';
+var SE_OPTS   = '<option value="">— assign SE —</option><option value="ABDUL KAFI MOHAMMAD KENTAR">ABDUL KAFI MOHAMMAD KENTAR</option><option value="Abdallah Khaleel">Abdallah Khaleel</option><option value="Abdullah Alaaeddin Katta">Abdullah Alaaeddin Katta</option><option value="Abdulrahman Rafat Khalil Abu Qarn">Abdulrahman Rafat Khalil Abu Qarn</option><option value="Adnan Atef Azem">Adnan Atef Azem</option><option value="Ahmad Khalid Abed Latif">Ahmad Khalid Abed Latif</option><option value="Ahmed Elkorany">Ahmed Elkorany</option><option value="Ahmed Hassanien">Ahmed Hassanien</option><option value="Ahmed Taha">Ahmed Taha</option><option value="Anas Ayyadat">Anas Ayyadat</option><option value="Asher Afzal Ali Khan">Asher Afzal Ali Khan</option><option value="Assem Faisal Abdulazeem">Assem Faisal Abdulazeem</option><option value="Basel Talal Mousa Dahabra">Basel Talal Mousa Dahabra</option><option value="El Sayed Samir Mahmoud Mohamed">El Sayed Samir Mahmoud Mohamed</option><option value="Fareed Sharaf Aldeen Ali Swalmeh">Fareed Sharaf Aldeen Ali Swalmeh</option><option value="Hamza Mohammed Marwan AlBandaqji">Hamza Mohammed Marwan AlBandaqji</option><option value="Hazem Tarek Muhamed Yusuf">Hazem Tarek Muhamed Yusuf</option><option value="Lina Awad">Lina Awad</option><option value="Mahammed Fatoh Eahea Walle">Mahammed Fatoh Eahea Walle</option><option value="Mahmoud Bassam Mahmoud Yamin">Mahmoud Bassam Mahmoud Yamin</option><option value="Mohamed Abdalla">Mohamed Abdalla</option><option value="Mohamed Abdon">Mohamed Abdon</option><option value="Mohamed Elhaiek">Mohamed Elhaiek</option><option value="Mohamed Gamal Nagib Farahat">Mohamed Gamal Nagib Farahat</option><option value="Mohamed Ghali Mohammed Majed Alsheerazi">Mohamed Ghali Mohammed Majed Alsheerazi</option><option value="Mohammad Ajayeb">Mohammad Ajayeb</option><option value="Mohammad Ismail Jaber Alramahi">Mohammad Ismail Jaber Alramahi</option><option value="Mohammed Ahmed Tawfik Ibrahim">Mohammed Ahmed Tawfik Ibrahim</option><option value="Mohammed Bawazir">Mohammed Bawazir</option><option value="Mohammed Ghadi">Mohammed Ghadi</option><option value="Mohammed Hamzah Mohammed Amuhaini">Mohammed Hamzah Mohammed Amuhaini</option><option value="Mohammed N M Alnaouq">Mohammed N M Alnaouq</option><option value="OMAR SELIMAN SABAAWI">OMAR SELIMAN SABAAWI</option><option value="Raad Abdulrahman Raad">Raad Abdulrahman Raad</option><option value="Rami Bukur">Rami Bukur</option><option value="SAEED HASAN ALGHIZZAWI">SAEED HASAN ALGHIZZAWI</option><option value="Yazan Abu Saa">Yazan Abu Saa</option><option value="Yousef Hussein Ali Aljedi">Yousef Hussein Ali Aljedi</option><option value="Zia ul Rahman Mohammed">Zia ul Rahman Mohammed</option>';
 
 function sarFmt(v){
   if(!v||isNaN(v))return"—";
@@ -496,7 +496,7 @@ window.addEventListener("DOMContentLoaded",function(){
 </main>
 <script>
 function esc(v){if(v===null||v===undefined)return'—';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-function matchBadge(t){const m={strong:'badge-strong',likely:'badge-likely',none:'badge-none'};const l={strong:'Matched',likely:'Review',none:'Gap'};return`<span class="badge ${m[t]||'badge-default'}">${l[t]||t}</span>`}
+function matchBadge(t){const m={strong:'badge-strong',likely:'badge-likely',none:'badge-none'};const l={strong:'Likely Quoted',likely:'Maybe Quoted',none:'No Match'};return`<span class="badge ${m[t]||'badge-default'}">${l[t]||t}</span>`}
 function statusBadge(v){if(!v)return'—';return`<span class="badge badge-default">${esc(v)}</span>`}
 function renderTable(tbodyId,rows,cols){
   const tb=document.getElementById(tbodyId);

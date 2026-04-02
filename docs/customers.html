@@ -67,7 +67,7 @@ tr:hover td{background:var(--surface2)}
 <a href="leakage.html" class="nav-link "><span class="nav-icon">🔥</span>SE Leakage</a>
 <a href="research.html" class="nav-link "><span class="nav-icon">📋</span>Research List</a>
 <a href="pipeline_xref.html" class="nav-link "><span class="nav-icon">🔗</span>Pipeline X-Ref</a></div>
-  <div class="sidebar-footer">Updated: 02 Apr 2026, 10:17</div>
+  <div class="sidebar-footer">Updated: 02 Apr 2026, 11:20</div>
 </nav>
 <main class="main-content">
 
@@ -95,7 +95,7 @@ fetch('data_customers.json').then(r=>r.json()).then(function(DATA){
 </main>
 <script>
 function esc(v){if(v===null||v===undefined)return'—';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-function matchBadge(t){const m={strong:'badge-strong',likely:'badge-likely',none:'badge-none'};const l={strong:'Matched',likely:'Review',none:'Gap'};return`<span class="badge ${m[t]||'badge-default'}">${l[t]||t}</span>`}
+function matchBadge(t){const m={strong:'badge-strong',likely:'badge-likely',none:'badge-none'};const l={strong:'Likely Quoted',likely:'Maybe Quoted',none:'No Match'};return`<span class="badge ${m[t]||'badge-default'}">${l[t]||t}</span>`}
 function statusBadge(v){if(!v)return'—';return`<span class="badge badge-default">${esc(v)}</span>`}
 function renderTable(tbodyId,rows,cols){
   const tb=document.getElementById(tbodyId);

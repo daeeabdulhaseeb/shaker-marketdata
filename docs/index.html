@@ -67,17 +67,17 @@ tr:hover td{background:var(--surface2)}
 <a href="leakage.html" class="nav-link "><span class="nav-icon">🔥</span>SE Leakage</a>
 <a href="research.html" class="nav-link "><span class="nav-icon">📋</span>Research List</a>
 <a href="pipeline_xref.html" class="nav-link "><span class="nav-icon">🔗</span>Pipeline X-Ref</a></div>
-  <div class="sidebar-footer">Updated: 02 Apr 2026, 10:17</div>
+  <div class="sidebar-footer">Updated: 02 Apr 2026, 11:20</div>
 </nav>
 <main class="main-content">
 
-<div class="page-header"><h1>Ventures Intelligence Platform</h1><p>Weekly cross-reference analysis &mdash; last updated 02 Apr 2026, 10:17</p></div>
-<div class="stats-grid"><div class="stat-card"><div class="stat-label">Ventures Projects</div><div class="stat-value ">10097</div></div><div class="stat-card"><div class="stat-label">Pipeline Matched</div><div class="stat-value success">889</div></div><div class="stat-card"><div class="stat-label">Needs Review</div><div class="stat-value warn">2975</div></div><div class="stat-card"><div class="stat-label">Coverage Gaps</div><div class="stat-value danger">6233</div></div><div class="stat-card"><div class="stat-label">SE Leakage</div><div class="stat-value danger">1453</div></div><div class="stat-card"><div class="stat-label">New Customers</div><div class="stat-value accent">4780</div></div></div>
+<div class="page-header"><h1>Ventures Intelligence Platform</h1><p>Weekly cross-reference analysis &mdash; last updated 02 Apr 2026, 11:20</p></div>
+<div class="stats-grid"><div class="stat-card"><div class="stat-label">Ventures Projects</div><div class="stat-value ">10097</div></div><div class="stat-card"><div class="stat-label">Pipeline Matched</div><div class="stat-value success">883</div></div><div class="stat-card"><div class="stat-label">Needs Review</div><div class="stat-value warn">3005</div></div><div class="stat-card"><div class="stat-label">Coverage Gaps</div><div class="stat-value danger">6209</div></div><div class="stat-card"><div class="stat-label">SE Leakage</div><div class="stat-value danger">2333</div></div><div class="stat-card"><div class="stat-label">New Customers</div><div class="stat-value accent">3876</div></div></div>
 <p style="color:var(--text2);font-size:13px">Use the sidebar to navigate between views. Data refreshes each time the Python script is run.</p>
 </main>
 <script>
 function esc(v){if(v===null||v===undefined)return'—';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-function matchBadge(t){const m={strong:'badge-strong',likely:'badge-likely',none:'badge-none'};const l={strong:'Matched',likely:'Review',none:'Gap'};return`<span class="badge ${m[t]||'badge-default'}">${l[t]||t}</span>`}
+function matchBadge(t){const m={strong:'badge-strong',likely:'badge-likely',none:'badge-none'};const l={strong:'Likely Quoted',likely:'Maybe Quoted',none:'No Match'};return`<span class="badge ${m[t]||'badge-default'}">${l[t]||t}</span>`}
 function statusBadge(v){if(!v)return'—';return`<span class="badge badge-default">${esc(v)}</span>`}
 function renderTable(tbodyId,rows,cols){
   const tb=document.getElementById(tbodyId);
