@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Pipeline X-Ref — Shaker Ventures Intel</title>
+<title>Pipeline Search — Shaker Ventures Intel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -61,34 +61,105 @@ tr:hover td{background:var(--surface2)}
     <span class="logo-mark">S</span>
     <span class="logo-text">Shaker<br><small>Ventures Intel</small></span>
   </div>
-  <div class="nav-links"><a href="index.html" class="nav-link "><span class="nav-icon">🏠</span>Home</a>
-<a href="market.html" class="nav-link "><span class="nav-icon">📊</span>Market Overview</a>
-<a href="coverage.html" class="nav-link "><span class="nav-icon">🔍</span>Contractors Gap</a>
-<a href="leakage.html" class="nav-link "><span class="nav-icon">🔥</span>SE Leakage</a>
-<a href="research.html" class="nav-link "><span class="nav-icon">📋</span>Research List</a>
-<a href="pipeline_xref.html" class="nav-link active"><span class="nav-icon">🔗</span>Pipeline X-Ref</a></div>
-  <div class="sidebar-footer">Updated: 02 Apr 2026, 11:32</div>
+  <div class="nav-links"><a href="market.html" class="nav-link "><span class="nav-icon">📊</span>Market Overview</a>
+<a href="coverage.html" class="nav-link "><span class="nav-icon">🏢</span>Contractors Gap</a>
+<a href="pipeline_xref.html" class="nav-link active"><span class="nav-icon">🔍</span>Pipeline Search</a></div>
+  <div class="sidebar-footer">Updated: 02 Apr 2026, 14:32</div>
 </nav>
 <main class="main-content">
 
-<div class="page-header"><h1>Pipeline Cross-Reference</h1><p>Ventures projects with a matching quotation in pipeline (3892 projects)</p></div>
-<div class="table-wrapper">
-<div class="table-toolbar">
-  <input class="search-input" id="search" placeholder="Search project, SE, quotation...">
-  <select class="filter-select" id="fMatch"><option value="">All Confidence</option><option value="strong">Likely Quoted</option><option value="likely">Maybe Quoted</option></select>
-  <span class="table-count" id="rowCount"></span>
+<div class="page-header">
+  <h1>Pipeline Search</h1>
+  <p>Quick lookup — search any Ventures project to see if it was quoted in the pipeline &mdash; 02 Apr 2026, 14:32</p>
 </div>
-<div class="table-scroll"><table>
-<thead><tr><th>Ventures Project</th><th>Status</th><th>City</th><th>Confidence</th><th>Quotation No.</th><th>SE Name</th><th>Team</th><th>Quote Probability</th><th>HVAC (US$M)</th></tr></thead>
-<tbody id="tb"></tbody></table></div></div>
+
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:16px">
+  <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">
+    <div style="display:flex;flex-direction:column;gap:3px">
+      <span style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.04em">Search project / client / contractor</span>
+      <input class="search-input" id="search" placeholder="Type to search..." style="width:320px">
+    </div>
+    <div style="display:flex;flex-direction:column;gap:3px">
+      <span style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.04em">Quoted?</span>
+      <select class="filter-select" id="fMatch">
+        <option value="">All</option>
+        <option value="strong">Yes — quoted</option>
+        <option value="likely">Likely quoted</option>
+        <option value="none">Not quoted</option>
+      </select>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:3px">
+      <span style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.04em">Status</span>
+      <select class="filter-select" id="fStatus"><option value="">All</option><option value="Cancelled">Cancelled</option><option value="Completed">Completed</option><option value="Concept Stage">Concept Stage</option><option value="Construction">Construction</option><option value="Design">Design</option><option value="Feasibility Study">Feasibility Study</option><option value="On Hold">On Hold</option><option value="Tender for Construction">Tender for Construction</option><option value="Tender for Consultancy">Tender for Consultancy</option></select>
+    </div>
+    <span class="table-count" style="margin-top:18px" id="rowCount"></span>
+  </div>
+</div>
+
+<div class="table-wrapper">
+<div style="max-height:520px;overflow-y:auto;overflow-x:auto">
+<table style="width:100%;border-collapse:collapse;font-size:11px">
+<thead style="position:sticky;top:0;z-index:1;background:var(--surface)">
+  <tr>
+    <th style="padding:9px 12px;white-space:nowrap;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border)">Ventures project</th>
+    <th style="padding:9px 12px;white-space:nowrap;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border)">Status</th>
+    <th style="padding:9px 12px;white-space:nowrap;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border)">Quoted?</th>
+    <th style="padding:9px 12px;white-space:nowrap;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border)">Pipeline project name</th>
+    <th style="padding:9px 12px;white-space:nowrap;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border)">Quotation no.</th>
+    <th style="padding:9px 12px;white-space:nowrap;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border)">SE name</th>
+    <th style="padding:9px 12px;white-space:nowrap;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border)">Team</th>
+    <th style="padding:9px 12px;white-space:nowrap;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border)">Probability</th>
+    <th style="text-align:right;padding:9px 12px;white-space:nowrap;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border)">HVAC (SAR)</th>
+  </tr>
+</thead>
+<tbody id="tb"></tbody>
+</table>
+</div>
+</div>
+
 <script>
-const COLS=[
-  {key:"Name"},{key:"Project Status",render:function(v){return statusBadge(v)}},{key:"City/Province"},
-  {key:"cr1_match_type",render:function(v){return matchBadge(v)}},{key:"cr1_quotation_no"},
-  {key:"cr1_se_name"},{key:"cr1_team"},{key:"cr1_quote_probability"},{key:"Hvac"}
-];
-fetch('data_pipeline_xref.json').then(r=>r.json()).then(function(DATA){
-  initTable('tb','rowCount',DATA,COLS,['Name','cr1_se_name','cr1_quotation_no'],[{id:'fMatch',field:'cr1_match_type'}]);
+var ALL_DATA = [];
+function sarFmt(v){if(!v||isNaN(v))return"—";if(v>=1e9)return"SAR "+(v/1e9).toFixed(1)+"B";if(v>=1e6)return"SAR "+(v/1e6).toFixed(1)+"M";if(v>0)return"SAR "+(v/1e3).toFixed(0)+"K";return"—";}
+function quotedBadge(t){
+  if(t==="strong")return'<span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;background:rgba(75,232,122,.15);color:var(--success)">Yes</span>';
+  if(t==="likely")return'<span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;background:rgba(232,148,75,.15);color:var(--warn)">Likely</span>';
+  return'<span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;background:rgba(232,75,75,.15);color:var(--danger)">No</span>';
+}
+function applyFilters(){
+  var q=(document.getElementById("search")||{}).value.toLowerCase()||"";
+  var mt=(document.getElementById("fMatch")||{}).value||"";
+  var st=(document.getElementById("fStatus")||{}).value||"";
+  var rows=ALL_DATA.filter(function(r){
+    if(q&&!["Name","Client","Contractor","MEP Contractor","cr1_pipeline_name","cr1_quotation_no","cr1_se_name"].some(function(k){return r[k]&&String(r[k]).toLowerCase().includes(q);}))return false;
+    if(mt&&(r["cr1_match_type"]||"none")!==mt)return false;
+    if(st&&r["Project Status"]!==st)return false;
+    return true;
+  });
+  var tb=document.getElementById("tb");
+  var rc=document.getElementById("rowCount");
+  if(rc)rc.textContent=rows.length.toLocaleString()+" of "+ALL_DATA.length.toLocaleString()+" projects";
+  if(!rows.length){tb.innerHTML='<tr><td colspan="9" style="text-align:center;color:var(--text2);padding:32px">No matching projects</td></tr>';return;}
+  tb.innerHTML=rows.slice(0,200).map(function(r){
+    var hvac=parseFloat(r["Hvac_SAR"])||0;
+    return'<tr style="border-bottom:1px solid var(--border)">'
+      +'<td style="padding:8px 12px;font-weight:500;white-space:nowrap">'+esc(r["Name"]||"—")+'</td>'
+      +'<td style="padding:8px 12px;white-space:nowrap"><span class="badge badge-default">'+esc(r["Project Status"]||"—")+'</span></td>'
+      +'<td style="padding:8px 12px;white-space:nowrap">'+quotedBadge(r["cr1_match_type"]||"none")+'</td>'
+      +'<td style="padding:8px 12px;color:var(--text2);font-size:11px;white-space:nowrap">'+esc(r["cr1_pipeline_name"]||"—")+'</td>'
+      +'<td style="padding:8px 12px;color:var(--accent2);font-size:11px;white-space:nowrap">'+esc(r["cr1_quotation_no"]||"—")+'</td>'
+      +'<td style="padding:8px 12px;white-space:nowrap">'+esc(r["cr1_se_name"]||"—")+'</td>'
+      +'<td style="padding:8px 12px;white-space:nowrap">'+esc(r["cr1_team"]||"—")+'</td>'
+      +'<td style="padding:8px 12px;white-space:nowrap">'+esc(r["cr1_quote_probability"]||"—")+'</td>'
+      +'<td style="padding:8px 12px;text-align:right;white-space:nowrap">'+sarFmt(hvac)+'</td>'
+      +'</tr>';
+  }).join("");
+}
+document.getElementById("search").addEventListener("input",applyFilters);
+document.getElementById("fMatch").addEventListener("change",applyFilters);
+document.getElementById("fStatus").addEventListener("change",applyFilters);
+fetch("data_pipeline_xref.json").then(function(r){return r.json();}).then(function(data){
+  ALL_DATA=data;
+  applyFilters();
 });
 </script>
 </main>
