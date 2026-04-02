@@ -67,13 +67,13 @@ tr:hover td{background:var(--surface2)}
 <a href="leakage.html" class="nav-link "><span class="nav-icon">🔥</span>SE Leakage</a>
 <a href="research.html" class="nav-link "><span class="nav-icon">📋</span>Research List</a>
 <a href="pipeline_xref.html" class="nav-link "><span class="nav-icon">🔗</span>Pipeline X-Ref</a></div>
-  <div class="sidebar-footer">Updated: 02 Apr 2026, 09:18</div>
+  <div class="sidebar-footer">Updated: 02 Apr 2026, 10:17</div>
 </nav>
 <main class="main-content">
 
 <div class="page-header">
   <h1>Market Overview</h1>
-  <p>Active SCAVO projects &mdash; Saudi Arabia &mdash; 02 Apr 2026, 09:18</p>
+  <p>Active SCAVO projects &mdash; Saudi Arabia &mdash; 02 Apr 2026, 10:17</p>
 </div>
 
 <!-- Active filter tags -->
@@ -259,7 +259,7 @@ tr:hover td{background:var(--surface2)}
         <tr>
           <th>Project</th><th>Region</th><th>Status</th><th>Industry</th><th>Client</th>
           <th>Contractor</th><th>MEP Contractor</th><th>HVAC (SAR M)</th><th>Size</th>
-          <th>Contr. Appointed</th><th>Exp. Award</th><th>Constr. Start</th><th>In Pipeline</th>
+          <th>Contr. Appointed</th><th>Exp. Award</th><th>Constr. Start</th><th>vCust Match</th><th>In Pipeline</th>
         </tr>
       </thead>
       <tbody id="tb"></tbody>
@@ -505,9 +505,25 @@ function updateTable(rows) {
     {key:"Client",render:function(v,r){return highlightEntity(v,r["cr2_client_match_type"]);}},
     {key:"Contractor",render:function(v,r){return highlightEntity(v,r["cr2_contractor_match_type"]);}},
     {key:"MEP Contractor",render:function(v,r){return highlightEntity(v,r["cr2_mep_match_type"]);}},
-    {key:"Hvac_SAR",render:function(v){return v?parseFloat(v).toFixed(1):"—";}},
+    {key:"Hvac_SAR",render:function(v){return v?sarFmt(parseFloat(v)):"—";}},
     {key:"Project Size"},
     {key:"Contractor Appointed"},{key:"Contractor Appointed Expected"},{key:"Construction Start"},
+    {key:"_vcust_match",render:function(v,r){
+      var parts = [];
+      if(r["cr2_client_match_type"]==="strong"||r["cr2_client_match_type"]==="likely") {
+        var lbl = r["cr2_client_match_type"]==="strong"?'<span style="color:var(--success)">&#10003;</span>':'<span style="color:var(--warn)">~</span>';
+        parts.push(lbl+' '+esc(r["cr2_client_customer_name"]||"")+(r["cr2_client_match_type"]==="likely"?' <span style="font-size:9px;color:var(--warn)">(review)</span>':''));
+      }
+      if(r["cr2_contractor_match_type"]==="strong"||r["cr2_contractor_match_type"]==="likely") {
+        var lbl2 = r["cr2_contractor_match_type"]==="strong"?'<span style="color:var(--success)">&#10003;</span>':'<span style="color:var(--warn)">~</span>';
+        parts.push(lbl2+' '+esc(r["cr2_contractor_customer_name"]||"")+(r["cr2_contractor_match_type"]==="likely"?' <span style="font-size:9px;color:var(--warn)">(review)</span>':''));
+      }
+      if(r["cr2_mep_match_type"]==="strong"||r["cr2_mep_match_type"]==="likely") {
+        var lbl3 = r["cr2_mep_match_type"]==="strong"?'<span style="color:var(--success)">&#10003;</span>':'<span style="color:var(--warn)">~</span>';
+        parts.push(lbl3+' '+esc(r["cr2_mep_customer_name"]||"")+(r["cr2_mep_match_type"]==="likely"?' <span style="font-size:9px;color:var(--warn)">(review)</span>':''));
+      }
+      return parts.length?'<span style="font-size:10px;line-height:1.6">'+parts.join("<br>")+"</span>":"—";
+    }},
     {key:"cr1_pipeline_name",render:function(v,r){
       if(!v) return "—";
       return '<span style="font-size:10px">'+esc(v)+'<br><span style="color:var(--text2);font-size:9px">'+esc(r["cr1_quotation_no"]||"")+'</span></span>';
@@ -515,7 +531,7 @@ function updateTable(rows) {
   ];
   renderTable("tb", rows.slice(0,50), COLS);
   var totalHvac = rows.reduce(function(s,r){return s+(parseFloat(r["Hvac_SAR"])||0);},0);
-  document.getElementById("tfoot").innerHTML = '<tr style="background:var(--surface2);font-weight:600"><td colspan="7" style="padding:10px 14px;color:var(--text2);font-size:11px">Totals ('+rows.length.toLocaleString()+' projects)</td><td style="padding:10px 14px">'+sarFmt(totalHvac)+'</td><td colspan="5" style="padding:10px 14px"></td></tr>';
+  document.getElementById("tfoot").innerHTML = '<tr style="background:var(--surface2);font-weight:600"><td colspan="7" style="padding:10px 14px;color:var(--text2);font-size:11px">Totals ('+rows.length.toLocaleString()+' projects)</td><td style="padding:10px 14px">'+sarFmt(totalHvac)+'</td><td colspan="6" style="padding:10px 14px"></td></tr>';
   document.getElementById("rowCount").textContent = "Showing 50 of "+rows.length.toLocaleString()+" projects";
 }
 
