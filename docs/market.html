@@ -63,21 +63,21 @@ tr:hover td{background:var(--surface2)}
   </div>
   <div class="nav-links"><a href="index.html" class="nav-link "><span class="nav-icon">🏠</span>Home</a>
 <a href="market.html" class="nav-link active"><span class="nav-icon">📊</span>Market Overview</a>
-<a href="coverage.html" class="nav-link "><span class="nav-icon">⚠️</span>Coverage Gaps</a>
+<a href="coverage.html" class="nav-link "><span class="nav-icon">🔍</span>Contractors Gap</a>
 <a href="leakage.html" class="nav-link "><span class="nav-icon">🔥</span>SE Leakage</a>
 <a href="research.html" class="nav-link "><span class="nav-icon">📋</span>Research List</a>
 <a href="pipeline_xref.html" class="nav-link "><span class="nav-icon">🔗</span>Pipeline X-Ref</a></div>
-  <div class="sidebar-footer">Updated: 01 Apr 2026, 16:35</div>
+  <div class="sidebar-footer">Updated: 02 Apr 2026, 09:18</div>
 </nav>
 <main class="main-content">
 
 <div class="page-header">
   <h1>Market Overview</h1>
-  <p>Active SCAVO projects &mdash; Saudi Arabia &mdash; 01 Apr 2026, 16:35</p>
+  <p>Active SCAVO projects &mdash; Saudi Arabia &mdash; 02 Apr 2026, 09:18</p>
 </div>
 
 <!-- Active filter tags -->
-<div id="activeTags" style="display:flex;gap:6px;flex-wrap:wrap;min-height:28px;margin-bottom:10px;align-items:center">
+<div id="activeTags" style="display:flex;gap:6px;flex-wrap:wrap;min-height:28px;margin-bottom:10px;align-items:center;position:sticky;top:0;z-index:200;background:var(--bg);padding:8px 0;backdrop-filter:blur(4px)">
   <span style="font-size:11px;color:var(--text3)" id="noFiltersMsg">No active filters</span>
 </div>
 
@@ -255,7 +255,7 @@ tr:hover td{background:var(--surface2)}
   </div>
   <div style="max-height:420px;overflow-y:auto">
     <table>
-      <thead style="position:sticky;top:0;z-index:10">
+      <thead style="position:sticky;top:0;z-index:10;background:var(--surface)">
         <tr>
           <th>Project</th><th>Region</th><th>Status</th><th>Industry</th><th>Client</th>
           <th>Contractor</th><th>MEP Contractor</th><th>HVAC (SAR M)</th><th>Size</th>
@@ -515,7 +515,7 @@ function updateTable(rows) {
   ];
   renderTable("tb", rows.slice(0,50), COLS);
   var totalHvac = rows.reduce(function(s,r){return s+(parseFloat(r["Hvac_SAR"])||0);},0);
-  document.getElementById("tfoot").innerHTML = '<tr style="background:var(--surface2);font-weight:600"><td colspan="7" style="padding:10px 14px;color:var(--text2);font-size:11px">Totals ('+rows.length.toLocaleString()+' projects)</td><td style="padding:10px 14px">'+totalHvac.toFixed(1)+'</td><td colspan="5" style="padding:10px 14px"></td></tr>';
+  document.getElementById("tfoot").innerHTML = '<tr style="background:var(--surface2);font-weight:600"><td colspan="7" style="padding:10px 14px;color:var(--text2);font-size:11px">Totals ('+rows.length.toLocaleString()+' projects)</td><td style="padding:10px 14px">'+sarFmt(totalHvac)+'</td><td colspan="5" style="padding:10px 14px"></td></tr>';
   document.getElementById("rowCount").textContent = "Showing 50 of "+rows.length.toLocaleString()+" projects";
 }
 
