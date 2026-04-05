@@ -64,13 +64,13 @@ tr:hover td{background:var(--surface2)}
   <div class="nav-links"><a href="market.html" class="nav-link "><span class="nav-icon">📊</span>Market Overview</a>
 <a href="coverage.html" class="nav-link active"><span class="nav-icon">🏢</span>Contractors Gap</a>
 <a href="pipeline_xref.html" class="nav-link "><span class="nav-icon">🔍</span>Pipeline Search</a></div>
-  <div class="sidebar-footer">Updated: 05 Apr 2026, 08:42</div>
+  <div class="sidebar-footer">Updated: 05 Apr 2026, 08:56</div>
 </nav>
 <main class="main-content">
 
 <div class="page-header">
   <h1>Contractors Gap Analysis</h1>
-  <p>Ventures entities (clients, contractors, MEP) matched against SAP customer master &mdash; 05 Apr 2026, 08:42</p>
+  <p>Ventures entities (clients, contractors, MEP) matched against SAP customer master &mdash; 05 Apr 2026, 08:56</p>
 </div>
 
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
@@ -158,26 +158,26 @@ tr:hover td{background:var(--surface2)}
 <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin-bottom:16px">
   <div onclick="jumpToSection('known')" style="background:rgba(75,232,122,.06);border:1.5px solid rgba(75,232,122,.4);border-radius:var(--radius);padding:12px;cursor:pointer" id="card-known">
     <div style="font-size:10px;font-weight:600;color:var(--success);text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">&#10003; Known</div>
-    <div style="font-family:var(--font-head);font-size:24px;font-weight:700;color:var(--success)" id="card-known-count">962</div>
+    <div style="font-family:var(--font-head);font-size:24px;font-weight:700;color:var(--success)" id="card-known-count">942</div>
     <div style="font-size:10px;color:var(--text2)">entities in vCust</div>
     <div style="border-top:1px solid rgba(75,232,122,.2);margin-top:8px;padding-top:6px;display:flex;justify-content:space-between;font-size:10px;color:var(--text2)">
-      <span id="card-known-proj">2212 projects</span><span id="card-known-hvac">SAR 49.5B</span>
+      <span id="card-known-proj">2152 projects</span><span id="card-known-hvac">SAR 53.9B</span>
     </div>
   </div>
   <div onclick="jumpToSection('likely')" style="background:rgba(232,148,75,.06);border:1.5px solid rgba(232,148,75,.35);border-radius:var(--radius);padding:12px;cursor:pointer" id="card-likely">
     <div style="font-size:10px;font-weight:600;color:var(--warn);text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">&#9888; Likely known</div>
-    <div style="font-family:var(--font-head);font-size:24px;font-weight:700;color:var(--warn)" id="card-likely-count">1298</div>
+    <div style="font-family:var(--font-head);font-size:24px;font-weight:700;color:var(--warn)" id="card-likely-count">1317</div>
     <div style="font-size:10px;color:var(--text2)">possible matches</div>
     <div style="border-top:1px solid rgba(232,148,75,.2);margin-top:8px;padding-top:6px;display:flex;justify-content:space-between;font-size:10px;color:var(--text2)">
-      <span id="card-likely-proj">2132 projects</span><span id="card-likely-hvac">SAR 113.4B</span>
+      <span id="card-likely-proj">2183 projects</span><span id="card-likely-hvac">SAR 109.9B</span>
     </div>
   </div>
   <div onclick="jumpToSection('unknown')" style="background:rgba(232,75,75,.06);border:1.5px solid rgba(232,75,75,.25);border-radius:var(--radius);padding:12px;cursor:pointer" id="card-unknown">
     <div style="font-size:10px;font-weight:600;color:var(--danger);text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">&#10005; Unknown</div>
-    <div style="font-family:var(--font-head);font-size:24px;font-weight:700;color:var(--danger)" id="card-unknown-count">3462</div>
+    <div style="font-family:var(--font-head);font-size:24px;font-weight:700;color:var(--danger)" id="card-unknown-count">3463</div>
     <div style="font-size:10px;color:var(--text2)">not in vCust</div>
     <div style="border-top:1px solid rgba(232,75,75,.2);margin-top:8px;padding-top:6px;display:flex;justify-content:space-between;font-size:10px;color:var(--text2)">
-      <span id="card-unknown-proj">11302 projects</span><span id="card-unknown-hvac">SAR 235.2B</span>
+      <span id="card-unknown-proj">11311 projects</span><span id="card-unknown-hvac">SAR 234.3B</span>
     </div>
   </div>
   <div onclick="jumpToSection('assigned-team')" style="background:rgba(75,123,232,.06);border:1.5px solid rgba(75,123,232,.35);border-radius:var(--radius);padding:12px;cursor:pointer" id="card-ateam">
@@ -611,9 +611,9 @@ function renderSection(tbodyId,ents,tier,countId) {
     var seDisp=(tier==="assigned-se")
       ? esc(e.assigned_se||"—")+'<span style="display:inline-block;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:600;background:rgba(75,232,122,.15);color:var(--success);margin-left:5px">saved</span>'
       : buildSECell(e,tier);
-    var rowOpacity=(cfmState&&tier==="likely")?" style="opacity:.45;cursor:default"":" style="cursor:pointer"";
+    var rowStyle=(cfmState&&tier==="likely")?"opacity:.45;cursor:default":"cursor:pointer";
     rows.push(
-      '<tr'+rowOpacity+' data-idx="'+e._idx+'" onclick="'+(cfmState?'':'openDrilldown('+e._idx+')')+'">'
+      '<tr style="'+rowStyle+'" data-idx="'+e._idx+'" onclick="'+(cfmState?'':'openDrilldown('+e._idx+')')+'">'
       +'<td style="white-space:nowrap"><div style="font-weight:500">'+esc(e.ventures_name)+'</div><div style="margin-top:2px">'+etypeBadge(e.entity_type)+'</div></td>'
       +'<td onclick="event.stopPropagation()" style="white-space:nowrap">'+buildCandCell(e,tier)+'</td>'
       +'<td onclick="event.stopPropagation()" style="white-space:nowrap">'+buildTeamCell(e,tier)+'</td>'
@@ -848,9 +848,9 @@ window.addEventListener("DOMContentLoaded",function(){
   var fSE=document.getElementById("fSE");
   if(fSE)fSE.addEventListener("change",function(){updateContextCards();updateAll();});
   Promise.all([
-    fetch("data_contractors_known.json").then(function(r){return r.json();}),
-    fetch("data_contractors_likely.json").then(function(r){return r.json();}),
-    fetch("data_contractors_unknown.json").then(function(r){return r.json();})
+    fetch("data_contractors_known.json").then(function(r){if(!r.ok)throw new Error("known:"+r.status);return r.json();}),
+    fetch("data_contractors_likely.json").then(function(r){if(!r.ok)throw new Error("likely:"+r.status);return r.json();}),
+    fetch("data_contractors_unknown.json").then(function(r){if(!r.ok)throw new Error("unknown:"+r.status);return r.json();}),
   ]).then(function(results){
     var idx=0;
     function indexEnts(arr){
@@ -866,6 +866,10 @@ window.addEventListener("DOMContentLoaded",function(){
     UNKNOWN_DATA = indexEnts(mergeAssignments(results[2]));
     updateContextCards();
     updateAll();
+  }).catch(function(err){
+    console.error("Contractors Gap: failed to load data —", err);
+    var tb=document.getElementById("tb-known");
+    if(tb)tb.innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--danger);padding:32px">Failed to load data: '+err.message+'. Check browser console.</td></tr>';
   });
 });
 </script>
