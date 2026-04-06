@@ -6,6 +6,7 @@
 <title>Market Overview — Shaker Ventures Intel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 :root{
   --bg:#0d0f14;--surface:#151820;--surface2:#1c2030;--border:#252a38;
@@ -64,13 +65,13 @@ tr:hover td{background:var(--surface2)}
   <div class="nav-links"><a href="market.html" class="nav-link active"><span class="nav-icon">📊</span>Market Overview</a>
 <a href="coverage.html" class="nav-link "><span class="nav-icon">🏢</span>Contractors Gap</a>
 <a href="pipeline_xref.html" class="nav-link "><span class="nav-icon">🔍</span>Pipeline Search</a></div>
-  <div class="sidebar-footer">Updated: 05 Apr 2026, 08:56</div>
+  <div class="sidebar-footer">Updated: 06 Apr 2026, 08:47</div>
 </nav>
 <main class="main-content">
 
 <div class="page-header">
   <h1>Market Overview</h1>
-  <p>Active SCAVO projects &mdash; Saudi Arabia &mdash; 05 Apr 2026, 08:56</p>
+  <p>Active SCAVO projects &mdash; Saudi Arabia &mdash; 06 Apr 2026, 08:47</p>
 </div>
 
 <!-- Active filter tags -->
@@ -249,6 +250,7 @@ tr:hover td{background:var(--surface2)}
   <div style="padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px">
     <span style="font-size:11px;color:var(--text2)" id="rowCount">Loading...</span>
     <span style="font-size:11px;color:var(--text3)">(max 50 rows shown)</span>
+    <button onclick="exportMarket()" style="margin-left:auto;background:rgba(75,232,122,.12);border:1px solid rgba(75,232,122,.3);color:var(--success);padding:4px 12px;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer">&#8595; Export all filtered</button>
   </div>
   <div style="max-height:420px;overflow-y:auto">
     <table>
@@ -530,6 +532,42 @@ function updateTable(rows) {
   var totalHvac = rows.reduce(function(s,r){return s+(parseFloat(r["Hvac_SAR"])||0);},0);
   document.getElementById("tfoot").innerHTML = '<tr style="background:var(--surface2);font-weight:600"><td colspan="7" style="padding:10px 14px;color:var(--text2);font-size:11px">Totals ('+rows.length.toLocaleString()+' projects)</td><td style="padding:10px 14px">'+sarFmt(totalHvac)+'</td><td colspan="6" style="padding:10px 14px"></td></tr>';
   document.getElementById("rowCount").textContent = "Showing 50 of "+rows.length.toLocaleString()+" projects";
+  // Store for export
+  window._MARKET_ROWS = rows;
+}
+
+function exportMarket() {
+  var rows = window._MARKET_ROWS || getAllFiltered();
+  if(!rows||!rows.length){alert("No data to export.");return;}
+  var data=rows.map(function(r){
+    return {
+      "Project":               r["Name"]||"",
+      "Region":                r["Region"]||"",
+      "Status":                r["Project Status"]||"",
+      "Industry":              r["Industry"]||"",
+      "Client":                r["Client"]||"",
+      "Contractor":            r["Contractor"]||"",
+      "MEP Contractor":        r["MEP Contractor"]||"",
+      "HVAC (SAR)":            parseFloat(r["Hvac_SAR"])||0,
+      "Size":                  r["Project Size"]||"",
+      "Contr. Appointed":      r["Contractor Appointed"]||"",
+      "Exp. Award":            r["Contractor Appointed Expected"]||"",
+      "Constr. Start":         r["Construction Start"]||"",
+      "Client Match":          r["cr2_client_match_type"]||"",
+      "Client vCust":          r["cr2_client_customer_name"]||"",
+      "Contractor Match":      r["cr2_contractor_match_type"]||"",
+      "Contractor vCust":      r["cr2_contractor_customer_name"]||"",
+      "MEP Match":             r["cr2_mep_match_type"]||"",
+      "MEP vCust":             r["cr2_mep_customer_name"]||"",
+      "Pipeline Match":        r["cr1_match_type"]||"",
+      "Pipeline Project":      r["cr1_pipeline_name"]||"",
+      "Quotation No.":         r["cr1_quotation_no"]||"",
+    };
+  });
+  var ws=XLSX.utils.json_to_sheet(data);
+  var wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,"Market Overview");
+  XLSX.writeFile(wb,"market_overview_"+new Date().toISOString().slice(0,10)+".xlsx");
 }
 
 function updateActiveTags() {

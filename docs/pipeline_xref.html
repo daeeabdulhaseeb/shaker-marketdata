@@ -6,6 +6,7 @@
 <title>Pipeline Search — Shaker Ventures Intel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 :root{
   --bg:#0d0f14;--surface:#151820;--surface2:#1c2030;--border:#252a38;
@@ -64,13 +65,13 @@ tr:hover td{background:var(--surface2)}
   <div class="nav-links"><a href="market.html" class="nav-link "><span class="nav-icon">📊</span>Market Overview</a>
 <a href="coverage.html" class="nav-link "><span class="nav-icon">🏢</span>Contractors Gap</a>
 <a href="pipeline_xref.html" class="nav-link active"><span class="nav-icon">🔍</span>Pipeline Search</a></div>
-  <div class="sidebar-footer">Updated: 05 Apr 2026, 08:56</div>
+  <div class="sidebar-footer">Updated: 06 Apr 2026, 08:47</div>
 </nav>
 <main class="main-content">
 
 <div class="page-header">
   <h1>Pipeline Search</h1>
-  <p>Quick lookup — search any Ventures project to see if it was quoted in the pipeline &mdash; 05 Apr 2026, 08:56</p>
+  <p>Quick lookup — search any Ventures project to see if it was quoted in the pipeline &mdash; 06 Apr 2026, 08:47</p>
 </div>
 
 <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:16px">
@@ -93,6 +94,7 @@ tr:hover td{background:var(--surface2)}
       <select class="filter-select" id="fStatus"><option value="">All</option><option value="Cancelled">Cancelled</option><option value="Completed">Completed</option><option value="Concept Stage">Concept Stage</option><option value="Construction">Construction</option><option value="Design">Design</option><option value="Feasibility Study">Feasibility Study</option><option value="On Hold">On Hold</option><option value="Tender for Construction">Tender for Construction</option><option value="Tender for Consultancy">Tender for Consultancy</option></select>
     </div>
     <span class="table-count" style="margin-top:18px" id="rowCount"></span>
+    <button onclick="exportPipeline()" style="margin-top:18px;background:rgba(75,232,122,.12);border:1px solid rgba(75,232,122,.3);color:var(--success);padding:5px 12px;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer">&#8595; Export all filtered</button>
   </div>
 </div>
 
@@ -138,6 +140,7 @@ function applyFilters(){
   var tb=document.getElementById("tb");
   var rc=document.getElementById("rowCount");
   if(rc)rc.textContent=rows.length.toLocaleString()+" of "+ALL_DATA.length.toLocaleString()+" projects";
+  window._PIPELINE_ROWS=rows;
   if(!rows.length){tb.innerHTML='<tr><td colspan="9" style="text-align:center;color:var(--text2);padding:32px">No matching projects</td></tr>';return;}
   tb.innerHTML=rows.slice(0,200).map(function(r){
     var hvac=parseFloat(r["Hvac_SAR"])||0;
@@ -161,6 +164,31 @@ fetch("data_pipeline_xref.json").then(function(r){return r.json();}).then(functi
   ALL_DATA=data;
   applyFilters();
 });
+function exportPipeline(){
+  var rows=window._PIPELINE_ROWS||[];
+  if(!rows.length){alert("No data to export.");return;}
+  var data=rows.map(function(r){
+    return{
+      "Ventures Project":  r["Name"]||"",
+      "Status":            r["Project Status"]||"",
+      "Region":            r["Region"]||"",
+      "Client":            r["Client"]||"",
+      "Contractor":        r["Contractor"]||"",
+      "MEP Contractor":    r["MEP Contractor"]||"",
+      "Quoted":            r["cr1_match_type"]==="strong"?"Yes":r["cr1_match_type"]==="likely"?"Likely":"No",
+      "Pipeline Project":  r["cr1_pipeline_name"]||"",
+      "Quotation No.":     r["cr1_quotation_no"]||"",
+      "SE Name":           r["cr1_se_name"]||"",
+      "Team":              r["cr1_team"]||"",
+      "Probability":       r["cr1_quote_probability"]||"",
+      "HVAC (SAR)":        parseFloat(r["Hvac_SAR"])||0,
+    };
+  });
+  var ws=XLSX.utils.json_to_sheet(data);
+  var wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,"Pipeline Search");
+  XLSX.writeFile(wb,"pipeline_search_"+new Date().toISOString().slice(0,10)+".xlsx");
+}
 </script>
 </main>
 <script>

@@ -6,6 +6,7 @@
 <title>Contractors Gap — Shaker Ventures Intel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 :root{
   --bg:#0d0f14;--surface:#151820;--surface2:#1c2030;--border:#252a38;
@@ -64,13 +65,13 @@ tr:hover td{background:var(--surface2)}
   <div class="nav-links"><a href="market.html" class="nav-link "><span class="nav-icon">📊</span>Market Overview</a>
 <a href="coverage.html" class="nav-link active"><span class="nav-icon">🏢</span>Contractors Gap</a>
 <a href="pipeline_xref.html" class="nav-link "><span class="nav-icon">🔍</span>Pipeline Search</a></div>
-  <div class="sidebar-footer">Updated: 05 Apr 2026, 08:56</div>
+  <div class="sidebar-footer">Updated: 06 Apr 2026, 08:47</div>
 </nav>
 <main class="main-content">
 
 <div class="page-header">
   <h1>Contractors Gap Analysis</h1>
-  <p>Ventures entities (clients, contractors, MEP) matched against SAP customer master &mdash; 05 Apr 2026, 08:56</p>
+  <p>Ventures entities (clients, contractors, MEP) matched against SAP customer master &mdash; 06 Apr 2026, 08:47</p>
 </div>
 
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
@@ -158,26 +159,26 @@ tr:hover td{background:var(--surface2)}
 <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin-bottom:16px">
   <div onclick="jumpToSection('known')" style="background:rgba(75,232,122,.06);border:1.5px solid rgba(75,232,122,.4);border-radius:var(--radius);padding:12px;cursor:pointer" id="card-known">
     <div style="font-size:10px;font-weight:600;color:var(--success);text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">&#10003; Known</div>
-    <div style="font-family:var(--font-head);font-size:24px;font-weight:700;color:var(--success)" id="card-known-count">942</div>
+    <div style="font-family:var(--font-head);font-size:24px;font-weight:700;color:var(--success)" id="card-known-count">1355</div>
     <div style="font-size:10px;color:var(--text2)">entities in vCust</div>
     <div style="border-top:1px solid rgba(75,232,122,.2);margin-top:8px;padding-top:6px;display:flex;justify-content:space-between;font-size:10px;color:var(--text2)">
-      <span id="card-known-proj">2152 projects</span><span id="card-known-hvac">SAR 53.9B</span>
+      <span id="card-known-proj">11643 projects</span><span id="card-known-hvac">SAR 477.4B</span>
     </div>
   </div>
   <div onclick="jumpToSection('likely')" style="background:rgba(232,148,75,.06);border:1.5px solid rgba(232,148,75,.35);border-radius:var(--radius);padding:12px;cursor:pointer" id="card-likely">
     <div style="font-size:10px;font-weight:600;color:var(--warn);text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">&#9888; Likely known</div>
-    <div style="font-family:var(--font-head);font-size:24px;font-weight:700;color:var(--warn)" id="card-likely-count">1317</div>
+    <div style="font-family:var(--font-head);font-size:24px;font-weight:700;color:var(--warn)" id="card-likely-count">1381</div>
     <div style="font-size:10px;color:var(--text2)">possible matches</div>
     <div style="border-top:1px solid rgba(232,148,75,.2);margin-top:8px;padding-top:6px;display:flex;justify-content:space-between;font-size:10px;color:var(--text2)">
-      <span id="card-likely-proj">2183 projects</span><span id="card-likely-hvac">SAR 109.9B</span>
+      <span id="card-likely-proj">3519 projects</span><span id="card-likely-hvac">SAR 107.5B</span>
     </div>
   </div>
   <div onclick="jumpToSection('unknown')" style="background:rgba(232,75,75,.06);border:1.5px solid rgba(232,75,75,.25);border-radius:var(--radius);padding:12px;cursor:pointer" id="card-unknown">
     <div style="font-size:10px;font-weight:600;color:var(--danger);text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">&#10005; Unknown</div>
-    <div style="font-family:var(--font-head);font-size:24px;font-weight:700;color:var(--danger)" id="card-unknown-count">3463</div>
+    <div style="font-family:var(--font-head);font-size:24px;font-weight:700;color:var(--danger)" id="card-unknown-count">2088</div>
     <div style="font-size:10px;color:var(--text2)">not in vCust</div>
     <div style="border-top:1px solid rgba(232,75,75,.2);margin-top:8px;padding-top:6px;display:flex;justify-content:space-between;font-size:10px;color:var(--text2)">
-      <span id="card-unknown-proj">11311 projects</span><span id="card-unknown-hvac">SAR 234.3B</span>
+      <span id="card-unknown-proj">4656 projects</span><span id="card-unknown-hvac">SAR 90.3B</span>
     </div>
   </div>
   <div onclick="jumpToSection('assigned-team')" style="background:rgba(75,123,232,.06);border:1.5px solid rgba(75,123,232,.35);border-radius:var(--radius);padding:12px;cursor:pointer" id="card-ateam">
@@ -207,6 +208,7 @@ tr:hover td{background:var(--surface2)}
       <div style="font-size:11px;color:var(--text2);margin-top:1px">Strong vCust match &mdash; confirmed existing customers</div>
     </div>
     <span style="margin-left:auto;font-size:11px;color:var(--text2)" id="count-known">— entities</span>
+    <button onclick="exportKnown()" style="background:rgba(75,232,122,.12);border:1px solid rgba(75,232,122,.3);color:var(--success);padding:3px 10px;border-radius:5px;font-size:10px;font-weight:600;cursor:pointer">&#8595; Export</button>
   </div>
   <div class="table-wrapper">
     <div style="display:flex;align-items:center;gap:6px;padding:7px 11px;border-bottom:1px solid var(--border);background:var(--surface2)">
@@ -237,6 +239,7 @@ tr:hover td{background:var(--surface2)}
       <div style="font-size:11px;color:var(--text2);margin-top:1px">Partial match &mdash; select correct vCust candidate. Confirm or deny to reclassify.</div>
     </div>
     <span style="margin-left:auto;font-size:11px;color:var(--text2)" id="count-likely">— entities</span>
+    <button onclick="exportLikely()" style="background:rgba(75,232,122,.12);border:1px solid rgba(75,232,122,.3);color:var(--success);padding:3px 10px;border-radius:5px;font-size:10px;font-weight:600;cursor:pointer">&#8595; Export</button>
   </div>
   <div class="table-wrapper">
     <div style="display:flex;align-items:center;gap:6px;padding:7px 11px;border-bottom:1px solid var(--border);background:var(--surface2)">
@@ -267,6 +270,7 @@ tr:hover td{background:var(--surface2)}
       <div style="font-size:11px;color:var(--text2);margin-top:1px">Not in vCust. Assign team &mdash; managers complete SE.</div>
     </div>
     <span style="margin-left:auto;font-size:11px;color:var(--text2)" id="count-unknown">— entities</span>
+    <button onclick="exportUnknown()" style="background:rgba(75,232,122,.12);border:1px solid rgba(75,232,122,.3);color:var(--success);padding:3px 10px;border-radius:5px;font-size:10px;font-weight:600;cursor:pointer">&#8595; Export</button>
   </div>
   <div class="table-wrapper">
     <div style="display:flex;align-items:center;gap:6px;padding:7px 11px;border-bottom:1px solid var(--border);background:var(--surface2)">
@@ -297,6 +301,7 @@ tr:hover td{background:var(--surface2)}
       <div style="font-size:11px;color:var(--text2);margin-top:1px">Team assigned. Managers: filter to your team, then assign SE here.</div>
     </div>
     <span style="margin-left:auto;font-size:11px;color:var(--text2)" id="count-assigned_team">— entities</span>
+    <button onclick="exportAssignedTeam()" style="background:rgba(75,232,122,.12);border:1px solid rgba(75,232,122,.3);color:var(--success);padding:3px 10px;border-radius:5px;font-size:10px;font-weight:600;cursor:pointer">&#8595; Export</button>
   </div>
   <div class="table-wrapper">
     <div style="display:flex;align-items:center;gap:6px;padding:7px 11px;border-bottom:1px solid var(--border);background:var(--surface2)">
@@ -327,6 +332,7 @@ tr:hover td{background:var(--surface2)}
       <div style="font-size:11px;color:var(--text2);margin-top:1px">Both team and SE assigned. Read-only.</div>
     </div>
     <span style="margin-left:auto;font-size:11px;color:var(--text2)" id="count-assigned_se">— entities</span>
+    <button onclick="exportAssignedSE()" style="background:rgba(75,232,122,.12);border:1px solid rgba(75,232,122,.3);color:var(--success);padding:3px 10px;border-radius:5px;font-size:10px;font-weight:600;cursor:pointer">&#8595; Export</button>
   </div>
   <div class="table-wrapper">
     <div style="display:flex;align-items:center;gap:6px;padding:7px 11px;border-bottom:1px solid var(--border);background:var(--surface2)">
@@ -361,7 +367,8 @@ tr:hover td{background:var(--surface2)}
         <div style="font-family:var(--font-head);font-size:15px;font-weight:700" id="dd-title"></div>
         <div style="font-size:11px;color:var(--text2);margin-top:2px" id="dd-sub"></div>
       </div>
-      <button onclick="closeDrilldown()" style="margin-left:auto;background:var(--surface2);border:1px solid var(--border);color:var(--text2);padding:4px 11px;border-radius:6px;font-size:11px;cursor:pointer;flex-shrink:0">Close &#10005;</button>
+      <button onclick="exportDrilldown()" style="background:rgba(75,232,122,.12);border:1px solid rgba(75,232,122,.3);color:var(--success);padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;flex-shrink:0">&#8595; Export</button>
+      <button onclick="closeDrilldown()" style="background:var(--surface2);border:1px solid var(--border);color:var(--text2);padding:4px 11px;border-radius:6px;font-size:11px;cursor:pointer;flex-shrink:0">Close &#10005;</button>
     </div>
     <div id="dd-contact" style="padding:9px 17px;border-bottom:1px solid var(--border);display:flex;gap:18px;flex-wrap:wrap;background:var(--surface2)"></div>
     <div style="overflow-y:auto;flex:1">
@@ -376,6 +383,8 @@ tr:hover td{background:var(--surface2)}
 <script>
 var SE_BY_TEAM = {"West": ["Abdel Rahman Hani Abdelrahman Halbounni", "ABDUL KAFI MOHAMMAD KENTAR", "Mahammed Fatoh Eahea Walle", "Masoud Ali Mohammed Eddaqa", "Mohammed Hamzah Mohammed Amuhaini", "OMAR SELIMAN SABAAWI", "Abdulrahman Rafat Khalil Abu Qarn"], "Other": ["Abdulaziz Faris Salem Basamer", "Abdullah Hussain Alnimer", "Abdullah Ibrahim Jamil Zahran", "Asher Afzal Ali Khan", "Hussein Sulaiman", "khaled ahmed mohammed issa", "Khusro Bilal Ahmed Mohammed", "MOHAMMED JOUDA MOHAMMED JOUMA", "Murad Obaid Yassin", "Qaiser Abbas Shabbir Abbas", "Suliman Majed Suliman Almalouf", "yasser nasri essam", "Zafar Iqbal Mohammed Ansari"], "Direct Sales Channel": ["Abdullah Alaaeddin Katta", "Lina Awad", "Yousef Hussein Ali Aljedi"], "East": ["Adnan Atef Azem", "Ahmed Elkorany", "Assem Faisal Abdulazeem", "Mohammad Hayel Mohammad Alkhalayleh", "Belal Sheikh Khaled", "Nour Aldeen Mohammad Salameh", "SAEED HASAN ALGHIZZAWI", "Mohamed Elhaiek"], "Manager Applied": ["Ahmad Khalid Abed Latif"], "Central Projects Team": ["Ahmed Sayed Ahmed Abouelsaad", "Faisal Dahham Alshammary", "Hamza Mohammed Marwan AlBandaqji", "Raad Abdulrahman Raad", "Yazan Abu Saa", "Zaheer Abdul Azeez", "Zia ul Rahman Mohammed", "Mahmoud Bassam Mahmoud Yamin", "Anas Mohammad Ahmad Ayyadat", "Eyad Kamel Hussien Rabah", "Rami Bukur", "Ahmed Hassanien", "Ahmed Taha"], "ACS Team": ["El Sayed Samir Mahmoud Mohamed", "Mohamed Ghali Mohammed Majed Alsheerazi", "Mohamed Mahmoud Mohamed Abdon", "Mohammed Ahmed Tawfik Ibrahim", "MOHAMMED FAHEEM RAJEH MOHAMMED", "Tawfiq Ahmed Tawfiq Mohammed", "Mohammed N M Alnaouq", "Fareed Sharaf Aldeen Ali Swalmeh", "Mohammad Ismail Jaber Alramahi", "Mohammad Ajayeb", "Mohammed Bawazir", "Mohamed Abdalla", "Mohammed Abdulrahman Soliman Ghadi"], "Support": ["Mohammad Ali Dafi Alkhamaseh"], "ESCO": ["Qusai Mohammed Taher Mustafa", "Basel Talal Mousa Dahabra", "Hazem Tarek Muhamed Yusuf"], "Application": ["Mujtaba Abduraoof", "Mohammed Abdul Azeem", "Ashraf Mahmood Khan", "Saud Mohammed AlHarbi", "Mohammed Mohydeen", "Mohammed Ameer", "Abdulaziz Alajaji 1878", "Mohammed Rahman", "Asharudheen Kunnathodi", "Ather Mohammed"], "Installation": ["Anwer Taher Tahayneh", "Muhammad Umer Butt", "Mohamad Hallak", "Khaled Almubayedh", "Najeebullah Khan", "Meshari Mohsen Aljabri", "Rana Husnain", "Jafar Ali", "Eman  Alshudukhi 2078"]};
 var ALL_SES    = ["ABDUL KAFI MOHAMMAD KENTAR", "Abdallah Khaleel", "Abdullah Alaaeddin Katta", "Abdulrahman Rafat Khalil Abu Qarn", "Adnan Atef Azem", "Ahmad Khalid Abed Latif", "Ahmed Elkorany", "Ahmed Hassanien", "Ahmed Taha", "Anas Ayyadat", "Asher Afzal Ali Khan", "Assem Faisal Abdulazeem", "Basel Talal Mousa Dahabra", "El Sayed Samir Mahmoud Mohamed", "Fareed Sharaf Aldeen Ali Swalmeh", "Hamza Mohammed Marwan AlBandaqji", "Hazem Tarek Muhamed Yusuf", "Lina Awad", "Mahammed Fatoh Eahea Walle", "Mahmoud Bassam Mahmoud Yamin", "Mohamed Abdalla", "Mohamed Abdon", "Mohamed Elhaiek", "Mohamed Gamal Nagib Farahat", "Mohamed Ghali Mohammed Majed Alsheerazi", "Mohammad Ajayeb", "Mohammad Ismail Jaber Alramahi", "Mohammed Ahmed Tawfik Ibrahim", "Mohammed Bawazir", "Mohammed Ghadi", "Mohammed Hamzah Mohammed Amuhaini", "Mohammed N M Alnaouq", "OMAR SELIMAN SABAAWI", "Raad Abdulrahman Raad", "Rami Bukur", "SAEED HASAN ALGHIZZAWI", "Yazan Abu Saa", "Yousef Hussein Ali Aljedi", "Zia ul Rahman Mohammed"];
+var CURRENT_DRILLDOWN_ENT   = null;
+var CURRENT_DRILLDOWN_PROJS = [];
 
 function saveAssignment(key, data) {
   try {
@@ -395,7 +404,7 @@ var CONFIRM_STATE = (function(){try{return JSON.parse(localStorage.getItem("cg_c
 // Merge baked-in assignments from generate.py with localStorage
 function mergeAssignments(ents) {
   return ents.map(function(e) {
-    var key = e.ventures_name.toLowerCase().trim()+"|"+e.entity_type;
+    var key = e.ventures_name.toLowerCase().trim();
     var ls  = ASSIGNMENTS[key]||{};
     return Object.assign({}, e, {
       assigned_team: ls.team || e.assigned_team || "",
@@ -419,13 +428,16 @@ function sarFmt(v) {
   return"—";
 }
 
-function etypeBadge(t) {
+function etypeBadge(types) {
   var s={
     "Client":        "background:rgba(75,123,232,.15);color:var(--accent2)",
     "Contractor":    "background:rgba(232,184,75,.15);color:var(--accent)",
     "MEP Contractor":"background:rgba(148,75,232,.15);color:#b47fe8"
   };
-  return'<span style="display:inline-block;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:600;'+(s[t]||"")+'">'+esc(t)+'</span>';
+  var arr=Array.isArray(types)?types:[types];
+  return arr.map(function(t){
+    return'<span style="display:inline-block;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:600;margin-right:2px;'+(s[t]||"")+'">'+esc(t)+'</span>';
+  }).join("");
 }
 
 function getFilters() {
@@ -463,6 +475,10 @@ function projMatches(p,f) {
 function filterEnts(data,f,extraFilter) {
   return data.filter(function(e) {
     if(f.search&&!e.ventures_name.toLowerCase().includes(f.search.toLowerCase()))return false;
+    if(f.entityType) {
+      var types=Array.isArray(e.entity_types)?e.entity_types:[e.entity_types||e.entity_type||""];
+      if(!types.includes(f.entityType))return false;
+    }
     if(f.team) {
       var et=e.assigned_team||e.team||"";
       if(et!==f.team)return false;
@@ -547,7 +563,7 @@ function onAssignTeam(sel) {
   var team=sel.value;
   e.assigned_team=team;
   e.assigned_se="";
-  var key=e.ventures_name.toLowerCase().trim()+"|"+e.entity_type;
+  var key=e.ventures_name.toLowerCase().trim();
   saveAssignment(key,{team:team,se:""});
   ASSIGNMENTS[key]={team:team,se:""};
   // Update SE dropdown in same row
@@ -567,7 +583,7 @@ function onAssignSE(sel) {
   if(!e)return;
   var se=sel.value;
   e.assigned_se=se;
-  var key=e.ventures_name.toLowerCase().trim()+"|"+e.entity_type;
+  var key=e.ventures_name.toLowerCase().trim();
   var cur=ASSIGNMENTS[key]||{};
   cur.se=se;
   saveAssignment(key,cur);
@@ -588,7 +604,7 @@ function renderSection(tbodyId,ents,tier,countId) {
   var rows=[];
   for(var i=0;i<ents.length;i++) {
     var e=ents[i];
-    var cfmKey=e.ventures_name.toLowerCase().trim()+"|"+e.entity_type;
+    var cfmKey=e.ventures_name.toLowerCase().trim();
     var cfmState=CONFIRM_STATE[cfmKey]||"";
     // For likely tier, show confirm/deny buttons or settled state
     var lastCol="";
@@ -614,7 +630,7 @@ function renderSection(tbodyId,ents,tier,countId) {
     var rowStyle=(cfmState&&tier==="likely")?"opacity:.45;cursor:default":"cursor:pointer";
     rows.push(
       '<tr style="'+rowStyle+'" data-idx="'+e._idx+'" onclick="'+(cfmState?'':'openDrilldown('+e._idx+')')+'">'
-      +'<td style="white-space:nowrap"><div style="font-weight:500">'+esc(e.ventures_name)+'</div><div style="margin-top:2px">'+etypeBadge(e.entity_type)+'</div></td>'
+      +'<td style="white-space:nowrap"><div style="font-weight:500">'+esc(e.ventures_name)+'</div><div style="margin-top:2px">'+etypeBadge(e.entity_types||e.entity_type)+'</div></td>'
       +'<td onclick="event.stopPropagation()" style="white-space:nowrap">'+buildCandCell(e,tier)+'</td>'
       +'<td onclick="event.stopPropagation()" style="white-space:nowrap">'+buildTeamCell(e,tier)+'</td>'
       +'<td onclick="event.stopPropagation()" style="white-space:nowrap">'+seDisp+'</td>'
@@ -669,16 +685,19 @@ function updateAll() {
 function openDrilldown(idx) {
   var e=ENT_INDEX[idx];
   if(!e)return;
+  CURRENT_DRILLDOWN_ENT=e;
   document.getElementById("dd-title").textContent=e.ventures_name;
-  document.getElementById("dd-sub").textContent=e.entity_type+" · "+e.proj_count+" projects · "+sarFmt(e.total_hvac);
+  var types=Array.isArray(e.entity_types)?e.entity_types:[e.entity_types||""];
+  document.getElementById("dd-sub").textContent=types.join(" · ")+" · "+e.proj_count+" projects · "+sarFmt(e.total_hvac);
   var ct=e.contact||{};
   var CONTACT_LABELS={
     "Client":       [["Client phone","client_phone"],["Client PM","client_pm"],["Client PM phone","client_pm_phone"],["Client PM email","client_pm_email"]],
     "Contractor":   [["Contr. phone","contr_phone"],["Contr. PM","contr_pm"],["Contr. PM phone","contr_pm_phone"],["Contr. PM email","contr_pm_email"]],
     "MEP Contractor":[["MEP phone","mep_phone"],["MEP PM","mep_pm"],["MEP PM phone","mep_pm_phone"],["MEP PM email","mep_pm_email"]]
   };
-  var labels=CONTACT_LABELS[e.entity_type]||[];
-  document.getElementById("dd-contact").innerHTML=labels.map(function(pair){
+  var allLabels=[];
+  types.forEach(function(t){(CONTACT_LABELS[t]||[]).forEach(function(pair){allLabels.push(pair);});});
+  document.getElementById("dd-contact").innerHTML=allLabels.map(function(pair){
     var v=ct[pair[1]]||"—";
     return'<div><div style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px">'+esc(pair[0])+'</div>'
       +'<div style="font-size:11px;color:var(--text)">'+esc(v)+'</div></div>';
@@ -686,23 +705,29 @@ function openDrilldown(idx) {
   var f=getFilters();
   var projs=e.projects.filter(function(p){return projMatches(p,f);});
   if(!projs.length)projs=e.projects;
+  CURRENT_DRILLDOWN_PROJS=projs;
   document.getElementById("dd-thead").innerHTML=
-    ['Project','Status','Region','HVAC (SAR)','Pipeline match','Quoted?'].map(function(h,i){
-      var r=(i===3);
+    ['Project','Type','Status','Region','HVAC (SAR)','Pipeline match','Quoted?'].map(function(h,i){
+      var r=(i===4);
       return'<th style="text-align:'+(r?'right':'left')+';padding:8px 13px;font-family:var(--font-head);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap">'+h+'</th>';
     }).join("");
   document.getElementById("dd-tbody").innerHTML=projs.map(function(p){
     var ct1=p.cr1_type||"none";
-    var quotedBadge;
-    if(ct1==="strong")      quotedBadge='<span style="display:inline-block;padding:1px 7px;border-radius:4px;font-size:10px;font-weight:600;background:rgba(75,232,122,.15);color:var(--success)">Yes</span>';
-    else if(ct1==="likely") quotedBadge='<span style="display:inline-block;padding:1px 7px;border-radius:4px;font-size:10px;font-weight:600;background:rgba(232,148,75,.15);color:var(--warn)">Likely</span>';
-    else                    quotedBadge='<span style="display:inline-block;padding:1px 7px;border-radius:4px;font-size:10px;font-weight:600;background:rgba(232,75,75,.15);color:var(--danger)">No</span>';
+    var quotedBadge=ct1==="strong"
+      ?'<span style="display:inline-block;padding:1px 7px;border-radius:4px;font-size:10px;font-weight:600;background:rgba(75,232,122,.15);color:var(--success)">Yes</span>'
+      :ct1==="likely"
+        ?'<span style="display:inline-block;padding:1px 7px;border-radius:4px;font-size:10px;font-weight:600;background:rgba(232,148,75,.15);color:var(--warn)">Likely</span>'
+        :'<span style="display:inline-block;padding:1px 7px;border-radius:4px;font-size:10px;font-weight:600;background:rgba(232,75,75,.15);color:var(--danger)">No</span>';
+    var typeBadge=p.is_group
+      ?'<span style="display:inline-block;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:600;background:rgba(232,148,75,.15);color:var(--warn)">Group</span>'
+      :'<span style="display:inline-block;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:600;background:rgba(75,123,232,.15);color:var(--accent2)">Sole</span>';
     return'<tr style="border-bottom:1px solid var(--border)">'
-      +'<td style="padding:8px 13px">'+esc(p.name||"—")+'</td>'
+      +'<td style="padding:8px 13px;white-space:nowrap">'+esc(p.name||"—")+'</td>'
+      +'<td style="padding:8px 13px">'+typeBadge+'</td>'
       +'<td style="padding:8px 13px"><span class="badge badge-default">'+esc(p.status||"—")+'</span></td>'
       +'<td style="padding:8px 13px;color:var(--text2)">'+esc(p.region||"—")+'</td>'
       +'<td style="padding:8px 13px;text-align:right">'+sarFmt(p.hvac)+'</td>'
-      +'<td style="padding:8px 13px;color:var(--text2);font-size:10px">'+esc(p.cr1_pip_name||"—")+'</td>'
+      +'<td style="padding:8px 13px;color:var(--text2);font-size:10px;white-space:nowrap">'+esc(p.cr1_pip_name||"—")+'</td>'
       +'<td style="padding:8px 13px">'+quotedBadge+'</td>'
       +'</tr>';
   }).join("");
@@ -713,7 +738,7 @@ function closeDrilldown(){document.getElementById("dd-overlay").style.display="n
 function confirmMatch(idx) {
   var e=ENT_INDEX[idx];
   if(!e)return;
-  var key=e.ventures_name.toLowerCase().trim()+"|"+e.entity_type;
+  var key=e.ventures_name.toLowerCase().trim();
   CONFIRM_STATE[key]="confirmed";
   try{var cs=JSON.parse(localStorage.getItem("cg_confirm")||"{}");cs[key]="confirmed";localStorage.setItem("cg_confirm",JSON.stringify(cs));}catch(ex){}
   // Move entity: add to KNOWN_DATA, remove from LIKELY_DATA
@@ -726,7 +751,7 @@ function confirmMatch(idx) {
 function denyMatch(idx) {
   var e=ENT_INDEX[idx];
   if(!e)return;
-  var key=e.ventures_name.toLowerCase().trim()+"|"+e.entity_type;
+  var key=e.ventures_name.toLowerCase().trim();
   CONFIRM_STATE[key]="denied";
   try{var cs=JSON.parse(localStorage.getItem("cg_confirm")||"{}");cs[key]="denied";localStorage.setItem("cg_confirm",JSON.stringify(cs));}catch(ex){}
   // Move entity: add to UNKNOWN_DATA, remove from LIKELY_DATA
@@ -800,22 +825,90 @@ function clearAllFilters() {
 }
 
 function setEtog(togId, tbodyId, btn, etype) {
-  // Update button styles
   var tog=document.getElementById(togId);
   if(tog)tog.querySelectorAll("button").forEach(function(b){
     b.style.background="transparent";b.style.color="var(--text2)";
   });
   btn.style.background="var(--surface)";btn.style.color="var(--text)";
-  // Filter rows in tbody by entity type
   var tb=document.getElementById(tbodyId);
   if(!tb)return;
-  var rows=tb.querySelectorAll("tr");
-  rows.forEach(function(tr){
+  tb.querySelectorAll("tr").forEach(function(tr){
     if(!etype){tr.style.display="";return;}
-    var badge=tr.querySelector("span[style*='border-radius:4px']");
-    if(badge&&badge.textContent.trim()===etype)tr.style.display="";
-    else tr.style.display="none";
+    var badges=tr.querySelectorAll("span[style*='border-radius:4px']");
+    var match=false;
+    badges.forEach(function(b){if(b.textContent.trim()===etype)match=true;});
+    tr.style.display=match?"":"none";
   });
+}
+
+function xlsxDate() {
+  return new Date().toISOString().slice(0,10);
+}
+function exportSection(data, tier, sectionName) {
+  var f=getFilters();
+  var rows=[];
+  // Apply same filter logic as filterEnts but without extraFilter
+  var filtered=data.filter(function(e){
+    if(f.search&&!e.ventures_name.toLowerCase().includes(f.search.toLowerCase()))return false;
+    if(f.entityType){var types=Array.isArray(e.entity_types)?e.entity_types:[e.entity_types||""];if(!types.includes(f.entityType))return false;}
+    if(f.team){var et=e.assigned_team||e.team||"";if(et!==f.team)return false;}
+    if(f.se){var es=e.assigned_se||e.se_name||"";if(es!==f.se)return false;}
+    if(f.region||f.industry||f.status||f.size||f.startFrom||f.startTo||f.caFrom||f.caTo||f.caeFrom||f.caeTo){
+      if(!e.projects.some(function(p){return projMatches(p,f);}))return false;
+    }
+    return true;
+  });
+  filtered.forEach(function(e){
+    rows.push({
+      "Entity in Ventures": e.ventures_name,
+      "Roles":              Array.isArray(e.entity_types)?e.entity_types.join(", "):(e.entity_types||""),
+      "Match Type":         e.match_type,
+      "Matched vCust Name": e.customer_name||"",
+      "Team / Region":      e.assigned_team||e.team||"",
+      "SE Owner":           e.assigned_se||e.se_name||"",
+      "Ventures Projects":  e.proj_count,
+      "Ventures HVAC (SAR)":e.total_hvac,
+      "Pipeline Projects":  e.pipeline_projects,
+      "Pipeline HVAC (SAR)":e.pipeline_hvac,
+    });
+  });
+  if(!rows.length){alert("No data to export.");return;}
+  var ws=XLSX.utils.json_to_sheet(rows);
+  var wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,sectionName.slice(0,31));
+  XLSX.writeFile(wb,"contractors_"+sectionName.toLowerCase().replace(/ /g,"_")+"_"+xlsxDate()+".xlsx");
+}
+function exportDrilldown() {
+  if(!CURRENT_DRILLDOWN_ENT||!CURRENT_DRILLDOWN_PROJS.length){alert("No drilldown open.");return;}
+  var rows=CURRENT_DRILLDOWN_PROJS.map(function(p){
+    return {
+      "Project":          p.name||"",
+      "Type":             p.is_group?"Group":"Sole",
+      "Status":           p.status||"",
+      "Region":           p.region||"",
+      "Industry":         p.industry||"",
+      "HVAC (SAR)":       p.hvac||0,
+      "Size":             p.size||"",
+      "Construction Start":p.constr_start||"",
+      "Pipeline Match":   p.cr1_pip_name||"",
+      "Quoted":           p.cr1_type==="strong"?"Yes":p.cr1_type==="likely"?"Likely":"No",
+    };
+  });
+  var ws=XLSX.utils.json_to_sheet(rows);
+  var wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,"Projects");
+  var safeName=(CURRENT_DRILLDOWN_ENT.ventures_name||"entity").replace(/[^a-zA-Z0-9]/g,"_").slice(0,20);
+  XLSX.writeFile(wb,"entity_projects_"+safeName+"_"+xlsxDate()+".xlsx");
+}
+
+function exportKnown()        { exportSection(KNOWN_DATA,   "strong",       "Known"); }
+function exportLikely()       { exportSection(LIKELY_DATA,  "likely",       "Likely"); }
+function exportUnknown()      { exportSection(UNKNOWN_DATA, "none",         "Unknown"); }
+function exportAssignedTeam() {
+  exportSection(UNKNOWN_DATA.filter(function(e){return !!e.assigned_team&&!e.assigned_se;}), "none", "Assigned_Team");
+}
+function exportAssignedSE() {
+  exportSection(UNKNOWN_DATA.filter(function(e){return !!e.assigned_team&&!!e.assigned_se;}), "none", "Assigned_SE");
 }
 
 function exportAssignments() {
@@ -824,7 +917,7 @@ function exportAssignments() {
   var merged={};
   UNKNOWN_DATA.forEach(function(e){
     if(e.assigned_team||e.assigned_se){
-      var k=e.ventures_name.toLowerCase().trim()+"|"+e.entity_type;
+      var k=e.ventures_name.toLowerCase().trim();
       merged[k]={team:e.assigned_team||"",se:e.assigned_se||""};
     }
   });
