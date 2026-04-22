@@ -5,994 +5,574 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Contractors Gap — Shaker Ventures Intel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-:root{
-  --bg:#0d0f14;--surface:#151820;--surface2:#1c2030;--border:#252a38;
-  --accent:#e8b84b;--accent2:#4b7be8;--danger:#e84b4b;--success:#4be87a;
-  --warn:#e8944b;--text:#e8eaf0;--text2:#8892a4;--text3:#505868;
-  --sidebar-w:220px;--radius:10px;
-  --font-head:'Syne',sans-serif;--font-body:'DM Sans',sans-serif;
-}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:14px;display:flex;min-height:100vh}
-.sidebar{width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100}
-.sidebar-logo{display:flex;align-items:center;gap:10px;padding:20px 16px;border-bottom:1px solid var(--border)}
-.logo-mark{width:34px;height:34px;background:var(--accent);color:#000;font-family:var(--font-head);font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:center;border-radius:8px;flex-shrink:0}
-.logo-text{font-family:var(--font-head);font-weight:700;font-size:13px;line-height:1.3}
-.logo-text small{font-size:10px;color:var(--text2);font-weight:400}
-.nav-links{list-style:none;padding:12px 8px;flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:2px}
-.nav-link{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:7px;color:var(--text2);text-decoration:none;font-size:13px;transition:all 0.15s}
-.nav-icon{font-size:14px}
-.nav-link:hover{background:var(--surface2);color:var(--text)}
-.nav-link.active{background:rgba(232,184,75,0.12);color:var(--accent);font-weight:500}
-.sidebar-footer{padding:14px 16px;border-top:1px solid var(--border);font-size:11px;color:var(--text3)}
-.main-content{margin-left:var(--sidebar-w);flex:1;padding:28px 32px}
-.page-header{margin-bottom:24px}
-.page-header h1{font-family:var(--font-head);font-weight:700;font-size:24px}
-.page-header p{color:var(--text2);margin-top:4px;font-size:13px}
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-bottom:24px}
-.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
-.stat-label{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
-.stat-value{font-family:var(--font-head);font-size:28px;font-weight:700}
-.stat-value.accent{color:var(--accent)}.stat-value.danger{color:var(--danger)}.stat-value.success{color:var(--success)}.stat-value.warn{color:var(--warn)}
-.table-wrapper{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
-.table-toolbar{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border);flex-wrap:wrap}
-.search-input{background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-size:13px;padding:7px 12px;border-radius:6px;outline:none;width:240px}
-.search-input:focus{border-color:var(--accent)}
-.filter-select{background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-size:12px;padding:7px 10px;border-radius:6px;outline:none;cursor:pointer}
-.table-count{margin-left:auto;font-size:11px;color:var(--text2)}
-.table-scroll{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:12px}
-th{text-align:left;padding:10px 14px;font-family:var(--font-head);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap}
-td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:middle}
+:root{
+  --bg:#f8f9fa;--surface:#ffffff;--surface2:#f1f3f5;
+  --border:#e5e7eb;--border2:#d1d5db;
+  --text:#111827;--text2:#6b7280;--text3:#9ca3af;
+  --accent:#1d4ed8;--accent-light:#eff6ff;
+  --success:#16a34a;--success-bg:#f0fdf4;
+  --warn:#d97706;--warn-bg:#fffbeb;
+  --danger:#dc2626;--danger-bg:#fef2f2;
+  --info:#2563eb;--info-bg:#eff6ff;
+  --radius:8px;--radius-lg:12px;
+  --font:'DM Sans',sans-serif;
+}
+body{font-family:var(--font);font-size:13px;color:var(--text);background:var(--bg);min-height:100vh}
+a{text-decoration:none;color:inherit}
+
+/* Top nav */
+.nav{display:flex;align-items:center;background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;position:sticky;top:0;z-index:100}
+.nav-brand{font-size:12px;font-weight:500;color:var(--text2);padding:14px 16px 14px 0;border-right:1px solid var(--border);margin-right:8px;white-space:nowrap}
+.nav-link{font-size:12px;padding:14px 14px;color:var(--text2);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;display:inline-block}
+.nav-link:hover{color:var(--text)}
+.nav-link.active{color:var(--text);font-weight:500;border-bottom:2px solid var(--accent)}
+.nav-right{margin-left:auto;font-size:11px;color:var(--text3)}
+
+/* Page */
+.page{padding:20px 24px 40px}
+.page-title{font-size:15px;font-weight:500;margin-bottom:2px}
+.page-sub{font-size:11px;color:var(--text2);margin-bottom:14px}
+
+/* KPI grid */
+.kpi-grid{display:grid;gap:10px;margin-bottom:14px}
+.g5{grid-template-columns:repeat(5,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.kpi{background:var(--surface2);border-radius:var(--radius);padding:12px 14px}
+.kpi.accent{background:var(--accent-light);border:1px solid #bfdbfe}
+.kpi-label{font-size:10px;color:var(--text2);margin-bottom:4px;text-transform:uppercase;letter-spacing:.03em}
+.kpi.accent .kpi-label{color:var(--accent)}
+.kpi-val{font-size:20px;font-weight:500}
+.kpi.accent .kpi-val{color:var(--accent)}
+.kpi-sub{font-size:10px;color:var(--text2);margin-top:2px}
+.kpi.accent .kpi-sub{color:var(--accent)}
+.kpi-pos{font-size:10px;color:var(--success);margin-top:2px}
+.kpi-neg{font-size:10px;color:var(--danger);margin-top:2px}
+
+/* Cards */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px 16px;margin-bottom:12px}
+.card-title{font-size:12px;font-weight:500;margin-bottom:2px}
+.card-sub{font-size:11px;color:var(--text2);margin-bottom:10px}
+.two-col{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:12px;margin-bottom:12px}
+.three-col{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:12px}
+
+/* Filter bar */
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px;padding:10px 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
+.filter-bar select,.filter-bar input{font-size:11px;padding:5px 8px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--surface);color:var(--text);height:30px;outline:none;font-family:inherit}
+.filter-bar input[type=text]{width:180px}
+.filter-bar input[type=date]{width:130px}
+.filter-label{font-size:10px;color:var(--text2);white-space:nowrap}
+.filter-group{display:flex;align-items:center;gap:5px}
+.filter-sep{width:1px;height:20px;background:var(--border2);margin:0 4px}
+.btn-clear{font-size:11px;padding:4px 10px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--surface);color:var(--text2);cursor:pointer;height:30px;font-family:inherit}
+.btn-export{font-size:11px;padding:4px 12px;border:1px solid var(--accent);border-radius:var(--radius);background:var(--accent-light);color:var(--accent);cursor:pointer;height:30px;font-weight:500;font-family:inherit}
+.btn-export:hover{background:var(--accent);color:#fff}
+.filter-count{font-size:11px;color:var(--text3);white-space:nowrap}
+
+/* Team pills */
+.team-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.team-pill{font-size:11px;padding:5px 12px;border-radius:20px;border:1px solid var(--border2);background:var(--surface);color:var(--text2);cursor:pointer;user-select:none;font-family:inherit}
+.team-pill:hover{border-color:var(--accent);color:var(--accent)}
+.team-pill.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* Tables */
+.tbl-wrap{border-radius:var(--radius-lg);border:1px solid var(--border);overflow:hidden;background:var(--surface)}
+.tbl-toolbar{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--border)}
+.tbl-scroll{height:420px;overflow-y:auto;overflow-x:auto}
+.tbl-scroll-sm{max-height:300px;overflow-y:auto;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:11px;background:var(--surface)}
+th{font-size:10px;font-weight:500;color:var(--text2);text-align:left;padding:7px 10px;border-bottom:1px solid var(--border);background:var(--surface2);white-space:nowrap;position:sticky;top:0;z-index:1}
+td{padding:7px 10px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:middle}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:var(--surface2)}
-.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
-.badge-strong{background:rgba(75,232,122,.15);color:var(--success)}
-.badge-likely{background:rgba(232,148,75,.15);color:var(--warn)}
-.badge-none{background:rgba(232,75,75,.15);color:var(--danger)}
-.badge-default{background:var(--surface2);color:var(--text2)}
+tr.clickable{cursor:pointer}
+.r{text-align:right;font-variant-numeric:tabular-nums}
+.c{text-align:center}
+.dim{color:var(--text3)}
+.pos{color:var(--success)}
+.neg{color:var(--danger)}
+.warn{color:var(--warn)}
+.truncate{max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Badges */
+.badge{display:inline-block;font-size:10px;font-weight:500;padding:2px 7px;border-radius:20px;white-space:nowrap}
+.b-strong{background:#dcfce7;color:#14532d}
+.b-likely{background:#fef3c7;color:#92400e}
+.b-none{background:#f3f4f6;color:#6b7280}
+.b-unknown{background:#fee2e2;color:#991b1b}
+.b-status{background:#eff6ff;color:#1e3a8a}
+.b-client{background:#dbeafe;color:#1e3a8a}
+.b-contractor{background:#fef3c7;color:#92400e}
+.b-mep{background:#ede9fe;color:#5b21b6}
+
+/* Coverage bar */
+.cov-bar-wrap{height:6px;background:var(--border);border-radius:20px;overflow:hidden;margin-top:4px}
+.cov-bar{height:100%;border-radius:20px;background:var(--accent)}
+
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:300;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border-radius:var(--radius-lg);width:min(900px,100%);max-height:90vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.modal-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:10px}
+.modal-head h3{font-size:14px;font-weight:500;margin-bottom:2px}
+.modal-head p{font-size:11px;color:var(--text2)}
+.modal-close{margin-left:auto;background:var(--surface2);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:var(--radius);font-size:11px;cursor:pointer;height:26px;font-family:inherit}
+.modal-body{padding:14px 18px;overflow-y:auto;flex:1}
+
+/* Chart */
+.chart-container{position:relative;height:200px}
 </style>
 </head>
 <body>
-<nav class="sidebar">
-  <div class="sidebar-logo">
-    <span class="logo-mark">S</span>
-    <span class="logo-text">Shaker<br><small>Ventures Intel</small></span>
-  </div>
-  <div class="nav-links"><a href="market.html" class="nav-link "><span class="nav-icon">📊</span>Market Overview</a>
-<a href="coverage.html" class="nav-link active"><span class="nav-icon">🏢</span>Contractors Gap</a>
-<a href="pipeline_xref.html" class="nav-link "><span class="nav-icon">🔍</span>Pipeline Search</a></div>
-  <div class="sidebar-footer">Updated: 06 Apr 2026, 08:47</div>
+
+<nav class="nav">
+  <span class="nav-brand">Shaker Ventures Intel</span>
+  <a href="market.html" class="nav-link ">Market Overview</a>
+<a href="coverage.html" class="nav-link active">Contractors Gap</a>
+<a href="pipeline_xref.html" class="nav-link ">Pipeline Search</a>
+  <span class="nav-right">Updated 22 Apr 2026, 10:10</span>
 </nav>
-<main class="main-content">
 
-<div class="page-header">
-  <h1>Contractors Gap Analysis</h1>
-  <p>Ventures entities (clients, contractors, MEP) matched against SAP customer master &mdash; 06 Apr 2026, 08:47</p>
-</div>
+<div class="page">
 
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
-  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px;display:flex;align-items:center;gap:12px">
-    <div style="width:36px;height:36px;border-radius:50%;background:rgba(75,123,232,.15);color:var(--accent2);font-family:var(--font-head);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0">T</div>
-    <div>
-      <div style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px">Viewing team</div>
-      <div style="font-size:14px;font-weight:600;color:var(--text)" id="ctx-team">All teams</div>
-      <div style="font-size:10px;color:var(--text3);margin-top:1px" id="ctx-team-sub">Select a team filter above to focus</div>
-    </div>
+<div class="page-title">Contractors Gap Analysis</div>
+<div class="page-sub">Ventures entities matched against SAP customer master — one vCust customer locks to one ventures entity globally</div>
+
+<!-- KPI ROW -->
+<div class="kpi-grid g4">
+  <div class="kpi">
+    <div class="kpi-label">Total entities</div>
+    <div class="kpi-val">4,824</div>
+    <div class="kpi-sub">SAR 675.2B HVAC value</div>
   </div>
-  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px;display:flex;align-items:center;gap:12px">
-    <div style="width:36px;height:36px;border-radius:50%;background:rgba(148,75,232,.15);color:#b47fe8;font-family:var(--font-head);font-weight:700;font-size:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0">SE</div>
-    <div>
-      <div style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px">Viewing sales employee</div>
-      <div style="font-size:14px;font-weight:600;color:var(--text)" id="ctx-se">All SEs</div>
-      <div style="font-size:10px;color:var(--text3);margin-top:1px" id="ctx-se-sub">Select an SE filter above to focus</div>
-    </div>
+  <div class="kpi">
+    <div class="kpi-label">Known customers</div>
+    <div class="kpi-val" style="color:var(--success)">1,129</div>
+    <div class="kpi-sub">SAR 365.4B — in vCust</div>
   </div>
-</div>
-
-<div id="activeTags" style="display:flex;gap:6px;flex-wrap:wrap;min-height:22px;margin-bottom:8px;align-items:center">
-  <span style="font-size:11px;color:var(--text3)" id="noFiltersMsg">No active filters</span>
-</div>
-
-<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:11px 13px;margin-bottom:14px">
-  <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:flex-end">
-    <div style="display:flex;flex-direction:column;gap:3px">
-      <span style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.04em">Search</span>
-      <input class="search-input" id="search" placeholder="Entity name..." style="width:155px">
-    </div>
-    <div style="display:flex;flex-direction:column;gap:3px">
-      <span style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.04em">Region</span>
-      <select class="filter-select" id="fRegion"><option value="">All</option><option value="Central">Central</option><option value="East">East</option><option value="West">West</option><option value="Unknown">Unknown</option></select>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:3px">
-      <span style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.04em">Industry</span>
-      <select class="filter-select" id="fIndustry"><option value="">All</option><option value="Buildings">Buildings</option><option value="Industrial">Industrial</option><option value="Infrastructure">Infrastructure</option><option value="Oil & Gas">Oil & Gas</option><option value="Power & Water">Power & Water</option></select>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:3px">
-      <span style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.04em">Status</span>
-      <select class="filter-select" id="fStatus"><option value="">All</option><option value="Cancelled">Cancelled</option><option value="Completed">Completed</option><option value="Concept Stage">Concept Stage</option><option value="Construction">Construction</option><option value="Design">Design</option><option value="Feasibility Study">Feasibility Study</option><option value="On Hold">On Hold</option><option value="Tender for Construction">Tender for Construction</option><option value="Tender for Consultancy">Tender for Consultancy</option></select>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:3px">
-      <span style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.04em">Size</span>
-      <select class="filter-select" id="fSize"><option value="">All sizes</option><option value="U (Ultra 100M+)">U (Ultra 100M+)</option><option value="G (Giga 20-100M)">G (Giga 20-100M)</option><option value="MG (Mega)">MG (Mega)</option><option value="L (Large)">L (Large)</option><option value="M (Medium)">M (Medium)</option><option value="S (Small)">S (Small)</option><option value="Unknown">Unknown</option></select>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:3px">
-      <span style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.04em">Team / region</span>
-      <select class="filter-select" id="fTeam" onchange="onGlobalTeamChange()"><option value="">All teams</option><option value="ACS Team">ACS Team</option><option value="Central Projects Team">Central Projects Team</option><option value="Direct Sales Channel">Direct Sales Channel</option><option value="ESCO">ESCO</option><option value="East">East</option><option value="Manager Applied">Manager Applied</option><option value="Other">Other</option><option value="West">West</option></select>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:3px">
-      <span style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.04em">Sales employee</span>
-      <select class="filter-select" id="fSE"><option value="">All SEs</option><option value="ABDUL KAFI MOHAMMAD KENTAR">ABDUL KAFI MOHAMMAD KENTAR</option><option value="Abdallah Khaleel">Abdallah Khaleel</option><option value="Abdullah Alaaeddin Katta">Abdullah Alaaeddin Katta</option><option value="Abdulrahman Rafat Khalil Abu Qarn">Abdulrahman Rafat Khalil Abu Qarn</option><option value="Adnan Atef Azem">Adnan Atef Azem</option><option value="Ahmad Khalid Abed Latif">Ahmad Khalid Abed Latif</option><option value="Ahmed Elkorany">Ahmed Elkorany</option><option value="Ahmed Hassanien">Ahmed Hassanien</option><option value="Ahmed Taha">Ahmed Taha</option><option value="Anas Ayyadat">Anas Ayyadat</option><option value="Asher Afzal Ali Khan">Asher Afzal Ali Khan</option><option value="Assem Faisal Abdulazeem">Assem Faisal Abdulazeem</option><option value="Basel Talal Mousa Dahabra">Basel Talal Mousa Dahabra</option><option value="El Sayed Samir Mahmoud Mohamed">El Sayed Samir Mahmoud Mohamed</option><option value="Fareed Sharaf Aldeen Ali Swalmeh">Fareed Sharaf Aldeen Ali Swalmeh</option><option value="Hamza Mohammed Marwan AlBandaqji">Hamza Mohammed Marwan AlBandaqji</option><option value="Hazem Tarek Muhamed Yusuf">Hazem Tarek Muhamed Yusuf</option><option value="Lina Awad">Lina Awad</option><option value="Mahammed Fatoh Eahea Walle">Mahammed Fatoh Eahea Walle</option><option value="Mahmoud Bassam Mahmoud Yamin">Mahmoud Bassam Mahmoud Yamin</option><option value="Mohamed Abdalla">Mohamed Abdalla</option><option value="Mohamed Abdon">Mohamed Abdon</option><option value="Mohamed Elhaiek">Mohamed Elhaiek</option><option value="Mohamed Gamal Nagib Farahat">Mohamed Gamal Nagib Farahat</option><option value="Mohamed Ghali Mohammed Majed Alsheerazi">Mohamed Ghali Mohammed Majed Alsheerazi</option><option value="Mohammad Ajayeb">Mohammad Ajayeb</option><option value="Mohammad Ismail Jaber Alramahi">Mohammad Ismail Jaber Alramahi</option><option value="Mohammed Ahmed Tawfik Ibrahim">Mohammed Ahmed Tawfik Ibrahim</option><option value="Mohammed Bawazir">Mohammed Bawazir</option><option value="Mohammed Ghadi">Mohammed Ghadi</option><option value="Mohammed Hamzah Mohammed Amuhaini">Mohammed Hamzah Mohammed Amuhaini</option><option value="Mohammed N M Alnaouq">Mohammed N M Alnaouq</option><option value="OMAR SELIMAN SABAAWI">OMAR SELIMAN SABAAWI</option><option value="Raad Abdulrahman Raad">Raad Abdulrahman Raad</option><option value="Rami Bukur">Rami Bukur</option><option value="SAEED HASAN ALGHIZZAWI">SAEED HASAN ALGHIZZAWI</option><option value="Yazan Abu Saa">Yazan Abu Saa</option><option value="Yousef Hussein Ali Aljedi">Yousef Hussein Ali Aljedi</option><option value="Zia ul Rahman Mohammed">Zia ul Rahman Mohammed</option></select>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:3px">
-      <span style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.04em">Constr. start</span>
-      <div style="display:flex;gap:3px;align-items:center">
-        <input class="filter-select" id="fStartFrom" type="date" style="width:118px">
-        <span style="color:var(--text3);font-size:11px">to</span>
-        <input class="filter-select" id="fStartTo" type="date" style="width:118px">
-      </div>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:3px">
-      <span style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.04em">Contr. appointed</span>
-      <div style="display:flex;gap:3px;align-items:center">
-        <input class="filter-select" id="fCAFrom" type="date" style="width:118px">
-        <span style="color:var(--text3);font-size:11px">to</span>
-        <input class="filter-select" id="fCATo" type="date" style="width:118px">
-      </div>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:3px">
-      <span style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.04em">Expected award</span>
-      <div style="display:flex;gap:3px;align-items:center">
-        <input class="filter-select" id="fCAEFrom" type="date" style="width:118px">
-        <span style="color:var(--text3);font-size:11px">to</span>
-        <input class="filter-select" id="fCAETo" type="date" style="width:118px">
-      </div>
-    </div>
-    <button onclick="clearAllFilters()" style="background:transparent;border:1px solid var(--border);color:var(--text2);padding:4px 9px;border-radius:6px;font-size:11px;cursor:pointer;margin-top:13px">Clear</button>
-    <button onclick="exportAssignments()" style="background:rgba(75,123,232,.15);border:1px solid rgba(75,123,232,.3);color:var(--accent2);padding:4px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;margin-top:13px">Export assignments</button>
+  <div class="kpi">
+    <div class="kpi-label">Likely known</div>
+    <div class="kpi-val" style="color:var(--warn)">546</div>
+    <div class="kpi-sub">SAR 109.7B — review needed</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Unknown</div>
+    <div class="kpi-val" style="color:var(--danger)">3,149</div>
+    <div class="kpi-sub">SAR 200.1B — new opportunities</div>
   </div>
 </div>
 
-<div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin-bottom:16px">
-  <div onclick="jumpToSection('known')" style="background:rgba(75,232,122,.06);border:1.5px solid rgba(75,232,122,.4);border-radius:var(--radius);padding:12px;cursor:pointer" id="card-known">
-    <div style="font-size:10px;font-weight:600;color:var(--success);text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">&#10003; Known</div>
-    <div style="font-family:var(--font-head);font-size:24px;font-weight:700;color:var(--success)" id="card-known-count">1355</div>
-    <div style="font-size:10px;color:var(--text2)">entities in vCust</div>
-    <div style="border-top:1px solid rgba(75,232,122,.2);margin-top:8px;padding-top:6px;display:flex;justify-content:space-between;font-size:10px;color:var(--text2)">
-      <span id="card-known-proj">11643 projects</span><span id="card-known-hvac">SAR 477.4B</span>
-    </div>
-  </div>
-  <div onclick="jumpToSection('likely')" style="background:rgba(232,148,75,.06);border:1.5px solid rgba(232,148,75,.35);border-radius:var(--radius);padding:12px;cursor:pointer" id="card-likely">
-    <div style="font-size:10px;font-weight:600;color:var(--warn);text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">&#9888; Likely known</div>
-    <div style="font-family:var(--font-head);font-size:24px;font-weight:700;color:var(--warn)" id="card-likely-count">1381</div>
-    <div style="font-size:10px;color:var(--text2)">possible matches</div>
-    <div style="border-top:1px solid rgba(232,148,75,.2);margin-top:8px;padding-top:6px;display:flex;justify-content:space-between;font-size:10px;color:var(--text2)">
-      <span id="card-likely-proj">3519 projects</span><span id="card-likely-hvac">SAR 107.5B</span>
-    </div>
-  </div>
-  <div onclick="jumpToSection('unknown')" style="background:rgba(232,75,75,.06);border:1.5px solid rgba(232,75,75,.25);border-radius:var(--radius);padding:12px;cursor:pointer" id="card-unknown">
-    <div style="font-size:10px;font-weight:600;color:var(--danger);text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">&#10005; Unknown</div>
-    <div style="font-family:var(--font-head);font-size:24px;font-weight:700;color:var(--danger)" id="card-unknown-count">2088</div>
-    <div style="font-size:10px;color:var(--text2)">not in vCust</div>
-    <div style="border-top:1px solid rgba(232,75,75,.2);margin-top:8px;padding-top:6px;display:flex;justify-content:space-between;font-size:10px;color:var(--text2)">
-      <span id="card-unknown-proj">4656 projects</span><span id="card-unknown-hvac">SAR 90.3B</span>
-    </div>
-  </div>
-  <div onclick="jumpToSection('assigned-team')" style="background:rgba(75,123,232,.06);border:1.5px solid rgba(75,123,232,.35);border-radius:var(--radius);padding:12px;cursor:pointer" id="card-ateam">
-    <div style="font-size:10px;font-weight:600;color:var(--accent2);text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">&#9654; Assigned — team</div>
-    <div style="font-family:var(--font-head);font-size:24px;font-weight:700;color:var(--accent2)" id="card-ateam-count">0</div>
-    <div style="font-size:10px;color:var(--text2)">team set, no SE</div>
-    <div style="border-top:1px solid rgba(75,123,232,.2);margin-top:8px;padding-top:6px;display:flex;justify-content:space-between;font-size:10px;color:var(--text2)">
-      <span id="card-ateam-proj">0 projects</span><span id="card-ateam-hvac">—</span>
-    </div>
-  </div>
-  <div onclick="jumpToSection('assigned-se')" style="background:rgba(148,75,232,.06);border:1.5px solid rgba(148,75,232,.3);border-radius:var(--radius);padding:12px;cursor:pointer" id="card-ase">
-    <div style="font-size:10px;font-weight:600;color:#b47fe8;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">&#10004; Fully assigned</div>
-    <div style="font-family:var(--font-head);font-size:24px;font-weight:700;color:#b47fe8" id="card-ase-count">0</div>
-    <div style="font-size:10px;color:var(--text2)">team + SE set</div>
-    <div style="border-top:1px solid rgba(148,75,232,.2);margin-top:8px;padding-top:6px;display:flex;justify-content:space-between;font-size:10px;color:var(--text2)">
-      <span id="card-ase-proj">0 projects</span><span id="card-ase-hvac">—</span>
-    </div>
+<!-- TEAM HEATMAP -->
+<div class="card">
+  <div class="card-title">Team coverage</div>
+  <div class="card-sub">Projects quoted vs ventures projects per team — click team to filter sections below</div>
+  <div class="tbl-scroll-sm">
+    <table id="team-tbl">
+      <thead>
+        <tr>
+          <th>Team</th>
+          <th class="r">Accounts</th>
+          <th class="r">Ventures projects</th>
+          <th class="r">Ventures HVAC</th>
+          <th class="r">Quoted projects</th>
+          <th class="r">Quoted HVAC</th>
+          <th class="r">Coverage</th>
+        </tr>
+      </thead>
+      <tbody id="team-tb"></tbody>
+    </table>
   </div>
 </div>
 
-
-<div id="section-known" style="margin-bottom:22px">
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-    <div style="width:4px;height:18px;background:var(--success);border-radius:0;flex-shrink:0"></div>
-    <div>
-      <div style="font-family:var(--font-head);font-size:14px;font-weight:700">Known customers</div>
-      <div style="font-size:11px;color:var(--text2);margin-top:1px">Strong vCust match &mdash; confirmed existing customers</div>
-    </div>
-    <span style="margin-left:auto;font-size:11px;color:var(--text2)" id="count-known">— entities</span>
-    <button onclick="exportKnown()" style="background:rgba(75,232,122,.12);border:1px solid rgba(75,232,122,.3);color:var(--success);padding:3px 10px;border-radius:5px;font-size:10px;font-weight:600;cursor:pointer">&#8595; Export</button>
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <input type="text" id="search" placeholder="Search entity name...">
+  <div class="filter-sep"></div>
+  <div class="filter-group">
+    <span class="filter-label">Entity type</span>
+    <select id="fType">
+      <option value="">All</option>
+      <option value="Client">Clients</option>
+      <option value="Contractor">Contractors</option>
+      <option value="MEP Contractor">MEP contractors</option>
+    </select>
   </div>
-  <div class="table-wrapper">
-    <div style="display:flex;align-items:center;gap:6px;padding:7px 11px;border-bottom:1px solid var(--border);background:var(--surface2)">
-      <div style="display:flex;gap:2px;background:var(--bg);padding:2px;border-radius:6px" id="etog-known">
-        <button onclick="setEtog('etog-known','tb-known',this,'')" style="padding:3px 9px;border-radius:5px;border:none;font-size:10px;font-weight:600;cursor:pointer;background:var(--surface);color:var(--text)">All</button>
-        <button onclick="setEtog('etog-known','tb-known',this,'Client')" style="padding:3px 9px;border-radius:5px;border:none;font-size:10px;font-weight:600;cursor:pointer;background:transparent;color:var(--text2)">Clients</button>
-        <button onclick="setEtog('etog-known','tb-known',this,'Contractor')" style="padding:3px 9px;border-radius:5px;border:none;font-size:10px;font-weight:600;cursor:pointer;background:transparent;color:var(--text2)">Contractors</button>
-        <button onclick="setEtog('etog-known','tb-known',this,'MEP Contractor')" style="padding:3px 9px;border-radius:5px;border:none;font-size:10px;font-weight:600;cursor:pointer;background:transparent;color:var(--text2)">MEP contractors</button>
-      </div>
+  <div class="filter-group">
+    <span class="filter-label">Team</span>
+    <select id="fTeam">
+      <option value="">All teams</option>
+      <option value="ACS Team">ACS Team</option><option value="Central Projects Team">Central Projects Team</option><option value="Direct Sales Channel">Direct Sales Channel</option><option value="ESCO">ESCO</option><option value="East">East</option><option value="Manager Applied">Manager Applied</option><option value="Other">Other</option><option value="Unassigned">Unassigned</option><option value="West">West</option>
+    </select>
+  </div>
+  <span class="filter-count" id="entCount" style="margin-left:auto"></span>
+  <button class="btn-clear" onclick="clearFilters()">Clear</button>
+</div>
+
+<!-- SECTIONS -->
+<div class="card" style="padding:0;overflow:hidden">
+  <div style="padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;background:var(--success-bg)">
+    <div style="width:4px;height:18px;background:var(--success);border-radius:2px"></div>
+    <div style="flex:1">
+      <div style="font-size:12px;font-weight:500">Known customers</div>
+      <div style="font-size:10px;color:var(--text2)">Strong vCust match — confirmed existing customers</div>
     </div>
-    <div style="font-size:10px;color:var(--text3);padding:5px 12px;border-bottom:1px solid var(--border)">&#8599; Click any row for projects + contact info</div>
-    <div style="max-height:320px;overflow-y:auto;overflow-x:auto">
-      <table style="width:100%;border-collapse:collapse;font-size:11px;table-layout:auto">
-        <thead>
-          <tr><th style="text-align:left;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Entity in ventures</th><th style="text-align:left;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Matched vCust name</th><th style="text-align:left;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Team / region</th><th style="text-align:left;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">SE owner</th><th style="text-align:right;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Ventures projects</th><th style="text-align:right;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Ventures HVAC</th><th style="text-align:right;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Pipeline projects</th><th style="text-align:right;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Pipeline HVAC</th></tr>
-        </thead>
-        <tbody id="tb-known"></tbody>
-      </table>
-    </div>
+    <span style="font-size:11px;color:var(--text2)" id="count-known">1129 entities</span>
+    <button class="btn-export" onclick="exportSection('known')">↓ Export</button>
+  </div>
+  <div class="tbl-scroll-sm">
+    <table>
+      <thead>
+        <tr>
+          <th>Entity</th><th>Roles</th><th>Matched vCust</th><th>Team</th><th>SE</th>
+          <th class="r">Projects</th><th class="r">HVAC</th><th class="r">Quoted</th><th class="r">Coverage</th>
+        </tr>
+      </thead>
+      <tbody id="tb-known"></tbody>
+    </table>
   </div>
 </div>
 
-<div id="section-likely" style="margin-bottom:22px">
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-    <div style="width:4px;height:18px;background:var(--warn);border-radius:0;flex-shrink:0"></div>
-    <div>
-      <div style="font-family:var(--font-head);font-size:14px;font-weight:700">Likely known &mdash; please review</div>
-      <div style="font-size:11px;color:var(--text2);margin-top:1px">Partial match &mdash; select correct vCust candidate. Confirm or deny to reclassify.</div>
+<div class="card" style="padding:0;overflow:hidden">
+  <div style="padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;background:var(--warn-bg)">
+    <div style="width:4px;height:18px;background:var(--warn);border-radius:2px"></div>
+    <div style="flex:1">
+      <div style="font-size:12px;font-weight:500">Likely known — please review</div>
+      <div style="font-size:10px;color:var(--text2)">Partial match — click row to see vCust candidate</div>
     </div>
-    <span style="margin-left:auto;font-size:11px;color:var(--text2)" id="count-likely">— entities</span>
-    <button onclick="exportLikely()" style="background:rgba(75,232,122,.12);border:1px solid rgba(75,232,122,.3);color:var(--success);padding:3px 10px;border-radius:5px;font-size:10px;font-weight:600;cursor:pointer">&#8595; Export</button>
+    <span style="font-size:11px;color:var(--text2)" id="count-likely">546 entities</span>
+    <button class="btn-export" onclick="exportSection('likely')">↓ Export</button>
   </div>
-  <div class="table-wrapper">
-    <div style="display:flex;align-items:center;gap:6px;padding:7px 11px;border-bottom:1px solid var(--border);background:var(--surface2)">
-      <div style="display:flex;gap:2px;background:var(--bg);padding:2px;border-radius:6px" id="etog-likely">
-        <button onclick="setEtog('etog-likely','tb-likely',this,'')" style="padding:3px 9px;border-radius:5px;border:none;font-size:10px;font-weight:600;cursor:pointer;background:var(--surface);color:var(--text)">All</button>
-        <button onclick="setEtog('etog-likely','tb-likely',this,'Client')" style="padding:3px 9px;border-radius:5px;border:none;font-size:10px;font-weight:600;cursor:pointer;background:transparent;color:var(--text2)">Clients</button>
-        <button onclick="setEtog('etog-likely','tb-likely',this,'Contractor')" style="padding:3px 9px;border-radius:5px;border:none;font-size:10px;font-weight:600;cursor:pointer;background:transparent;color:var(--text2)">Contractors</button>
-        <button onclick="setEtog('etog-likely','tb-likely',this,'MEP Contractor')" style="padding:3px 9px;border-radius:5px;border:none;font-size:10px;font-weight:600;cursor:pointer;background:transparent;color:var(--text2)">MEP contractors</button>
-      </div>
-    </div>
-    <div style="font-size:10px;color:var(--text3);padding:5px 12px;border-bottom:1px solid var(--border)">&#8599; Click any row for projects + contact. Use dropdown to select vCust candidate.</div>
-    <div style="max-height:320px;overflow-y:auto;overflow-x:auto">
-      <table style="width:100%;border-collapse:collapse;font-size:11px;table-layout:auto">
-        <thead>
-          <tr><th style="text-align:left;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Entity in ventures</th><th style="text-align:left;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Possible vCust match(es)</th><th style="text-align:left;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Team / region</th><th style="text-align:left;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">SE owner</th><th style="text-align:right;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Ventures projects</th><th style="text-align:right;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Ventures HVAC</th><th style="text-align:left;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Confirm match</th></tr>
-        </thead>
-        <tbody id="tb-likely"></tbody>
-      </table>
-    </div>
+  <div class="tbl-scroll-sm">
+    <table>
+      <thead>
+        <tr>
+          <th>Entity</th><th>Roles</th><th>Likely vCust match</th><th>Team</th><th>SE</th>
+          <th class="r">Projects</th><th class="r">HVAC</th>
+        </tr>
+      </thead>
+      <tbody id="tb-likely"></tbody>
+    </table>
   </div>
 </div>
 
-<div id="section-unknown" style="margin-bottom:22px">
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-    <div style="width:4px;height:18px;background:var(--danger);border-radius:0;flex-shrink:0"></div>
-    <div>
-      <div style="font-family:var(--font-head);font-size:14px;font-weight:700">Unknown &mdash; new opportunities</div>
-      <div style="font-size:11px;color:var(--text2);margin-top:1px">Not in vCust. Assign team &mdash; managers complete SE.</div>
+<div class="card" style="padding:0;overflow:hidden">
+  <div style="padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;background:var(--danger-bg)">
+    <div style="width:4px;height:18px;background:var(--danger);border-radius:2px"></div>
+    <div style="flex:1">
+      <div style="font-size:12px;font-weight:500">Unknown — new opportunities</div>
+      <div style="font-size:10px;color:var(--text2)">Not in vCust — potential new accounts to develop</div>
     </div>
-    <span style="margin-left:auto;font-size:11px;color:var(--text2)" id="count-unknown">— entities</span>
-    <button onclick="exportUnknown()" style="background:rgba(75,232,122,.12);border:1px solid rgba(75,232,122,.3);color:var(--success);padding:3px 10px;border-radius:5px;font-size:10px;font-weight:600;cursor:pointer">&#8595; Export</button>
+    <span style="font-size:11px;color:var(--text2)" id="count-unknown">3149 entities</span>
+    <button class="btn-export" onclick="exportSection('unknown')">↓ Export</button>
   </div>
-  <div class="table-wrapper">
-    <div style="display:flex;align-items:center;gap:6px;padding:7px 11px;border-bottom:1px solid var(--border);background:var(--surface2)">
-      <div style="display:flex;gap:2px;background:var(--bg);padding:2px;border-radius:6px" id="etog-unknown">
-        <button onclick="setEtog('etog-unknown','tb-unknown',this,'')" style="padding:3px 9px;border-radius:5px;border:none;font-size:10px;font-weight:600;cursor:pointer;background:var(--surface);color:var(--text)">All</button>
-        <button onclick="setEtog('etog-unknown','tb-unknown',this,'Client')" style="padding:3px 9px;border-radius:5px;border:none;font-size:10px;font-weight:600;cursor:pointer;background:transparent;color:var(--text2)">Clients</button>
-        <button onclick="setEtog('etog-unknown','tb-unknown',this,'Contractor')" style="padding:3px 9px;border-radius:5px;border:none;font-size:10px;font-weight:600;cursor:pointer;background:transparent;color:var(--text2)">Contractors</button>
-        <button onclick="setEtog('etog-unknown','tb-unknown',this,'MEP Contractor')" style="padding:3px 9px;border-radius:5px;border:none;font-size:10px;font-weight:600;cursor:pointer;background:transparent;color:var(--text2)">MEP contractors</button>
-      </div>
-    </div>
-    <div style="font-size:10px;color:var(--text3);padding:5px 12px;border-bottom:1px solid var(--border)">&#8599; Click any row for projects + contact info</div>
-    <div style="max-height:320px;overflow-y:auto;overflow-x:auto">
-      <table style="width:100%;border-collapse:collapse;font-size:11px;table-layout:auto">
-        <thead>
-          <tr><th style="text-align:left;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Entity in ventures</th><th style="text-align:left;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">vCust name</th><th style="text-align:left;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Assign team / region</th><th style="text-align:left;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Assign SE owner</th><th style="text-align:right;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Ventures projects</th><th style="text-align:right;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Ventures HVAC</th><th style="text-align:right;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Pipeline</th><th style="text-align:right;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Pipeline HVAC</th></tr>
-        </thead>
-        <tbody id="tb-unknown"></tbody>
-      </table>
-    </div>
+  <div class="tbl-scroll-sm">
+    <table>
+      <thead>
+        <tr>
+          <th>Entity</th><th>Roles</th>
+          <th class="r">Projects</th><th class="r">HVAC</th><th class="r">Pipeline hits</th>
+        </tr>
+      </thead>
+      <tbody id="tb-unknown"></tbody>
+    </table>
   </div>
 </div>
 
-<div id="section-assigned-team" style="margin-bottom:22px">
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-    <div style="width:4px;height:18px;background:var(--accent2);border-radius:0;flex-shrink:0"></div>
-    <div>
-      <div style="font-family:var(--font-head);font-size:14px;font-weight:700">Assigned to team &mdash; SE pending</div>
-      <div style="font-size:11px;color:var(--text2);margin-top:1px">Team assigned. Managers: filter to your team, then assign SE here.</div>
-    </div>
-    <span style="margin-left:auto;font-size:11px;color:var(--text2)" id="count-assigned_team">— entities</span>
-    <button onclick="exportAssignedTeam()" style="background:rgba(75,232,122,.12);border:1px solid rgba(75,232,122,.3);color:var(--success);padding:3px 10px;border-radius:5px;font-size:10px;font-weight:600;cursor:pointer">&#8595; Export</button>
-  </div>
-  <div class="table-wrapper">
-    <div style="display:flex;align-items:center;gap:6px;padding:7px 11px;border-bottom:1px solid var(--border);background:var(--surface2)">
-      <div style="display:flex;gap:2px;background:var(--bg);padding:2px;border-radius:6px" id="etog-assigned-team">
-        <button onclick="setEtog('etog-assigned-team','tb-assigned-team',this,'')" style="padding:3px 9px;border-radius:5px;border:none;font-size:10px;font-weight:600;cursor:pointer;background:var(--surface);color:var(--text)">All</button>
-        <button onclick="setEtog('etog-assigned-team','tb-assigned-team',this,'Client')" style="padding:3px 9px;border-radius:5px;border:none;font-size:10px;font-weight:600;cursor:pointer;background:transparent;color:var(--text2)">Clients</button>
-        <button onclick="setEtog('etog-assigned-team','tb-assigned-team',this,'Contractor')" style="padding:3px 9px;border-radius:5px;border:none;font-size:10px;font-weight:600;cursor:pointer;background:transparent;color:var(--text2)">Contractors</button>
-        <button onclick="setEtog('etog-assigned-team','tb-assigned-team',this,'MEP Contractor')" style="padding:3px 9px;border-radius:5px;border:none;font-size:10px;font-weight:600;cursor:pointer;background:transparent;color:var(--text2)">MEP contractors</button>
-      </div>
-    </div>
-    <div style="font-size:10px;color:var(--text3);padding:5px 12px;border-bottom:1px solid var(--border)">&#8599; Click any row for projects + contact info</div>
-    <div style="max-height:320px;overflow-y:auto;overflow-x:auto">
-      <table style="width:100%;border-collapse:collapse;font-size:11px;table-layout:auto">
-        <thead>
-          <tr><th style="text-align:left;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Entity in ventures</th><th style="text-align:left;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">vCust name</th><th style="text-align:left;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Team / region</th><th style="text-align:left;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Assign SE owner</th><th style="text-align:right;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Ventures projects</th><th style="text-align:right;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Ventures HVAC</th><th style="text-align:right;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Pipeline</th><th style="text-align:right;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Pipeline HVAC</th></tr>
-        </thead>
-        <tbody id="tb-assigned-team"></tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
-<div id="section-assigned-se" style="margin-bottom:22px">
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-    <div style="width:4px;height:18px;background:#b47fe8;border-radius:0;flex-shrink:0"></div>
-    <div>
-      <div style="font-family:var(--font-head);font-size:14px;font-weight:700">Fully assigned</div>
-      <div style="font-size:11px;color:var(--text2);margin-top:1px">Both team and SE assigned. Read-only.</div>
-    </div>
-    <span style="margin-left:auto;font-size:11px;color:var(--text2)" id="count-assigned_se">— entities</span>
-    <button onclick="exportAssignedSE()" style="background:rgba(75,232,122,.12);border:1px solid rgba(75,232,122,.3);color:var(--success);padding:3px 10px;border-radius:5px;font-size:10px;font-weight:600;cursor:pointer">&#8595; Export</button>
-  </div>
-  <div class="table-wrapper">
-    <div style="display:flex;align-items:center;gap:6px;padding:7px 11px;border-bottom:1px solid var(--border);background:var(--surface2)">
-      <div style="display:flex;gap:2px;background:var(--bg);padding:2px;border-radius:6px" id="etog-assigned-se">
-        <button onclick="setEtog('etog-assigned-se','tb-assigned-se',this,'')" style="padding:3px 9px;border-radius:5px;border:none;font-size:10px;font-weight:600;cursor:pointer;background:var(--surface);color:var(--text)">All</button>
-        <button onclick="setEtog('etog-assigned-se','tb-assigned-se',this,'Client')" style="padding:3px 9px;border-radius:5px;border:none;font-size:10px;font-weight:600;cursor:pointer;background:transparent;color:var(--text2)">Clients</button>
-        <button onclick="setEtog('etog-assigned-se','tb-assigned-se',this,'Contractor')" style="padding:3px 9px;border-radius:5px;border:none;font-size:10px;font-weight:600;cursor:pointer;background:transparent;color:var(--text2)">Contractors</button>
-        <button onclick="setEtog('etog-assigned-se','tb-assigned-se',this,'MEP Contractor')" style="padding:3px 9px;border-radius:5px;border:none;font-size:10px;font-weight:600;cursor:pointer;background:transparent;color:var(--text2)">MEP contractors</button>
-      </div>
-    </div>
-    <div style="font-size:10px;color:var(--text3);padding:5px 12px;border-bottom:1px solid var(--border)">&#8599; Click any row for projects + contact info</div>
-    <div style="max-height:320px;overflow-y:auto;overflow-x:auto">
-      <table style="width:100%;border-collapse:collapse;font-size:11px;table-layout:auto">
-        <thead>
-          <tr><th style="text-align:left;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Entity in ventures</th><th style="text-align:left;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">vCust name</th><th style="text-align:left;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Team / region</th><th style="text-align:left;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">SE owner</th><th style="text-align:right;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Ventures projects</th><th style="text-align:right;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Ventures HVAC</th><th style="text-align:right;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Pipeline</th><th style="text-align:right;padding:8px 11px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;background:var(--surface)">Pipeline HVAC</th></tr>
-        </thead>
-        <tbody id="tb-assigned-se"></tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
-<div style="position:sticky;bottom:20px;display:flex;justify-content:flex-end;margin-top:12px;pointer-events:none">
-  <button onclick="clearAllFilters()" style="pointer-events:all;background:var(--danger);color:#fff;border:none;padding:8px 20px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.3)">&#10005; Clear all filters</button>
-</div>
-
-<!-- Drilldown modal -->
-<div id="dd-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:300;align-items:center;justify-content:center" onclick="if(event.target===this)closeDrilldown()">
-  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);width:min(760px,95vw);max-height:80vh;display:flex;flex-direction:column;overflow:hidden">
-    <div style="padding:13px 17px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:10px">
+<!-- DRILLDOWN MODAL -->
+<div class="modal-overlay" id="dd-overlay" onclick="if(event.target===this)closeDD()">
+  <div class="modal">
+    <div class="modal-head">
       <div>
-        <div style="font-family:var(--font-head);font-size:15px;font-weight:700" id="dd-title"></div>
-        <div style="font-size:11px;color:var(--text2);margin-top:2px" id="dd-sub"></div>
+        <h3 id="dd-title"></h3>
+        <p id="dd-sub"></p>
       </div>
-      <button onclick="exportDrilldown()" style="background:rgba(75,232,122,.12);border:1px solid rgba(75,232,122,.3);color:var(--success);padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;flex-shrink:0">&#8595; Export</button>
-      <button onclick="closeDrilldown()" style="background:var(--surface2);border:1px solid var(--border);color:var(--text2);padding:4px 11px;border-radius:6px;font-size:11px;cursor:pointer;flex-shrink:0">Close &#10005;</button>
+      <button class="btn-export" onclick="exportDrilldown()">↓ Export projects</button>
+      <button class="modal-close" onclick="closeDD()">Close</button>
     </div>
-    <div id="dd-contact" style="padding:9px 17px;border-bottom:1px solid var(--border);display:flex;gap:18px;flex-wrap:wrap;background:var(--surface2)"></div>
-    <div style="overflow-y:auto;flex:1">
-      <table style="width:100%;border-collapse:collapse;font-size:12px">
-        <thead style="position:sticky;top:0;background:var(--surface)"><tr id="dd-thead"></tr></thead>
-        <tbody id="dd-tbody"></tbody>
-      </table>
-    </div>
+    <div class="modal-body" id="dd-body"></div>
   </div>
 </div>
 
 <script>
-var SE_BY_TEAM = {"West": ["Abdel Rahman Hani Abdelrahman Halbounni", "ABDUL KAFI MOHAMMAD KENTAR", "Mahammed Fatoh Eahea Walle", "Masoud Ali Mohammed Eddaqa", "Mohammed Hamzah Mohammed Amuhaini", "OMAR SELIMAN SABAAWI", "Abdulrahman Rafat Khalil Abu Qarn"], "Other": ["Abdulaziz Faris Salem Basamer", "Abdullah Hussain Alnimer", "Abdullah Ibrahim Jamil Zahran", "Asher Afzal Ali Khan", "Hussein Sulaiman", "khaled ahmed mohammed issa", "Khusro Bilal Ahmed Mohammed", "MOHAMMED JOUDA MOHAMMED JOUMA", "Murad Obaid Yassin", "Qaiser Abbas Shabbir Abbas", "Suliman Majed Suliman Almalouf", "yasser nasri essam", "Zafar Iqbal Mohammed Ansari"], "Direct Sales Channel": ["Abdullah Alaaeddin Katta", "Lina Awad", "Yousef Hussein Ali Aljedi"], "East": ["Adnan Atef Azem", "Ahmed Elkorany", "Assem Faisal Abdulazeem", "Mohammad Hayel Mohammad Alkhalayleh", "Belal Sheikh Khaled", "Nour Aldeen Mohammad Salameh", "SAEED HASAN ALGHIZZAWI", "Mohamed Elhaiek"], "Manager Applied": ["Ahmad Khalid Abed Latif"], "Central Projects Team": ["Ahmed Sayed Ahmed Abouelsaad", "Faisal Dahham Alshammary", "Hamza Mohammed Marwan AlBandaqji", "Raad Abdulrahman Raad", "Yazan Abu Saa", "Zaheer Abdul Azeez", "Zia ul Rahman Mohammed", "Mahmoud Bassam Mahmoud Yamin", "Anas Mohammad Ahmad Ayyadat", "Eyad Kamel Hussien Rabah", "Rami Bukur", "Ahmed Hassanien", "Ahmed Taha"], "ACS Team": ["El Sayed Samir Mahmoud Mohamed", "Mohamed Ghali Mohammed Majed Alsheerazi", "Mohamed Mahmoud Mohamed Abdon", "Mohammed Ahmed Tawfik Ibrahim", "MOHAMMED FAHEEM RAJEH MOHAMMED", "Tawfiq Ahmed Tawfiq Mohammed", "Mohammed N M Alnaouq", "Fareed Sharaf Aldeen Ali Swalmeh", "Mohammad Ismail Jaber Alramahi", "Mohammad Ajayeb", "Mohammed Bawazir", "Mohamed Abdalla", "Mohammed Abdulrahman Soliman Ghadi"], "Support": ["Mohammad Ali Dafi Alkhamaseh"], "ESCO": ["Qusai Mohammed Taher Mustafa", "Basel Talal Mousa Dahabra", "Hazem Tarek Muhamed Yusuf"], "Application": ["Mujtaba Abduraoof", "Mohammed Abdul Azeem", "Ashraf Mahmood Khan", "Saud Mohammed AlHarbi", "Mohammed Mohydeen", "Mohammed Ameer", "Abdulaziz Alajaji 1878", "Mohammed Rahman", "Asharudheen Kunnathodi", "Ather Mohammed"], "Installation": ["Anwer Taher Tahayneh", "Muhammad Umer Butt", "Mohamad Hallak", "Khaled Almubayedh", "Najeebullah Khan", "Meshari Mohsen Aljabri", "Rana Husnain", "Jafar Ali", "Eman  Alshudukhi 2078"]};
-var ALL_SES    = ["ABDUL KAFI MOHAMMAD KENTAR", "Abdallah Khaleel", "Abdullah Alaaeddin Katta", "Abdulrahman Rafat Khalil Abu Qarn", "Adnan Atef Azem", "Ahmad Khalid Abed Latif", "Ahmed Elkorany", "Ahmed Hassanien", "Ahmed Taha", "Anas Ayyadat", "Asher Afzal Ali Khan", "Assem Faisal Abdulazeem", "Basel Talal Mousa Dahabra", "El Sayed Samir Mahmoud Mohamed", "Fareed Sharaf Aldeen Ali Swalmeh", "Hamza Mohammed Marwan AlBandaqji", "Hazem Tarek Muhamed Yusuf", "Lina Awad", "Mahammed Fatoh Eahea Walle", "Mahmoud Bassam Mahmoud Yamin", "Mohamed Abdalla", "Mohamed Abdon", "Mohamed Elhaiek", "Mohamed Gamal Nagib Farahat", "Mohamed Ghali Mohammed Majed Alsheerazi", "Mohammad Ajayeb", "Mohammad Ismail Jaber Alramahi", "Mohammed Ahmed Tawfik Ibrahim", "Mohammed Bawazir", "Mohammed Ghadi", "Mohammed Hamzah Mohammed Amuhaini", "Mohammed N M Alnaouq", "OMAR SELIMAN SABAAWI", "Raad Abdulrahman Raad", "Rami Bukur", "SAEED HASAN ALGHIZZAWI", "Yazan Abu Saa", "Yousef Hussein Ali Aljedi", "Zia ul Rahman Mohammed"];
-var CURRENT_DRILLDOWN_ENT   = null;
-var CURRENT_DRILLDOWN_PROJS = [];
+var KNOWN_DATA = [], LIKELY_DATA = [], UNKNOWN_DATA = [], TEAM_DATA = [];
+var CURRENT_DD_ENT = null, CURRENT_DD_PROJS = [];
 
-function saveAssignment(key, data) {
-  try {
-    var all = JSON.parse(localStorage.getItem("cg_assignments")||"{}");
-    all[key] = data;
-    localStorage.setItem("cg_assignments", JSON.stringify(all));
-  } catch(e) {}
-}
-function loadAssignments() {
-  try { return JSON.parse(localStorage.getItem("cg_assignments")||"{}"); }
-  catch(e) { return {}; }
+function sarfmtJS(v) {
+  if (!v || isNaN(v)) return "—";
+  if (v >= 1e9) return "SAR " + (v/1e9).toFixed(1) + "B";
+  if (v >= 1e6) return "SAR " + (v/1e6).toFixed(1) + "M";
+  if (v > 0)    return "SAR " + (v/1e3).toFixed(0) + "K";
+  return "—";
 }
 
-var ASSIGNMENTS = loadAssignments();
-var CONFIRM_STATE = (function(){try{return JSON.parse(localStorage.getItem("cg_confirm")||"{}")}catch(e){return {}}}());
-
-// Merge baked-in assignments from generate.py with localStorage
-function mergeAssignments(ents) {
-  return ents.map(function(e) {
-    var key = e.ventures_name.toLowerCase().trim();
-    var ls  = ASSIGNMENTS[key]||{};
-    return Object.assign({}, e, {
-      assigned_team: ls.team || e.assigned_team || "",
-      assigned_se:   ls.se   || e.assigned_se   || "",
-    });
-  });
+function roleBadges(types) {
+  var arr = Array.isArray(types) ? types : [types];
+  var m = {"Client":"b-client","Contractor":"b-contractor","MEP Contractor":"b-mep"};
+  return arr.map(function(t) { return '<span class="badge ' + (m[t]||"b-none") + '">' + esc(t) + '</span>'; }).join(' ');
 }
 
-var KNOWN_DATA   = [];
-var LIKELY_DATA  = [];
-var UNKNOWN_DATA = [];
-
-// Entity index for lag-free drilldown (avoids inline JSON.stringify on rows)
-var ENT_INDEX = {};
-
-function sarFmt(v) {
-  if(!v||isNaN(v))return"—";
-  if(v>=1e9)return"SAR "+(v/1e9).toFixed(1)+"B";
-  if(v>=1e6)return"SAR "+(v/1e6).toFixed(1)+"M";
-  if(v>0)return"SAR "+(v/1e3).toFixed(0)+"K";
-  return"—";
+function renderTeamTable() {
+  var tb = document.getElementById("team-tb");
+  if (!TEAM_DATA.length) { tb.innerHTML = ""; return; }
+  tb.innerHTML = TEAM_DATA.map(function(t) {
+    var covColor = t.coverage_pct >= 40 ? "pos" : t.coverage_pct >= 20 ? "warn" : "neg";
+    return '<tr class="clickable" onclick="filterByTeam(&quot;' + esc(t.team).replace(/"/g,'&quot;') + '&quot;)">'
+      + '<td style="font-weight:500">' + esc(t.team) + '</td>'
+      + '<td class="r">' + numFmt(t.accounts) + '</td>'
+      + '<td class="r">' + numFmt(t.ventures_projects) + '</td>'
+      + '<td class="r">' + sarfmtJS(t.ventures_hvac) + '</td>'
+      + '<td class="r">' + numFmt(t.quoted_projects) + '</td>'
+      + '<td class="r">' + sarfmtJS(t.quoted_hvac) + '</td>'
+      + '<td class="r ' + covColor + '" style="font-weight:500">' + pctFmt(t.coverage_pct) + '</td>'
+      + '</tr>';
+  }).join('');
 }
 
-function etypeBadge(types) {
-  var s={
-    "Client":        "background:rgba(75,123,232,.15);color:var(--accent2)",
-    "Contractor":    "background:rgba(232,184,75,.15);color:var(--accent)",
-    "MEP Contractor":"background:rgba(148,75,232,.15);color:#b47fe8"
-  };
-  var arr=Array.isArray(types)?types:[types];
-  return arr.map(function(t){
-    return'<span style="display:inline-block;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:600;margin-right:2px;'+(s[t]||"")+'">'+esc(t)+'</span>';
-  }).join("");
+function filterByTeam(team) {
+  document.getElementById("fTeam").value = team;
+  applyFilters();
+  document.querySelector(".card").scrollIntoView({behavior:"smooth"});
 }
 
 function getFilters() {
   return {
-    search:    (document.getElementById("search")||{}).value||"",
-    region:    (document.getElementById("fRegion")||{}).value||"",
-    industry:  (document.getElementById("fIndustry")||{}).value||"",
-    status:    (document.getElementById("fStatus")||{}).value||"",
-    size:      (document.getElementById("fSize")||{}).value||"",
-    team:      (document.getElementById("fTeam")||{}).value||"",
-    se:        (document.getElementById("fSE")||{}).value||"",
-    startFrom: (document.getElementById("fStartFrom")||{}).value||"",
-    startTo:   (document.getElementById("fStartTo")||{}).value||"",
-    caFrom:    (document.getElementById("fCAFrom")||{}).value||"",
-    caTo:      (document.getElementById("fCATo")||{}).value||"",
-    caeFrom:   (document.getElementById("fCAEFrom")||{}).value||"",
-    caeTo:     (document.getElementById("fCAETo")||{}).value||""
+    search: (document.getElementById("search").value || "").toLowerCase(),
+    type:   document.getElementById("fType").value || "",
+    team:   document.getElementById("fTeam").value || "",
   };
 }
 
-function projMatches(p,f) {
-  if(f.region   &&p.region   !==f.region)  return false;
-  if(f.industry &&p.industry !==f.industry)return false;
-  if(f.status   &&p.status   !==f.status)  return false;
-  if(f.size     &&p.size     !==f.size)    return false;
-  if(f.startFrom&&!(p.constr_start&&p.constr_start>=f.startFrom))return false;
-  if(f.startTo  &&!(p.constr_start&&p.constr_start<=f.startTo))  return false;
-  if(f.caFrom   &&!(p.ca&&p.ca>=f.caFrom))return false;
-  if(f.caTo     &&!(p.ca&&p.ca<=f.caTo))  return false;
-  if(f.caeFrom  &&!(p.cae&&p.cae>=f.caeFrom))return false;
-  if(f.caeTo    &&!(p.cae&&p.cae<=f.caeTo))  return false;
-  return true;
-}
-
-function filterEnts(data,f,extraFilter) {
+function filterEnts(data, f) {
   return data.filter(function(e) {
-    if(f.search&&!e.ventures_name.toLowerCase().includes(f.search.toLowerCase()))return false;
-    if(f.entityType) {
-      var types=Array.isArray(e.entity_types)?e.entity_types:[e.entity_types||e.entity_type||""];
-      if(!types.includes(f.entityType))return false;
+    if (f.search && !e.ventures_name.toLowerCase().includes(f.search)) return false;
+    if (f.type) {
+      var types = Array.isArray(e.entity_types) ? e.entity_types : [];
+      if (!types.includes(f.type)) return false;
     }
-    if(f.team) {
-      var et=e.assigned_team||e.team||"";
-      if(et!==f.team)return false;
-    }
-    if(f.se) {
-      var es=e.assigned_se||e.se_name||"";
-      if(es!==f.se)return false;
-    }
-    if(f.region||f.industry||f.status||f.size||f.startFrom||f.startTo||f.caFrom||f.caTo||f.caeFrom||f.caeTo) {
-      if(!e.projects.some(function(p){return projMatches(p,f);}))return false;
-    }
-    if(extraFilter&&!extraFilter(e))return false;
-    return true;
-  });
-}
-
-function buildCandCell(e,tier) {
-  if(tier==="strong") {
-    return'<span style="display:inline-block;padding:1px 7px;border-radius:4px;font-size:10px;font-weight:600;background:rgba(75,232,122,.15);color:var(--success)">'+esc(e.customer_name||"—")+'</span>';
-  }
-  if(tier==="likely") {
-    var cands=e.candidates||[];
-    if(cands.length<=1)return esc(e.customer_name||"—");
-    var uid="cand_"+e._idx;
-    var opts=cands.map(function(c,i){return'<option value="'+i+'">'+esc(c.customer_name||"?")+'</option>';}).join("");
-    return'<select id="'+uid+'" onchange="syncCand(this,'+e._idx+')" onclick="event.stopPropagation()" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);font-size:11px;padding:3px 6px;border-radius:5px;max-width:180px">'+opts+'</select>';
-  }
-  return'<span style="color:var(--text3)">—</span>';
-}
-
-function syncCand(sel,idx) {
-  var e=ENT_INDEX[idx];
-  if(!e)return;
-  var c=(e.candidates||[])[parseInt(sel.value)];
-  if(!c)return;
-  var tr=sel.closest("tr");
-  var te=tr.querySelector(".cand-team");
-  var se=tr.querySelector(".cand-se");
-  if(te)te.textContent=c.team||"—";
-  if(se)se.textContent=c.se_name||"—";
-}
-
-function buildTeamCell(e,tier) {
-  if(tier==="unknown") {
-    var sel='<select class="filter-select cand-team" data-idx="'+e._idx+'" onchange="onAssignTeam(this)" onclick="event.stopPropagation()" style="font-size:11px;padding:3px 6px"><option value="">— assign team —</option>';
-    Object.keys(SE_BY_TEAM).forEach(function(t){sel+='<option'+(e.assigned_team===t?' selected':'')+'>'+esc(t)+'</option>';});
-    sel+='</select>';
-    return sel;
-  }
-  if(tier==="assigned-team") {
-    return'<span style="font-size:11px;font-weight:500;color:var(--accent2)">'+esc(e.assigned_team||e.team||"—")+'</span>';
-  }
-  if(tier==="likely") {
-    var t=(e.candidates&&e.candidates.length)?e.candidates[0].team:e.team;
-    return'<span class="cand-team">'+esc(t||"—")+'</span>';
-  }
-  return esc(e.team||"—");
-}
-
-function buildSECell(e,tier) {
-  if(tier==="unknown"||tier==="assigned-team") {
-    var at=e.assigned_team||"";
-    var ses=at?SE_BY_TEAM[at]||[]:[];
-    var dis=ses.length===0&&!at;
-    var sel='<select class="filter-select cand-se" data-idx="'+e._idx+'" onchange="onAssignSE(this)" onclick="event.stopPropagation()" style="font-size:11px;padding:3px 6px"'+(dis?' disabled':'')+'>';
-    sel+=(dis||!at)?'<option value="">— select team first —</option>':'<option value="">— assign SE —</option>';
-    ses.forEach(function(s){sel+='<option'+(e.assigned_se===s?' selected':'')+'>'+esc(s)+'</option>';});
-    sel+='</select>';
-    return sel;
-  }
-  if(tier==="likely") {
-    var s=(e.candidates&&e.candidates.length)?e.candidates[0].se_name:e.se_name;
-    return'<span class="cand-se">'+esc(s||"—")+'</span>';
-  }
-  return esc(e.se_name||"—");
-}
-
-function onAssignTeam(sel) {
-  var idx=parseInt(sel.getAttribute("data-idx"));
-  var e=ENT_INDEX[idx];
-  if(!e)return;
-  var team=sel.value;
-  e.assigned_team=team;
-  e.assigned_se="";
-  var key=e.ventures_name.toLowerCase().trim();
-  saveAssignment(key,{team:team,se:""});
-  ASSIGNMENTS[key]={team:team,se:""};
-  // Update SE dropdown in same row
-  var tr=sel.closest("tr");
-  var seCell=tr.querySelector(".cand-se");
-  if(seCell) {
-    var ses=team?SE_BY_TEAM[team]||[]:[];
-    seCell.disabled=!team||ses.length===0;
-    seCell.innerHTML=(team&&ses.length)?'<option value="">— assign SE —</option>'+ses.map(function(s){return'<option>'+esc(s)+'</option>';}  ).join(''):'<option value="">— select team first —</option>';
-  }
-  updateAll();
-}
-
-function onAssignSE(sel) {
-  var idx=parseInt(sel.getAttribute("data-idx"));
-  var e=ENT_INDEX[idx];
-  if(!e)return;
-  var se=sel.value;
-  e.assigned_se=se;
-  var key=e.ventures_name.toLowerCase().trim();
-  var cur=ASSIGNMENTS[key]||{};
-  cur.se=se;
-  saveAssignment(key,cur);
-  ASSIGNMENTS[key]=cur;
-  updateAll();
-}
-
-function renderSection(tbodyId,ents,tier,countId) {
-  var tb=document.getElementById(tbodyId);
-  var ct=document.getElementById(countId);
-  if(!tb)return;
-  if(ct)ct.textContent=ents.length.toLocaleString()+" entities";
-  if(!ents.length) {
-    tb.innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--text2);padding:28px">No entities matching current filters</td></tr>';
-    return;
-  }
-  var DASH='<td style="text-align:right;color:var(--text3)">—</td>';
-  var rows=[];
-  for(var i=0;i<ents.length;i++) {
-    var e=ents[i];
-    var cfmKey=e.ventures_name.toLowerCase().trim();
-    var cfmState=CONFIRM_STATE[cfmKey]||"";
-    // For likely tier, show confirm/deny buttons or settled state
-    var lastCol="";
-    if(tier==="likely") {
-      if(cfmState==="confirmed") {
-        lastCol='<td style="color:var(--success);font-size:10px;font-weight:600">&#10003; Confirmed &mdash; in Known</td>';
-      } else if(cfmState==="denied") {
-        lastCol='<td style="color:var(--danger);font-size:10px;font-weight:600">&#10005; Denied &mdash; in Unknown</td>';
-      } else {
-        lastCol='<td onclick="event.stopPropagation()" style="white-space:nowrap">'
-          +'<button onclick="confirmMatch('+e._idx+')" style="padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;cursor:pointer;border:1px solid rgba(75,232,122,.4);background:rgba(75,232,122,.1);color:var(--success);margin-right:4px">&#10003; Confirm</button>'
-          +'<button onclick="denyMatch('+e._idx+')" style="padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;cursor:pointer;border:1px solid rgba(232,75,75,.4);background:rgba(232,75,75,.1);color:var(--danger)">&#10005; Not a match</button>'
-          +'</td>';
-      }
-    } else {
-      var pipProj=(tier==="strong")? '<td style="text-align:right;white-space:nowrap">'+e.pipeline_projects+'</td>' : DASH;
-      var pipHvac=(tier==="strong")? '<td style="text-align:right;white-space:nowrap">'+sarFmt(e.pipeline_hvac)+'</td>' : DASH;
-      lastCol=pipProj+pipHvac;
-    }
-    var seDisp=(tier==="assigned-se")
-      ? esc(e.assigned_se||"—")+'<span style="display:inline-block;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:600;background:rgba(75,232,122,.15);color:var(--success);margin-left:5px">saved</span>'
-      : buildSECell(e,tier);
-    var rowStyle=(cfmState&&tier==="likely")?"opacity:.45;cursor:default":"cursor:pointer";
-    rows.push(
-      '<tr style="'+rowStyle+'" data-idx="'+e._idx+'" onclick="'+(cfmState?'':'openDrilldown('+e._idx+')')+'">'
-      +'<td style="white-space:nowrap"><div style="font-weight:500">'+esc(e.ventures_name)+'</div><div style="margin-top:2px">'+etypeBadge(e.entity_types||e.entity_type)+'</div></td>'
-      +'<td onclick="event.stopPropagation()" style="white-space:nowrap">'+buildCandCell(e,tier)+'</td>'
-      +'<td onclick="event.stopPropagation()" style="white-space:nowrap">'+buildTeamCell(e,tier)+'</td>'
-      +'<td onclick="event.stopPropagation()" style="white-space:nowrap">'+seDisp+'</td>'
-      +'<td style="text-align:right;font-weight:500;white-space:nowrap">'+e.proj_count+'</td>'
-      +'<td style="text-align:right;white-space:nowrap">'+sarFmt(e.total_hvac)+'</td>'
-      +lastCol
-      +'</tr>'
-    );
-  }
-  tb.innerHTML=rows.join("");
-}
-
-function updateCardCounts(kn,li,un,at,as_) {
-  var psum=function(a){return a.reduce(function(s,e){return s+e.proj_count;},0);};
-  var hsum=function(a){return a.reduce(function(s,e){return s+e.total_hvac;},0);};
-  document.getElementById("card-known-count").textContent=kn.length.toLocaleString();
-  document.getElementById("card-likely-count").textContent=li.length.toLocaleString();
-  document.getElementById("card-unknown-count").textContent=un.length.toLocaleString();
-  document.getElementById("card-ateam-count").textContent=at.length.toLocaleString();
-  document.getElementById("card-ase-count").textContent=as_.length.toLocaleString();
-  document.getElementById("card-known-proj").textContent=psum(kn).toLocaleString()+" projects";
-  document.getElementById("card-likely-proj").textContent=psum(li).toLocaleString()+" projects";
-  document.getElementById("card-unknown-proj").textContent=psum(un).toLocaleString()+" projects";
-  document.getElementById("card-ateam-proj").textContent=psum(at).toLocaleString()+" projects";
-  document.getElementById("card-ase-proj").textContent=psum(as_).toLocaleString()+" projects";
-  document.getElementById("card-known-hvac").textContent=sarFmt(hsum(kn));
-  document.getElementById("card-likely-hvac").textContent=sarFmt(hsum(li));
-  document.getElementById("card-unknown-hvac").textContent=sarFmt(hsum(un));
-  document.getElementById("card-ateam-hvac").textContent=sarFmt(hsum(at));
-  document.getElementById("card-ase-hvac").textContent=sarFmt(hsum(as_));
-}
-
-function updateAll() {
-  var f=getFilters();
-  var kn=filterEnts(KNOWN_DATA,f);
-  var li=filterEnts(LIKELY_DATA,f);
-  // Unknown: no team AND no SE
-  var un=filterEnts(UNKNOWN_DATA,f,function(e){return !e.assigned_team&&!e.assigned_se;});
-  // Assigned-team: has team but no SE
-  var at=filterEnts(UNKNOWN_DATA,f,function(e){return !!e.assigned_team&&!e.assigned_se;});
-  // Fully assigned: has both
-  var as_=filterEnts(UNKNOWN_DATA,f,function(e){return !!e.assigned_team&&!!e.assigned_se;});
-  renderSection("tb-known",   kn, "strong",        "count-known");
-  renderSection("tb-likely",  li, "likely",         "count-likely");
-  renderSection("tb-unknown", un, "unknown",        "count-unknown");
-  renderSection("tb-assigned-team", at, "assigned-team", "count-assigned_team");
-  renderSection("tb-assigned-se",  as_,"assigned-se",    "count-assigned_se");
-  updateCardCounts(kn,li,un,at,as_);
-  updateTags(f);
-}
-
-function openDrilldown(idx) {
-  var e=ENT_INDEX[idx];
-  if(!e)return;
-  CURRENT_DRILLDOWN_ENT=e;
-  document.getElementById("dd-title").textContent=e.ventures_name;
-  var types=Array.isArray(e.entity_types)?e.entity_types:[e.entity_types||""];
-  document.getElementById("dd-sub").textContent=types.join(" · ")+" · "+e.proj_count+" projects · "+sarFmt(e.total_hvac);
-  var ct=e.contact||{};
-  var CONTACT_LABELS={
-    "Client":       [["Client phone","client_phone"],["Client PM","client_pm"],["Client PM phone","client_pm_phone"],["Client PM email","client_pm_email"]],
-    "Contractor":   [["Contr. phone","contr_phone"],["Contr. PM","contr_pm"],["Contr. PM phone","contr_pm_phone"],["Contr. PM email","contr_pm_email"]],
-    "MEP Contractor":[["MEP phone","mep_phone"],["MEP PM","mep_pm"],["MEP PM phone","mep_pm_phone"],["MEP PM email","mep_pm_email"]]
-  };
-  var allLabels=[];
-  types.forEach(function(t){(CONTACT_LABELS[t]||[]).forEach(function(pair){allLabels.push(pair);});});
-  document.getElementById("dd-contact").innerHTML=allLabels.map(function(pair){
-    var v=ct[pair[1]]||"—";
-    return'<div><div style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px">'+esc(pair[0])+'</div>'
-      +'<div style="font-size:11px;color:var(--text)">'+esc(v)+'</div></div>';
-  }).join("");
-  var f=getFilters();
-  var projs=e.projects.filter(function(p){return projMatches(p,f);});
-  if(!projs.length)projs=e.projects;
-  CURRENT_DRILLDOWN_PROJS=projs;
-  document.getElementById("dd-thead").innerHTML=
-    ['Project','Type','Status','Region','HVAC (SAR)','Pipeline match','Quoted?'].map(function(h,i){
-      var r=(i===4);
-      return'<th style="text-align:'+(r?'right':'left')+';padding:8px 13px;font-family:var(--font-head);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap">'+h+'</th>';
-    }).join("");
-  document.getElementById("dd-tbody").innerHTML=projs.map(function(p){
-    var ct1=p.cr1_type||"none";
-    var quotedBadge=ct1==="strong"
-      ?'<span style="display:inline-block;padding:1px 7px;border-radius:4px;font-size:10px;font-weight:600;background:rgba(75,232,122,.15);color:var(--success)">Yes</span>'
-      :ct1==="likely"
-        ?'<span style="display:inline-block;padding:1px 7px;border-radius:4px;font-size:10px;font-weight:600;background:rgba(232,148,75,.15);color:var(--warn)">Likely</span>'
-        :'<span style="display:inline-block;padding:1px 7px;border-radius:4px;font-size:10px;font-weight:600;background:rgba(232,75,75,.15);color:var(--danger)">No</span>';
-    var typeBadge=p.is_group
-      ?'<span style="display:inline-block;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:600;background:rgba(232,148,75,.15);color:var(--warn)">Group</span>'
-      :'<span style="display:inline-block;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:600;background:rgba(75,123,232,.15);color:var(--accent2)">Sole</span>';
-    return'<tr style="border-bottom:1px solid var(--border)">'
-      +'<td style="padding:8px 13px;white-space:nowrap">'+esc(p.name||"—")+'</td>'
-      +'<td style="padding:8px 13px">'+typeBadge+'</td>'
-      +'<td style="padding:8px 13px"><span class="badge badge-default">'+esc(p.status||"—")+'</span></td>'
-      +'<td style="padding:8px 13px;color:var(--text2)">'+esc(p.region||"—")+'</td>'
-      +'<td style="padding:8px 13px;text-align:right">'+sarFmt(p.hvac)+'</td>'
-      +'<td style="padding:8px 13px;color:var(--text2);font-size:10px;white-space:nowrap">'+esc(p.cr1_pip_name||"—")+'</td>'
-      +'<td style="padding:8px 13px">'+quotedBadge+'</td>'
-      +'</tr>';
-  }).join("");
-  document.getElementById("dd-overlay").style.display="flex";
-}
-function closeDrilldown(){document.getElementById("dd-overlay").style.display="none";}
-
-function confirmMatch(idx) {
-  var e=ENT_INDEX[idx];
-  if(!e)return;
-  var key=e.ventures_name.toLowerCase().trim();
-  CONFIRM_STATE[key]="confirmed";
-  try{var cs=JSON.parse(localStorage.getItem("cg_confirm")||"{}");cs[key]="confirmed";localStorage.setItem("cg_confirm",JSON.stringify(cs));}catch(ex){}
-  // Move entity: add to KNOWN_DATA, remove from LIKELY_DATA
-  e.match_type="strong";
-  KNOWN_DATA.push(e);
-  LIKELY_DATA=LIKELY_DATA.filter(function(x){return x._idx!==idx;});
-  updateAll();
-}
-
-function denyMatch(idx) {
-  var e=ENT_INDEX[idx];
-  if(!e)return;
-  var key=e.ventures_name.toLowerCase().trim();
-  CONFIRM_STATE[key]="denied";
-  try{var cs=JSON.parse(localStorage.getItem("cg_confirm")||"{}");cs[key]="denied";localStorage.setItem("cg_confirm",JSON.stringify(cs));}catch(ex){}
-  // Move entity: add to UNKNOWN_DATA, remove from LIKELY_DATA
-  e.match_type="none";
-  UNKNOWN_DATA.push(e);
-  LIKELY_DATA=LIKELY_DATA.filter(function(x){return x._idx!==idx;});
-  updateAll();
-}
-
-function jumpToSection(id) {
-  var el=document.getElementById("section-"+id);
-  if(el)el.scrollIntoView({behavior:"smooth",block:"start"});
-}
-
-function updateContextCards() {
-  var team=(document.getElementById("fTeam")||{}).value||"";
-  var se=(document.getElementById("fSE")||{}).value||"";
-  var ct=document.getElementById("ctx-team");
-  var cs=document.getElementById("ctx-team-sub");
-  var ce=document.getElementById("ctx-se");
-  var ces=document.getElementById("ctx-se-sub");
-  if(ct)ct.textContent=team||"All teams";
-  if(cs)cs.textContent=team?"Showing only this team’s entities":"Select a team filter above to focus";
-  if(ce)ce.textContent=se||"All SEs";
-  if(ces)ces.textContent=se?"Showing only this SE’s entities":"Select an SE filter above to focus";
-}
-
-function onGlobalTeamChange() {
-  var team=document.getElementById("fTeam").value;
-  var seSel=document.getElementById("fSE");
-  if(!team) {
-    seSel.innerHTML='<option value="">All SEs</option>'+ALL_SES.map(function(s){return'<option>'+esc(s)+'</option>';}).join('');
-  } else {
-    var ses=SE_BY_TEAM[team]||[];
-    seSel.innerHTML='<option value="">All SEs</option>'+ses.map(function(s){return'<option>'+esc(s)+'</option>';}).join('');
-  }
-  seSel.value="";
-  updateContextCards();
-  updateAll();
-}
-
-function updateTags(f) {
-  if(!f)f=getFilters();
-  var tags=[];
-  var lbls={search:"Search",region:"Region",industry:"Industry",status:"Status",size:"Size",team:"Team",se:"SE",startFrom:"Start from",startTo:"Start to",caFrom:"CA from",caTo:"CA to",caeFrom:"CAE from",caeTo:"CAE to"};
-  Object.keys(lbls).forEach(function(k){if(f[k])tags.push({key:k,label:lbls[k]+": "+f[k]});});
-  var ct=document.getElementById("activeTags");
-  if(!tags.length){ct.innerHTML='<span style="font-size:11px;color:var(--text3)" id="noFiltersMsg">No active filters</span>';return;}
-  ct.innerHTML=tags.map(function(t){
-    return'<span data-key="'+t.key+'" class="ftag" style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:11px;background:rgba(75,123,232,.15);color:var(--accent2);cursor:pointer">'+esc(t.label)+' <span style="opacity:.7">×</span></span>';
-  }).join("");
-  ct.querySelectorAll(".ftag").forEach(function(el){
-    el.addEventListener("click",function(){removeTag(this.getAttribute("data-key"));});
-  });
-}
-
-function removeTag(key) {
-  var m={search:"search",region:"fRegion",industry:"fIndustry",status:"fStatus",size:"fSize",team:"fTeam",se:"fSE",startFrom:"fStartFrom",startTo:"fStartTo",caFrom:"fCAFrom",caTo:"fCATo",caeFrom:"fCAEFrom",caeTo:"fCAETo"};
-  var el=document.getElementById(m[key]||"");
-  if(el)el.tagName==="INPUT"?el.value="":el.selectedIndex=0;
-  if(key==="team")onGlobalTeamChange();
-  else updateAll();
-}
-
-function clearAllFilters() {
-  ["search","fRegion","fIndustry","fStatus","fSize","fTeam","fSE","fStartFrom","fStartTo","fCAFrom","fCATo","fCAEFrom","fCAETo"].forEach(function(id){
-    var el=document.getElementById(id);
-    if(el)el.tagName==="INPUT"?el.value="":el.selectedIndex=0;
-  });
-  onGlobalTeamChange();
-}
-
-function setEtog(togId, tbodyId, btn, etype) {
-  var tog=document.getElementById(togId);
-  if(tog)tog.querySelectorAll("button").forEach(function(b){
-    b.style.background="transparent";b.style.color="var(--text2)";
-  });
-  btn.style.background="var(--surface)";btn.style.color="var(--text)";
-  var tb=document.getElementById(tbodyId);
-  if(!tb)return;
-  tb.querySelectorAll("tr").forEach(function(tr){
-    if(!etype){tr.style.display="";return;}
-    var badges=tr.querySelectorAll("span[style*='border-radius:4px']");
-    var match=false;
-    badges.forEach(function(b){if(b.textContent.trim()===etype)match=true;});
-    tr.style.display=match?"":"none";
-  });
-}
-
-function xlsxDate() {
-  return new Date().toISOString().slice(0,10);
-}
-function exportSection(data, tier, sectionName) {
-  var f=getFilters();
-  var rows=[];
-  // Apply same filter logic as filterEnts but without extraFilter
-  var filtered=data.filter(function(e){
-    if(f.search&&!e.ventures_name.toLowerCase().includes(f.search.toLowerCase()))return false;
-    if(f.entityType){var types=Array.isArray(e.entity_types)?e.entity_types:[e.entity_types||""];if(!types.includes(f.entityType))return false;}
-    if(f.team){var et=e.assigned_team||e.team||"";if(et!==f.team)return false;}
-    if(f.se){var es=e.assigned_se||e.se_name||"";if(es!==f.se)return false;}
-    if(f.region||f.industry||f.status||f.size||f.startFrom||f.startTo||f.caFrom||f.caTo||f.caeFrom||f.caeTo){
-      if(!e.projects.some(function(p){return projMatches(p,f);}))return false;
+    if (f.team) {
+      var t = e.team || "";
+      if (t !== f.team) return false;
     }
     return true;
   });
-  filtered.forEach(function(e){
-    rows.push({
-      "Entity in Ventures": e.ventures_name,
-      "Roles":              Array.isArray(e.entity_types)?e.entity_types.join(", "):(e.entity_types||""),
-      "Match Type":         e.match_type,
-      "Matched vCust Name": e.customer_name||"",
-      "Team / Region":      e.assigned_team||e.team||"",
-      "SE Owner":           e.assigned_se||e.se_name||"",
-      "Ventures Projects":  e.proj_count,
-      "Ventures HVAC (SAR)":e.total_hvac,
-      "Pipeline Projects":  e.pipeline_projects,
-      "Pipeline HVAC (SAR)":e.pipeline_hvac,
-    });
-  });
-  if(!rows.length){alert("No data to export.");return;}
-  var ws=XLSX.utils.json_to_sheet(rows);
-  var wb=XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb,ws,sectionName.slice(0,31));
-  XLSX.writeFile(wb,"contractors_"+sectionName.toLowerCase().replace(/ /g,"_")+"_"+xlsxDate()+".xlsx");
-}
-function exportDrilldown() {
-  if(!CURRENT_DRILLDOWN_ENT||!CURRENT_DRILLDOWN_PROJS.length){alert("No drilldown open.");return;}
-  var rows=CURRENT_DRILLDOWN_PROJS.map(function(p){
-    return {
-      "Project":          p.name||"",
-      "Type":             p.is_group?"Group":"Sole",
-      "Status":           p.status||"",
-      "Region":           p.region||"",
-      "Industry":         p.industry||"",
-      "HVAC (SAR)":       p.hvac||0,
-      "Size":             p.size||"",
-      "Construction Start":p.constr_start||"",
-      "Pipeline Match":   p.cr1_pip_name||"",
-      "Quoted":           p.cr1_type==="strong"?"Yes":p.cr1_type==="likely"?"Likely":"No",
-    };
-  });
-  var ws=XLSX.utils.json_to_sheet(rows);
-  var wb=XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb,ws,"Projects");
-  var safeName=(CURRENT_DRILLDOWN_ENT.ventures_name||"entity").replace(/[^a-zA-Z0-9]/g,"_").slice(0,20);
-  XLSX.writeFile(wb,"entity_projects_"+safeName+"_"+xlsxDate()+".xlsx");
 }
 
-function exportKnown()        { exportSection(KNOWN_DATA,   "strong",       "Known"); }
-function exportLikely()       { exportSection(LIKELY_DATA,  "likely",       "Likely"); }
-function exportUnknown()      { exportSection(UNKNOWN_DATA, "none",         "Unknown"); }
-function exportAssignedTeam() {
-  exportSection(UNKNOWN_DATA.filter(function(e){return !!e.assigned_team&&!e.assigned_se;}), "none", "Assigned_Team");
-}
-function exportAssignedSE() {
-  exportSection(UNKNOWN_DATA.filter(function(e){return !!e.assigned_team&&!!e.assigned_se;}), "none", "Assigned_SE");
-}
-
-function exportAssignments() {
-  var all=loadAssignments();
-  // Also pick up any baked-in assignments
-  var merged={};
-  UNKNOWN_DATA.forEach(function(e){
-    if(e.assigned_team||e.assigned_se){
-      var k=e.ventures_name.toLowerCase().trim();
-      merged[k]={team:e.assigned_team||"",se:e.assigned_se||""};
-    }
-  });
-  Object.assign(merged,all);
-  var teamCnt=Object.values(merged).filter(function(v){return v.team&&!v.se;}).length;
-  var seCnt  =Object.values(merged).filter(function(v){return v.team&&v.se;}).length;
-  if(!teamCnt&&!seCnt){alert("No assignments to export yet.");return;}
-  var blob=new Blob([JSON.stringify(merged,null,2)],{type:"application/json"});
-  var a=document.createElement("a");
-  a.href=URL.createObjectURL(blob);
-  a.download="assignments.json";
-  a.click();
-  URL.revokeObjectURL(a.href);
+function renderKnown(ents) {
+  var tb = document.getElementById("tb-known");
+  document.getElementById("count-known").textContent = ents.length + " entities";
+  if (!ents.length) { tb.innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--text3);padding:24px">No matching entities</td></tr>'; return; }
+  tb.innerHTML = ents.slice(0, 500).map(function(e, i) {
+    var cov = e.proj_count > 0 ? (e.pipeline_projects / e.proj_count * 100) : 0;
+    var covColor = cov >= 40 ? "pos" : cov >= 20 ? "warn" : "neg";
+    return '<tr class="clickable" onclick="openDD(&quot;known&quot;,' + i + ')">'
+      + '<td style="font-weight:500">' + esc(e.ventures_name) + '</td>'
+      + '<td>' + roleBadges(e.entity_types) + '</td>'
+      + '<td class="dim">' + esc(e.customer_name||"") + '</td>'
+      + '<td>' + esc(e.team||"") + '</td>'
+      + '<td>' + esc(e.se_name||"") + '</td>'
+      + '<td class="r">' + numFmt(e.proj_count) + '</td>'
+      + '<td class="r">' + sarfmtJS(e.total_hvac) + '</td>'
+      + '<td class="r">' + numFmt(e.pipeline_projects) + '</td>'
+      + '<td class="r ' + covColor + '">' + pctFmt(cov) + '</td>'
+      + '</tr>';
+  }).join('');
 }
 
-window.addEventListener("DOMContentLoaded",function(){
-  ["search","fRegion","fIndustry","fStatus","fSize","fStartFrom","fStartTo","fCAFrom","fCATo","fCAEFrom","fCAETo"].forEach(function(id){
-    var el=document.getElementById(id);
-    if(el)el.addEventListener(el.tagName==="INPUT"?"input":"change",updateAll);
-  });
-  var fSE=document.getElementById("fSE");
-  if(fSE)fSE.addEventListener("change",function(){updateContextCards();updateAll();});
-  Promise.all([
-    fetch("data_contractors_known.json").then(function(r){if(!r.ok)throw new Error("known:"+r.status);return r.json();}),
-    fetch("data_contractors_likely.json").then(function(r){if(!r.ok)throw new Error("likely:"+r.status);return r.json();}),
-    fetch("data_contractors_unknown.json").then(function(r){if(!r.ok)throw new Error("unknown:"+r.status);return r.json();}),
-  ]).then(function(results){
-    var idx=0;
-    function indexEnts(arr){
-      return arr.map(function(e){
-        e._idx=idx;
-        ENT_INDEX[idx]=e;
-        idx++;
-        return e;
-      });
-    }
-    KNOWN_DATA   = indexEnts(mergeAssignments(results[0]));
-    LIKELY_DATA  = indexEnts(mergeAssignments(results[1]));
-    UNKNOWN_DATA = indexEnts(mergeAssignments(results[2]));
-    updateContextCards();
-    updateAll();
-  }).catch(function(err){
-    console.error("Contractors Gap: failed to load data —", err);
-    var tb=document.getElementById("tb-known");
-    if(tb)tb.innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--danger);padding:32px">Failed to load data: '+err.message+'. Check browser console.</td></tr>';
-  });
-});
-</script>
-</main>
-<script>
-function esc(v){if(v===null||v===undefined)return'—';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-function matchBadge(t){const m={strong:'badge-strong',likely:'badge-likely',none:'badge-none'};const l={strong:'Likely Quoted',likely:'Maybe Quoted',none:'No Match'};return`<span class="badge ${m[t]||'badge-default'}">${l[t]||t}</span>`}
-function statusBadge(v){if(!v)return'—';return`<span class="badge badge-default">${esc(v)}</span>`}
-function renderTable(tbodyId,rows,cols){
-  const tb=document.getElementById(tbodyId);
-  if(!tb)return;
-  if(!rows||!rows.length){tb.innerHTML='<tr><td colspan="'+cols.length+'" style="text-align:center;color:var(--text2);padding:40px">No records</td></tr>';return}
-  tb.innerHTML=rows.map(r=>`<tr>${cols.map(c=>`<td>${c.render?c.render(r[c.key],r):esc(r[c.key])}</td>`).join('')}</tr>`).join('')
+function renderLikely(ents) {
+  var tb = document.getElementById("tb-likely");
+  document.getElementById("count-likely").textContent = ents.length + " entities";
+  if (!ents.length) { tb.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text3);padding:24px">No matching entities</td></tr>'; return; }
+  tb.innerHTML = ents.slice(0, 500).map(function(e, i) {
+    return '<tr class="clickable" onclick="openDD(&quot;likely&quot;,' + i + ')">'
+      + '<td style="font-weight:500">' + esc(e.ventures_name) + '</td>'
+      + '<td>' + roleBadges(e.entity_types) + '</td>'
+      + '<td class="dim">' + esc(e.customer_name||"") + '</td>'
+      + '<td>' + esc(e.team||"") + '</td>'
+      + '<td>' + esc(e.se_name||"") + '</td>'
+      + '<td class="r">' + numFmt(e.proj_count) + '</td>'
+      + '<td class="r">' + sarfmtJS(e.total_hvac) + '</td>'
+      + '</tr>';
+  }).join('');
 }
-function initTable(tbodyId,countId,data,cols,searchFields,filterDefs){
-  let rows=[...data];
-  function applyFilters(){
-    rows=[...data];
-    const searchEl=document.getElementById('search');
-    if(searchEl&&searchEl.value){const t=searchEl.value.toLowerCase();rows=rows.filter(r=>searchFields.some(f=>r[f]&&String(r[f]).toLowerCase().includes(t)))}
-    filterDefs.forEach(fd=>{const el=document.getElementById(fd.id);if(el&&el.value)rows=rows.filter(r=>r[fd.field]===el.value)});
-    renderTable(tbodyId,rows,cols);
-    const ce=document.getElementById(countId);
-    if(ce)ce.textContent=rows.length+' of '+data.length;
-  }
-  const searchEl=document.getElementById('search');
-  if(searchEl)searchEl.addEventListener('input',applyFilters);
-  filterDefs.forEach(fd=>{const el=document.getElementById(fd.id);if(el)el.addEventListener('change',applyFilters)});
+
+function renderUnknown(ents) {
+  var tb = document.getElementById("tb-unknown");
+  document.getElementById("count-unknown").textContent = ents.length + " entities";
+  if (!ents.length) { tb.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text3);padding:24px">No matching entities</td></tr>'; return; }
+  tb.innerHTML = ents.slice(0, 500).map(function(e, i) {
+    return '<tr class="clickable" onclick="openDD(&quot;unknown&quot;,' + i + ')">'
+      + '<td style="font-weight:500">' + esc(e.ventures_name) + '</td>'
+      + '<td>' + roleBadges(e.entity_types) + '</td>'
+      + '<td class="r">' + numFmt(e.proj_count) + '</td>'
+      + '<td class="r">' + sarfmtJS(e.total_hvac) + '</td>'
+      + '<td class="r">' + (e.pipeline_projects > 0 ? '<span class="warn">' + numFmt(e.pipeline_projects) + '</span>' : '—') + '</td>'
+      + '</tr>';
+  }).join('');
+}
+
+function applyFilters() {
+  var f = getFilters();
+  var kn = filterEnts(KNOWN_DATA, f);
+  var li = filterEnts(LIKELY_DATA, f);
+  var un = filterEnts(UNKNOWN_DATA, f);
+  renderKnown(kn);
+  renderLikely(li);
+  renderUnknown(un);
+  window._FILTERED = {known: kn, likely: li, unknown: un};
+  document.getElementById("entCount").textContent = (kn.length + li.length + un.length) + " entities shown";
+}
+
+function clearFilters() {
+  document.getElementById("search").value = "";
+  document.getElementById("fType").value = "";
+  document.getElementById("fTeam").value = "";
   applyFilters();
 }
+
+function openDD(tier, idx) {
+  var f = window._FILTERED || {};
+  var data = f[tier] || [];
+  var e = data[idx];
+  if (!e) return;
+  CURRENT_DD_ENT = e;
+  CURRENT_DD_PROJS = e.projects || [];
+
+  var types = Array.isArray(e.entity_types) ? e.entity_types : [];
+  document.getElementById("dd-title").textContent = e.ventures_name;
+  document.getElementById("dd-sub").innerHTML = types.map(function(t){return esc(t);}).join(" · ") + " · " + e.proj_count + " projects · " + sarfmtJS(e.total_hvac);
+
+  var soleCount = e.projects.filter(function(p){return !p.is_group;}).length;
+  var groupCount = e.projects.filter(function(p){return p.is_group;}).length;
+  var quotedCount = e.pipeline_projects;
+  var gapCount = e.proj_count - quotedCount;
+
+  var html = '';
+
+  // Customer match card
+  if (e.match_type !== "none") {
+    html += '<div style="background:var(--success-bg);border:1px solid #bbf7d0;border-radius:var(--radius);padding:10px 14px;margin-bottom:12px">'
+      + '<div style="font-size:10px;color:var(--success);text-transform:uppercase;letter-spacing:.03em">Matched vCust customer</div>'
+      + '<div style="font-size:13px;font-weight:500;margin-top:2px">' + esc(e.customer_name||"") + '</div>'
+      + '<div style="font-size:11px;color:var(--text2);margin-top:2px">Customer #' + esc(e.customer_no||"") + ' · Team: ' + esc(e.team||"—") + ' · SE: ' + esc(e.se_name||"—") + '</div>'
+      + '</div>';
+  }
+
+  // Coverage summary
+  html += '<div class="kpi-grid g3" style="margin-bottom:12px">'
+    + '<div class="kpi"><div class="kpi-label">Ventures projects</div><div class="kpi-val">' + e.proj_count + '</div><div class="kpi-sub">' + soleCount + ' sole · ' + groupCount + ' group</div></div>'
+    + '<div class="kpi" style="background:var(--success-bg)"><div class="kpi-label" style="color:var(--success)">Quoted</div><div class="kpi-val" style="color:var(--success)">' + quotedCount + '</div><div class="kpi-sub" style="color:var(--success)">' + sarfmtJS(e.pipeline_hvac) + '</div></div>'
+    + '<div class="kpi" style="background:var(--danger-bg)"><div class="kpi-label" style="color:var(--danger)">Gap</div><div class="kpi-val" style="color:var(--danger)">' + gapCount + '</div><div class="kpi-sub" style="color:var(--danger)">' + sarfmtJS(e.total_hvac - e.pipeline_hvac) + ' — not quoted</div></div>'
+    + '</div>';
+
+  // Projects table
+  html += '<div style="font-size:11px;font-weight:500;margin:10px 0 6px">Ventures projects</div>'
+    + '<div class="tbl-wrap"><div style="max-height:340px;overflow-y:auto"><table>'
+    + '<thead><tr><th>Project</th><th>Type</th><th>Status</th><th>Region</th><th class="r">HVAC</th><th>Pipeline match</th><th>Quoted?</th></tr></thead><tbody>'
+    + CURRENT_DD_PROJS.map(function(p) {
+        var tb = p.is_group ? '<span class="badge b-likely">Group</span>' : '<span class="badge b-client">Sole</span>';
+        var qb = p.cr1_type === "strong" ? '<span class="badge b-strong">Yes</span>'
+               : p.cr1_type === "likely" ? '<span class="badge b-likely">Likely</span>'
+               : '<span class="badge b-none">No</span>';
+        return '<tr><td class="truncate">' + esc(p.name||"") + '</td>'
+          + '<td>' + tb + '</td>'
+          + '<td><span class="badge b-status">' + esc(p.status||"") + '</span></td>'
+          + '<td class="dim">' + esc(p.region||"") + '</td>'
+          + '<td class="r">' + sarfmtJS(p.hvac) + '</td>'
+          + '<td class="dim truncate" title="' + esc(p.cr1_pip_name||"") + '">' + esc(p.cr1_pip_name||"") + '</td>'
+          + '<td>' + qb + '</td></tr>';
+      }).join('')
+    + '</tbody></table></div></div>';
+
+  document.getElementById("dd-body").innerHTML = html;
+  document.getElementById("dd-overlay").classList.add("open");
+}
+
+function closeDD() {
+  document.getElementById("dd-overlay").classList.remove("open");
+}
+
+function exportSection(tier) {
+  var f = window._FILTERED || {};
+  var data = f[tier] || [];
+  if (!data.length) { alert("No data to export."); return; }
+  var rows = data.map(function(e) {
+    var cov = e.proj_count > 0 ? (e.pipeline_projects / e.proj_count * 100) : 0;
+    return {
+      "Entity":          e.ventures_name,
+      "Roles":           (e.entity_types||[]).join(", "),
+      "Matched vCust":   e.customer_name || "",
+      "Customer No":     e.customer_no || "",
+      "Team":            e.team || "",
+      "SE":              e.se_name || "",
+      "Ventures Projects": e.proj_count,
+      "Ventures HVAC (SAR)": e.total_hvac,
+      "Quoted Projects": e.pipeline_projects,
+      "Quoted HVAC (SAR)": e.pipeline_hvac,
+      "Coverage %":      Math.round(cov * 10) / 10,
+    };
+  });
+  var ws = XLSX.utils.json_to_sheet(rows);
+  var wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, tier);
+  XLSX.writeFile(wb, "contractors_" + tier + "_" + xlsxDate() + ".xlsx");
+}
+
+function exportDrilldown() {
+  if (!CURRENT_DD_ENT || !CURRENT_DD_PROJS.length) { alert("Nothing to export."); return; }
+  var rows = CURRENT_DD_PROJS.map(function(p) {
+    return {
+      "Project":       p.name || "",
+      "Type":          p.is_group ? "Group" : "Sole",
+      "Status":        p.status || "",
+      "Region":        p.region || "",
+      "Industry":      p.industry || "",
+      "HVAC (SAR)":    p.hvac || 0,
+      "Pipeline Match": p.cr1_pip_name || "",
+      "Quoted":        p.cr1_type === "strong" ? "Yes" : p.cr1_type === "likely" ? "Likely" : "No",
+    };
+  });
+  var ws = XLSX.utils.json_to_sheet(rows);
+  var wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Projects");
+  var name = (CURRENT_DD_ENT.ventures_name || "entity").replace(/[^a-zA-Z0-9]/g, "_").slice(0, 30);
+  XLSX.writeFile(wb, "entity_" + name + "_" + xlsxDate() + ".xlsx");
+}
+
+document.getElementById("search").addEventListener("input", applyFilters);
+document.getElementById("fType").addEventListener("change", applyFilters);
+document.getElementById("fTeam").addEventListener("change", applyFilters);
+
+Promise.all([
+  fetch("data_contractors_known.json").then(function(r) { if(!r.ok) throw new Error("known "+r.status); return r.json(); }),
+  fetch("data_contractors_likely.json").then(function(r) { if(!r.ok) throw new Error("likely "+r.status); return r.json(); }),
+  fetch("data_contractors_unknown.json").then(function(r) { if(!r.ok) throw new Error("unknown "+r.status); return r.json(); }),
+  fetch("data_contractors_teams.json").then(function(r) { if(!r.ok) throw new Error("teams "+r.status); return r.json(); }),
+]).then(function(results) {
+  KNOWN_DATA = results[0];
+  LIKELY_DATA = results[1];
+  UNKNOWN_DATA = results[2];
+  TEAM_DATA = results[3];
+  renderTeamTable();
+  applyFilters();
+}).catch(function(err) {
+  console.error("Load error:", err);
+  document.getElementById("tb-known").innerHTML = '<tr><td colspan="9" style="color:var(--danger);padding:20px">Failed to load data: ' + err.message + '</td></tr>';
+});
+</script>
+</div>
+
+<script>
+function esc(v){if(v===null||v===undefined||v==='')return'—';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function sarFmt(v){if(!v||isNaN(v))return'—';v=parseFloat(v);if(v>=1e9)return'SAR '+(v/1e9).toFixed(1)+'B';if(v>=1e6)return'SAR '+(v/1e6).toFixed(1)+'M';if(v>0)return'SAR '+(v/1e3).toFixed(0)+'K';return'—'}
+function numFmt(v){if(v===null||v===undefined||isNaN(v))return'—';return parseInt(v).toLocaleString()}
+function pctFmt(v){if(v===null||v===undefined||isNaN(v))return'—';return (parseFloat(v)).toFixed(0)+'%'}
+function matchBadge(t){if(t==='strong')return'<span class="badge b-strong">Matched</span>';if(t==='likely')return'<span class="badge b-likely">Likely</span>';return'<span class="badge b-none">—</span>'}
+function xlsxDate(){return new Date().toISOString().slice(0,10)}
 </script>
 </body>
 </html>
