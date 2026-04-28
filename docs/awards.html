@@ -136,7 +136,7 @@ tr.clickable{cursor:pointer}
 <a href="coverage.html" class="nav-link ">Contractors Gap</a>
 <a href="pipeline_xref.html" class="nav-link ">Pipeline Search</a>
 <a href="awards.html" class="nav-link active">Award Tracker</a>
-  <span class="nav-right">Updated 28 Apr 2026, 10:28</span>
+  <span class="nav-right">Updated 28 Apr 2026, 10:45</span>
 </nav>
 
 <div class="page">
@@ -488,8 +488,8 @@ function filterQ(quotes){
   var from=document.getElementById('pipFrom').value,to=document.getElementById('pipTo').value;
   if(!from&&!to)return quotes||[];
   return (quotes||[]).filter(function(q){
-    if(!q.valid_from)return true;
-    var vf=q.valid_from.slice(0,10);
+    if(!q.vf)return true;
+    var vf=q.vf.slice(0,10);
     if(from&&vf<from)return false;if(to&&vf>to)return false;return true;
   });
 }
@@ -588,7 +588,7 @@ function renderChart(){
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
-function ddQ(quotes){var seen={},out=[];(quotes||[]).forEach(function(q){var k=q.quotation_no||q.project_name||Math.random();if(!seen[k]){seen[k]=1;out.push(q);}});return out;}
+function ddQ(quotes){var seen={},out=[];(quotes||[]).forEach(function(q){var k=q.q||q.pn||Math.random();if(!seen[k]){seen[k]=1;out.push(q);}});return out;}
 
 function matchedEntityLabel(r){
   var parts=[];
@@ -691,19 +691,19 @@ function openCustModal(idx){
   if(!allQ.length){tbody.innerHTML='<tr><td colspan="10" style="text-align:center;color:var(--text3);padding:20px">No quotes found</td></tr>';
   }else{
     tbody.innerHTML=allQ.map(function(q){
-      var isM=(cr1Quo&&q.quotation_no===cr1Quo)||(r.cr1_proj&&q.project_name===r.cr1_proj);
+      var isM=(cr1Quo&&q.q===cr1Quo)||(r.cr1_proj&&q.pn===r.cr1_proj);
       var cls=isM?' class="hl-row"':'';
       var mb=isM?'<span class="badge b-strong">Project match</span>':'<span class="badge b-none">Customer only</span>';
       return'<tr'+cls+'>'
-        +'<td style="font-size:10px;color:var(--accent)">'+esc(q.quotation_no||'—')+'</td>'
-        +'<td class="truncate" style="max-width:150px">'+esc(q.project_name||'—')+'</td>'
-        +'<td style="font-size:10px">'+esc(q.customer_name||'—')+'</td>'
-        +'<td style="font-size:10px;color:var(--text2)">'+esc(q.misc_customer||'—')+'</td>'
-        +'<td><span class="badge b-status">'+esc(q.probability||'—')+'</span></td>'
-        +'<td>'+esc(q.status||'—')+'</td>'
-        +'<td style="font-size:10px">'+esc(q.valid_from||'—')+'</td>'
-        +'<td style="font-size:10px">'+esc(q.se_name||'—')+'</td>'
-        +'<td class="r">'+sarFmt(q.value_sar)+'</td>'
+        +'<td style="font-size:10px;color:var(--accent)">'+esc(q.q||'—')+'</td>'
+        +'<td class="truncate" style="max-width:150px">'+esc(q.pn||'—')+'</td>'
+        +'<td style="font-size:10px">'+esc(q.cn||'—')+'</td>'
+        +'<td style="font-size:10px;color:var(--text2)">'+esc(q.mc||'—')+'</td>'
+        +'<td><span class="badge b-status">'+esc(q.pr||'—')+'</span></td>'
+        +'<td>'+esc(q.st||'—')+'</td>'
+        +'<td style="font-size:10px">'+esc(q.vf||'—')+'</td>'
+        +'<td style="font-size:10px">'+esc(q.se||'—')+'</td>'
+        +'<td class="r">'+sarFmt(q.vs)+'</td>'
         +'<td>'+mb+'</td>'
         +'</tr>';
     }).join('');
@@ -721,18 +721,18 @@ function openPipeModal(idx){
   if(!all.length){tbody.innerHTML='<tr><td colspan="11" style="text-align:center;color:var(--text3);padding:20px">No matches</td></tr>';
   }else{
     tbody.innerHTML=all.map(function(q){
-      var b=q.match_type==='strong'?'<span class="badge b-strong">Match</span>':'<span class="badge b-likely">Likely</span>';
+      var b=q.mt==='strong'?'<span class="badge b-strong">Match</span>':'<span class="badge b-likely">Likely</span>';
       return'<tr>'
-        +'<td style="font-size:10px;color:var(--accent)">'+esc(q.quotation_no||'—')+'</td>'
-        +'<td class="truncate" style="max-width:160px">'+esc(q.project_name||'—')+'</td>'
-        +'<td style="font-size:10px">'+esc(q.customer_name||'—')+'</td>'
-        +'<td style="font-size:10px;color:var(--text2)">'+esc(q.misc_customer||'—')+'</td>'
-        +'<td><span class="badge b-status">'+esc(q.probability||'—')+'</span></td>'
-        +'<td style="font-size:10px">'+esc(q.status||'—')+'</td>'
-        +'<td style="font-size:10px">'+esc(q.valid_from||'—')+'</td>'
-        +'<td style="font-size:10px">'+esc(q.expected_award||'—')+'</td>'
-        +'<td style="font-size:10px">'+esc(q.se_name||'—')+'</td>'
-        +'<td class="r">'+sarFmt(q.value_sar)+'</td>'
+        +'<td style="font-size:10px;color:var(--accent)">'+esc(q.q||'—')+'</td>'
+        +'<td class="truncate" style="max-width:160px">'+esc(q.pn||'—')+'</td>'
+        +'<td style="font-size:10px">'+esc(q.cn||'—')+'</td>'
+        +'<td style="font-size:10px;color:var(--text2)">'+esc(q.mc||'—')+'</td>'
+        +'<td><span class="badge b-status">'+esc(q.pr||'—')+'</span></td>'
+        +'<td style="font-size:10px">'+esc(q.st||'—')+'</td>'
+        +'<td style="font-size:10px">'+esc(q.vf||'—')+'</td>'
+        +'<td style="font-size:10px">'+esc(q.ea||'—')+'</td>'
+        +'<td style="font-size:10px">'+esc(q.se||'—')+'</td>'
+        +'<td class="r">'+sarFmt(q.vs)+'</td>'
         +'<td>'+b+'</td>'
         +'</tr>';
     }).join('');
@@ -850,11 +850,11 @@ function exportPipeMatch(){
   rows.forEach(function(r){var _ri=ALL_DATA.indexOf(r); (_ri>=0?(cr1map[String(_ri)]||[]):[]).forEach(function(q){
     out.push({'Ventures Project':r.Name||'','Region':r.Region||'','HVAC (SAR)':parseFloat(r.Hvac_SAR)||0,
       'Appt Date':r.appt_date||'','Expected Date':r.expected_date||'',
-      'Quo No.':q.quotation_no||'','Pipeline Project':q.project_name||'',
-      'Customer':q.customer_name||'','Misc Customer':q.misc_customer||'',
-      'Probability':q.probability||'','Status':q.status||'',
-      'Valid From':q.valid_from||'','SE':q.se_name||'','Team':q.team||'',
-      'Q Gross Value (SAR)':parseFloat(q.value_sar)||0,'Match Type':q.match_type||''});
+      'Quo No.':q.q||'','Pipeline Project':q.pn||'',
+      'Customer':q.cn||'','Misc Customer':q.mc||'',
+      'Probability':q.pr||'','Status':q.st||'',
+      'Valid From':q.vf||'','SE':q.se||'','Team':q.tm||'',
+      'Q Gross Value (SAR)':parseFloat(q.vs)||0,'Match Type':q.mt||''});
   });});
   var ws=XLSX.utils.json_to_sheet(out);var wb=XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,ws,'Pipeline Match');XLSX.writeFile(wb,'pipeline_match_'+xlsxDate()+'.xlsx');
