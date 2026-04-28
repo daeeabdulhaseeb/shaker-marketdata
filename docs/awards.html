@@ -136,7 +136,7 @@ tr.clickable{cursor:pointer}
 <a href="coverage.html" class="nav-link ">Contractors Gap</a>
 <a href="pipeline_xref.html" class="nav-link ">Pipeline Search</a>
 <a href="awards.html" class="nav-link active">Award Tracker</a>
-  <span class="nav-right">Updated 28 Apr 2026, 11:00</span>
+  <span class="nav-right">Updated 28 Apr 2026, 11:22</span>
 </nav>
 
 <div class="page">
@@ -685,7 +685,8 @@ function openCustModal(idx){
   var custName=r.co_name||r.mep_name||r.cl_name||'';
   document.getElementById('qmSub').textContent='Matched customer: '+custName;
   var cust=DETAIL.cust||{};
-  var allQ=ddQ(filterQ((cust[r.co_no]||[]).concat(cust[r.mep_no]||[]).concat(cust[r.cl_no]||[])));
+  var coK=r.co_no?String(r.co_no):''; var mepK=r.mep_no?String(r.mep_no):''; var clK=r.cl_no?String(r.cl_no):'';
+  var allQ=ddQ(filterQ((cust[coK]||[]).concat(cust[mepK]||[]).concat(cust[clK]||[])));
   var cr1Quo=r.cr1_quo;
   var tbody=document.getElementById('qmTb');
   if(!allQ.length){tbody.innerHTML='<tr><td colspan="10" style="text-align:center;color:var(--text3);padding:20px">No quotes found</td></tr>';
@@ -716,7 +717,7 @@ function openPipeModal(idx){
   var r=PIPE_INDEX[idx];if(!r)return;
   document.getElementById('pmTitle').textContent='Pipeline Quotations — '+(r.Name||'');
   document.getElementById('pmSub').textContent='All pipeline projects matched to this ventures project by name';
-  var all=(DETAIL.cr1||{})[String(idx)]||[];
+  var all=(DETAIL.cr1||{})[String(r._row_idx)]||[];
   var tbody=document.getElementById('pmTb');
   if(!all.length){tbody.innerHTML='<tr><td colspan="11" style="text-align:center;color:var(--text3);padding:20px">No matches</td></tr>';
   }else{
