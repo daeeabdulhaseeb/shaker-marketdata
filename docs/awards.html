@@ -136,7 +136,7 @@ tr.clickable{cursor:pointer}
 <a href="coverage.html" class="nav-link ">Contractors Gap</a>
 <a href="pipeline_xref.html" class="nav-link ">Pipeline Search</a>
 <a href="awards.html" class="nav-link active">Award Tracker</a>
-  <span class="nav-right">Updated 28 Apr 2026, 09:55</span>
+  <span class="nav-right">Updated 28 Apr 2026, 10:09</span>
 </nav>
 
 <div class="page">
@@ -386,7 +386,7 @@ tr.clickable{cursor:pointer}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script>
-var ALL_DATA=[], FILTERED=[];
+var ALL_DATA=[], FILTERED=[], DETAIL=[];
 var A_MODE='year', F_MODE='year';
 var CHART_INST=null, ENT_CHART=null;
 var ROW_INDEX={}, PIPE_INDEX={};
@@ -546,9 +546,7 @@ function renderKPIs(){
     if(r.cl_match==='strong'||r.cl_match==='likely')   matchedEnt.add(r.cl_no||r.cl_name);
     if(!r.co_match||r.co_match==='none'){if(r.Contractor)unmatched.add(r.Contractor);}
     if(!r.mep_match||r.mep_match==='none'){if(r['MEP Contractor'])unmatched.add(r['MEP Contractor']);}
-    var allQ=filterQ((r.co_quotes||[]).concat(r.mep_quotes||[]).concat(r.cl_quotes||[]));
-    var seen={};
-    allQ.forEach(function(q){var k=q.quotation_no||Math.random();if(!seen[k]){seen[k]=1;qCount++;qVal+=parseFloat(q.value_sar)||0;if(q.project_name)quotedProj.add(q.project_name);}});
+    qCount+=(r.co_q_count||0)+(r.mep_q_count||0)+(r.cl_q_count||0);
   });
   var mPct=total?Math.round(matchedProj.size/total*100):0;
   var cPct=matchedProj.size?Math.round(quotedProj.size/matchedProj.size*100):0;
@@ -617,8 +615,7 @@ function renderAwardTable(){
       var tip=esc(entity||'')+(custName?' → '+esc(custName):'');
       return'<span class="badge '+b+'" title="'+tip+'">'+(custName?esc(custName.slice(0,18)):esc((entity||'').slice(0,18)))+'</span>';
     }
-    var allQ=filterQ((r.co_quotes||[]).concat(r.mep_quotes||[]).concat(r.cl_quotes||[]));
-    var qc=ddQ(allQ).length;
+    var qc=(r.co_q_count||0)+(r.mep_q_count||0)+(r.cl_q_count||0);
     var qCell=qc?'<span class="qlink" onclick="openCustModal('+i+')">'+qc+' quotes</span>':'<span class="dim">—</span>';
     var seStr=r.co_se||r.mep_se||r.cl_se||'—';
     var tmStr=r.co_team||r.mep_team||r.cl_team||'—';
@@ -647,7 +644,7 @@ function renderAwardTable(){
 function renderPipeTable(){
   var tb=document.getElementById('pipeTb');
   // Only rows that have cr1_all matches
-  var rows=FILTERED.filter(function(r){return r.cr1_all&&r.cr1_all.length;});
+  var rows=FILTERED.filter(function(r){return (r.cr1_count||0)>0;});
   document.getElementById('pipeCount').textContent=rows.length.toLocaleString()+' projects with pipeline match';
   if(!rows.length){tb.innerHTML='<tr><td colspan="12" style="text-align:center;color:var(--text3);padding:24px">No projects matched to pipeline by project name</td></tr>';return;}
   PIPE_INDEX={};
@@ -655,7 +652,7 @@ function renderPipeTable(){
     PIPE_INDEX[i]=r;
     var apptStr=r.appt_date?'<span class="dim">'+r.appt_date+'</span>':'—';
     var expStr=r.expected_date?'<span style="color:#7c3aed;font-size:10px">'+r.expected_date+'</span>':'—';
-    var all=r.cr1_all||[];
+    var all=[];
     // Collect unique SEs and teams across all matches
     var ses=new Set(),teams=new Set();
     all.forEach(function(q){if(q.se_name)ses.add(q.se_name);if(q.team)teams.add(q.team);});
@@ -675,7 +672,7 @@ function renderPipeTable(){
       +'<td>'+matchBdg+'</td>'
       +'<td style="font-size:10px">'+seStr+'</td>'
       +'<td style="font-size:10px">'+tmStr+'</td>'
-      +'<td><span class="qlink" onclick="openPipeModal('+i+')">'+all.length+' quotes</span></td>'
+      +'<td><span class="qlink" onclick="openPipeModal('+i+')">'+r.cr1_count+' quotes</span></td>'
       +'</tr>';
   }).join('');
   tb.innerHTML=html;
@@ -687,7 +684,8 @@ function openCustModal(idx){
   document.getElementById('qmTitle').textContent='Customer Quotes — '+(r.Name||'');
   var custName=r.co_name||r.mep_name||r.cl_name||'';
   document.getElementById('qmSub').textContent='Matched customer: '+custName;
-  var allQ=ddQ(filterQ((r.co_quotes||[]).concat(r.mep_quotes||[]).concat(r.cl_quotes||[])));
+  var d=DETAIL[idx]||{};
+  var allQ=ddQ(filterQ((d.co_quotes||[]).concat(d.mep_quotes||[]).concat(d.cl_quotes||[])));
   var cr1Quo=r.cr1_quo;
   var tbody=document.getElementById('qmTb');
   if(!allQ.length){tbody.innerHTML='<tr><td colspan="10" style="text-align:center;color:var(--text3);padding:20px">No quotes found</td></tr>';
@@ -718,7 +716,7 @@ function openPipeModal(idx){
   var r=PIPE_INDEX[idx];if(!r)return;
   document.getElementById('pmTitle').textContent='Pipeline Quotations — '+(r.Name||'');
   document.getElementById('pmSub').textContent='All pipeline projects matched to this ventures project by name';
-  var all=r.cr1_all||[];
+  var dp=DETAIL[idx]||{}; var all=dp.cr1_all||[];
   var tbody=document.getElementById('pmTb');
   if(!all.length){tbody.innerHTML='<tr><td colspan="11" style="text-align:center;color:var(--text3);padding:20px">No matches</td></tr>';
   }else{
@@ -756,9 +754,9 @@ function renderCustomerTable(){
       custMap[k].hvac+=parseFloat(r.Hvac_SAR)||0;
       filterQ(quotes||[]).forEach(function(q){custMap[k].quotes.push(q);custMap[k].quotesVal+=parseFloat(q.value_sar)||0;});
     }
-    if(r.co_match==='strong'||r.co_match==='likely') addC(r.co_no,r.co_name,r.co_se,r.co_team,r.co_entity||r.Contractor,'Contractor',r.co_quotes);
-    if(r.mep_match==='strong'||r.mep_match==='likely') addC(r.mep_no,r.mep_name,r.mep_se,r.mep_team,r.mep_entity||r['MEP Contractor'],'MEP',r.mep_quotes);
-    if(r.cl_match==='strong'||r.cl_match==='likely') addC(r.cl_no,r.cl_name,r.cl_se,r.cl_team,r.cl_entity||r.Client,'Client',r.cl_quotes);
+    if(r.co_match==='strong'||r.co_match==='likely') addC(r.co_no,r.co_name,r.co_se,r.co_team,r.co_entity||r.Contractor,'Contractor',[]);
+    if(r.mep_match==='strong'||r.mep_match==='likely') addC(r.mep_no,r.mep_name,r.mep_se,r.mep_team,r.mep_entity||r['MEP Contractor'],'MEP',[]);
+    if(r.cl_match==='strong'||r.cl_match==='likely') addC(r.cl_no,r.cl_name,r.cl_se,r.cl_team,r.cl_entity||r.Client,'Client',[]);
   });
   var custs=Object.values(custMap).sort(function(a,b){return b.projects.size-a.projects.size;});
   document.getElementById('custCount').textContent=custs.length+' customers';
@@ -830,7 +828,8 @@ function renderUnmatchTable(){
 function exportAwards(){
   if(!FILTERED.length){alert('No data.');return;}
   var rows=FILTERED.map(function(r){
-    var allQ=ddQ(filterQ((r.co_quotes||[]).concat(r.mep_quotes||[]).concat(r.cl_quotes||[])));
+    var _idx=FILTERED.indexOf(r); var _d=DETAIL[_idx]||{};
+    var allQ=ddQ(filterQ((_d.co_quotes||[]).concat(_d.mep_quotes||[]).concat(_d.cl_quotes||[])));
     return{'Project':r.Name||'','Region':r.Region||'','HVAC (SAR)':parseFloat(r.Hvac_SAR)||0,
       'Contractor':r.Contractor||'','MEP Contractor':r['MEP Contractor']||'',
       'Appt Date':r.appt_date||'','Expected Date':r.expected_date||'',
@@ -844,10 +843,10 @@ function exportAwards(){
 }
 
 function exportPipeMatch(){
-  var rows=FILTERED.filter(function(r){return r.cr1_all&&r.cr1_all.length;});
+  var rows=FILTERED.filter(function(r){return (r.cr1_count||0)>0;});
   if(!rows.length){alert('No data.');return;}
   var out=[];
-  rows.forEach(function(r){(r.cr1_all||[]).forEach(function(q){
+  rows.forEach(function(r){var _di=DETAIL[FILTERED.indexOf(r)]||{}; (_di.cr1_all||[]).forEach(function(q){
     out.push({'Ventures Project':r.Name||'','Region':r.Region||'','HVAC (SAR)':parseFloat(r.Hvac_SAR)||0,
       'Appt Date':r.appt_date||'','Expected Date':r.expected_date||'',
       'Quo No.':q.quotation_no||'','Pipeline Project':q.project_name||'',
