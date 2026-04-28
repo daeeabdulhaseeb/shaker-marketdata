@@ -136,7 +136,7 @@ tr.clickable{cursor:pointer}
 <a href="coverage.html" class="nav-link ">Contractors Gap</a>
 <a href="pipeline_xref.html" class="nav-link ">Pipeline Search</a>
 <a href="awards.html" class="nav-link active">Award Tracker</a>
-  <span class="nav-right">Updated 28 Apr 2026, 10:09</span>
+  <span class="nav-right">Updated 28 Apr 2026, 10:28</span>
 </nav>
 
 <div class="page">
@@ -386,7 +386,7 @@ tr.clickable{cursor:pointer}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script>
-var ALL_DATA=[], FILTERED=[], DETAIL=[];
+var ALL_DATA=[], FILTERED=[], DETAIL={cust:{},cr1:{}};
 var A_MODE='year', F_MODE='year';
 var CHART_INST=null, ENT_CHART=null;
 var ROW_INDEX={}, PIPE_INDEX={};
@@ -684,8 +684,8 @@ function openCustModal(idx){
   document.getElementById('qmTitle').textContent='Customer Quotes — '+(r.Name||'');
   var custName=r.co_name||r.mep_name||r.cl_name||'';
   document.getElementById('qmSub').textContent='Matched customer: '+custName;
-  var d=DETAIL[idx]||{};
-  var allQ=ddQ(filterQ((d.co_quotes||[]).concat(d.mep_quotes||[]).concat(d.cl_quotes||[])));
+  var cust=DETAIL.cust||{};
+  var allQ=ddQ(filterQ((cust[r.co_no]||[]).concat(cust[r.mep_no]||[]).concat(cust[r.cl_no]||[])));
   var cr1Quo=r.cr1_quo;
   var tbody=document.getElementById('qmTb');
   if(!allQ.length){tbody.innerHTML='<tr><td colspan="10" style="text-align:center;color:var(--text3);padding:20px">No quotes found</td></tr>';
@@ -716,7 +716,7 @@ function openPipeModal(idx){
   var r=PIPE_INDEX[idx];if(!r)return;
   document.getElementById('pmTitle').textContent='Pipeline Quotations — '+(r.Name||'');
   document.getElementById('pmSub').textContent='All pipeline projects matched to this ventures project by name';
-  var dp=DETAIL[idx]||{}; var all=dp.cr1_all||[];
+  var all=(DETAIL.cr1||{})[String(idx)]||[];
   var tbody=document.getElementById('pmTb');
   if(!all.length){tbody.innerHTML='<tr><td colspan="11" style="text-align:center;color:var(--text3);padding:20px">No matches</td></tr>';
   }else{
@@ -828,8 +828,8 @@ function renderUnmatchTable(){
 function exportAwards(){
   if(!FILTERED.length){alert('No data.');return;}
   var rows=FILTERED.map(function(r){
-    var _idx=FILTERED.indexOf(r); var _d=DETAIL[_idx]||{};
-    var allQ=ddQ(filterQ((_d.co_quotes||[]).concat(_d.mep_quotes||[]).concat(_d.cl_quotes||[])));
+    var cust=DETAIL.cust||{};
+    var allQ=ddQ(filterQ((cust[r.co_no]||[]).concat(cust[r.mep_no]||[]).concat(cust[r.cl_no]||[])));
     return{'Project':r.Name||'','Region':r.Region||'','HVAC (SAR)':parseFloat(r.Hvac_SAR)||0,
       'Contractor':r.Contractor||'','MEP Contractor':r['MEP Contractor']||'',
       'Appt Date':r.appt_date||'','Expected Date':r.expected_date||'',
@@ -846,7 +846,8 @@ function exportPipeMatch(){
   var rows=FILTERED.filter(function(r){return (r.cr1_count||0)>0;});
   if(!rows.length){alert('No data.');return;}
   var out=[];
-  rows.forEach(function(r){var _di=DETAIL[FILTERED.indexOf(r)]||{}; (_di.cr1_all||[]).forEach(function(q){
+  var cr1map=DETAIL.cr1||{};
+  rows.forEach(function(r){var _ri=ALL_DATA.indexOf(r); (_ri>=0?(cr1map[String(_ri)]||[]):[]).forEach(function(q){
     out.push({'Ventures Project':r.Name||'','Region':r.Region||'','HVAC (SAR)':parseFloat(r.Hvac_SAR)||0,
       'Appt Date':r.appt_date||'','Expected Date':r.expected_date||'',
       'Quo No.':q.quotation_no||'','Pipeline Project':q.project_name||'',
