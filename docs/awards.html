@@ -136,7 +136,7 @@ tr.clickable{cursor:pointer}
 <a href="coverage.html" class="nav-link ">Contractors Gap</a>
 <a href="pipeline_xref.html" class="nav-link ">Pipeline Search</a>
 <a href="awards.html" class="nav-link active">Award Tracker</a>
-  <span class="nav-right">Updated 28 Apr 2026, 08:50</span>
+  <span class="nav-right">Updated 28 Apr 2026, 09:55</span>
 </nav>
 
 <div class="page">
@@ -144,34 +144,50 @@ tr.clickable{cursor:pointer}
 <div class="page-title">Award Tracker</div>
 <div class="page-sub">Track contractor appointments by period · check vCust coverage · measure pipeline engagement</div>
 
-<!-- ── DATE SELECTOR ─────────────────────────────────────────────────────── -->
-<div class="card" style="margin-bottom:12px">
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-    <span class="card-title" style="margin-bottom:0">Date Filter — Contractor Appointed</span>
-    <div style="margin-left:auto;display:flex;gap:4px" id="dateModeTabs">
-      <button class="date-mode-btn active" onclick="setDateMode('year')">Year</button>
-      <button class="date-mode-btn" onclick="setDateMode('quarter')">Quarter</button>
-      <button class="date-mode-btn" onclick="setDateMode('month')">Month</button>
-      <button class="date-mode-btn" onclick="setDateMode('custom')">Custom Range</button>
+<!-- ── DATE SELECTORS ────────────────────────────────────────────────────── -->
+<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin-bottom:12px">
+  <div class="card" style="margin-bottom:0">
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+      <span class="card-title" style="margin-bottom:0;font-size:11px">Contractor Appointed</span>
+      <span style="font-size:10px;color:var(--text3)">(actuals)</span>
+      <div style="margin-left:auto;display:flex;gap:3px" id="Atabs">
+        <button class="date-mode-btn active" onclick="setMode('A','year')">Year</button>
+        <button class="date-mode-btn" onclick="setMode('A','quarter')">Quarter</button>
+        <button class="date-mode-btn" onclick="setMode('A','month')">Month</button>
+        <button class="date-mode-btn" onclick="setMode('A','custom')">Custom</button>
+      </div>
+    </div>
+    <div id="Adm_year"   ><div id="ApillYear"    class="pill-row"></div></div>
+    <div id="Adm_quarter" style="display:none"><div id="ApillQuarter" class="pill-row"></div></div>
+    <div id="Adm_month"   style="display:none"><div id="ApillMonth"   class="pill-row"></div></div>
+    <div id="Adm_custom"  style="display:none;gap:6px;align-items:center;flex-wrap:wrap">
+      <span class="filter-label">From</span><input type="date" id="AcustomFrom" onchange="applyFilters()">
+      <span class="filter-label">To</span><input type="date" id="AcustomTo" onchange="applyFilters()">
     </div>
   </div>
-  <div id="dmYear"  class="dm-panel"><div id="yearPills"    class="pill-row"></div></div>
-  <div id="dmQuarter" class="dm-panel" style="display:none">
-    <div id="quarterPills" class="pill-row"></div>
-    <div style="font-size:10px;color:var(--text3);margin-top:5px">◆ Forecast — from Contractor Appointed Expected date &nbsp;|&nbsp; Multi-select supported</div>
-  </div>
-  <div id="dmMonth" class="dm-panel" style="display:none"><div id="monthPills" class="pill-row"></div></div>
-  <div id="dmCustom" class="dm-panel" style="display:none;gap:8px;align-items:center">
-    <span class="filter-label">From</span>
-    <input type="date" id="customFrom" onchange="applyFilters()">
-    <span class="filter-label">To</span>
-    <input type="date" id="customTo" onchange="applyFilters()">
+  <div class="card" style="margin-bottom:0;border-color:#ddd6fe">
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+      <span class="card-title" style="margin-bottom:0;font-size:11px;color:#7c3aed">Expected Appointment</span>
+      <span style="font-size:10px;color:var(--text3)">(forecast)</span>
+      <div style="margin-left:auto;display:flex;gap:3px" id="Ftabs">
+        <button class="date-mode-btn fc-btn active" onclick="setMode('F','year')">Year</button>
+        <button class="date-mode-btn fc-btn" onclick="setMode('F','quarter')">Quarter</button>
+        <button class="date-mode-btn fc-btn" onclick="setMode('F','month')">Month</button>
+        <button class="date-mode-btn fc-btn" onclick="setMode('F','custom')">Custom</button>
+      </div>
+    </div>
+    <div id="Fdm_year"   ><div id="FpillYear"    class="pill-row"></div></div>
+    <div id="Fdm_quarter" style="display:none"><div id="FpillQuarter" class="pill-row"></div></div>
+    <div id="Fdm_month"   style="display:none"><div id="FpillMonth"   class="pill-row"></div></div>
+    <div id="Fdm_custom"  style="display:none;gap:6px;align-items:center;flex-wrap:wrap">
+      <span class="filter-label">From</span><input type="date" id="FcustomFrom" onchange="applyFilters()">
+      <span class="filter-label">To</span><input type="date" id="FcustomTo" onchange="applyFilters()">
+    </div>
   </div>
 </div>
 
 <!-- ── FILTERS ───────────────────────────────────────────────────────────── -->
 <div class="filter-bar" style="margin-bottom:14px">
-
   <div class="filter-group"><span class="filter-label">Region</span>
     <select id="fRegion" onchange="applyFilters()"><option value="">All Regions</option><option value="Central">Central</option><option value="East">East</option><option value="West">West</option></select>
   </div>
@@ -204,37 +220,35 @@ tr.clickable{cursor:pointer}
     <span class="filter-label">to</span>
     <input type="date" id="pipTo" onchange="applyFilters()">
   </div>
-
 </div>
 
 <!-- ── KPI CARDS ─────────────────────────────────────────────────────────── -->
-<div class="kpi-grid g6" id="kpiRow" style="grid-template-columns:repeat(6,minmax(0,1fr));margin-bottom:14px">
+<div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-bottom:14px">
   <div class="kpi accent"><div class="kpi-label">Projects Awarded</div><div class="kpi-val" id="kAwarded">—</div><div class="kpi-sub" id="kAwardedSar">—</div></div>
   <div class="kpi"><div class="kpi-label">Contractor Entities</div><div class="kpi-val" id="kEntities">—</div><div class="kpi-sub">unique contractors / MEP</div></div>
-  <div class="kpi"><div class="kpi-label">Matched to vCust</div><div class="kpi-val" id="kMatched">—</div><div class="kpi-sub" id="kMatchedSar">—</div></div>
-  <div class="kpi"><div class="kpi-label">Matched Projects</div><div class="kpi-val" id="kMatchedProj">—</div><div class="kpi-sub" id="kMatchedProjSar">unique projects with ≥1 matched entity</div></div>
-  <div class="kpi"><div class="kpi-label">Pipeline Quotes</div><div class="kpi-val" id="kQuotes">—</div><div class="kpi-sub" id="kQuotesSar">from matched customers · Valid From applied</div></div>
-  <div class="kpi"><div class="kpi-label">Pipeline Coverage</div><div class="kpi-val" id="kCoverage">—</div><div class="kpi-sub" id="kCoverageSub">quoted ÷ matched projects</div></div>
+  <div class="kpi"><div class="kpi-label">Matched to vCust</div><div class="kpi-val" id="kMatched">—</div><div class="kpi-sub" id="kMatchedSub">—</div></div>
+  <div class="kpi"><div class="kpi-label">Matched Projects</div><div class="kpi-val" id="kMatchedProj">—</div><div class="kpi-sub" id="kMatchedProjSub">unique projects with ≥1 matched entity</div></div>
+  <div class="kpi"><div class="kpi-label">Pipeline Quotes</div><div class="kpi-val" id="kQuotes">—</div><div class="kpi-sub" id="kQuotesSar">from matched customers</div></div>
+  <div class="kpi"><div class="kpi-label">Pipeline Coverage</div><div class="kpi-val" id="kCoverage">—</div><div class="kpi-sub" id="kCoverageSub">—</div></div>
 </div>
 
-<!-- ── MONTHLY CHART ──────────────────────────────────────────────────────── -->
+<!-- ── CHART ─────────────────────────────────────────────────────────────── -->
 <div class="card" style="margin-bottom:14px">
-  <div style="display:flex;align-items:center;margin-bottom:6px">
-    <div><div class="card-title">Monthly Award Activity</div>
-    <div class="card-sub" style="margin-bottom:0">Bars = HVAC value &nbsp;·&nbsp; Line = project count &nbsp;·&nbsp; Dashed bars = forecast (Contractor Appointed Expected)</div></div>
-  </div>
+  <div class="card-title">Monthly Award Activity</div>
+  <div class="card-sub">Bars = HVAC value · Line = project count · Dashed = forecast (Expected date)</div>
   <div style="position:relative;height:220px"><canvas id="awardChart"></canvas></div>
   <div style="display:flex;gap:16px;margin-top:8px">
-    <span style="font-size:10px;color:var(--text2)"><span style="display:inline-block;width:10px;height:10px;background:var(--accent);border-radius:2px;margin-right:4px"></span>Actual HVAC value</span>
-    <span style="font-size:10px;color:var(--text2)"><span style="display:inline-block;width:10px;height:10px;background:#bfdbfe;border:1px dashed #93c5fd;border-radius:2px;margin-right:4px"></span>Forecast HVAC value</span>
-    <span style="font-size:10px;color:var(--text2)"><span style="display:inline-block;width:10px;height:10px;background:var(--danger);border-radius:50%;margin-right:4px"></span>Project count (line)</span>
+    <span style="font-size:10px;color:var(--text2)"><span style="display:inline-block;width:10px;height:10px;background:#1d4ed8;border-radius:2px;margin-right:4px"></span>Actual</span>
+    <span style="font-size:10px;color:var(--text2)"><span style="display:inline-block;width:10px;height:10px;background:#bfdbfe;border:1px dashed #93c5fd;border-radius:2px;margin-right:4px"></span>Forecast</span>
+    <span style="font-size:10px;color:var(--text2)"><span style="display:inline-block;width:10px;height:10px;background:#dc2626;border-radius:50%;margin-right:4px"></span>Count (line)</span>
   </div>
 </div>
 
-<!-- ── AWARDED PROJECTS TABLE ────────────────────────────────────────────── -->
+<!-- ── TABLE 1: ENTITY-VCUST MATCH ───────────────────────────────────────── -->
 <div class="tbl-wrap" style="margin-bottom:14px">
   <div class="tbl-toolbar">
-    <span class="card-title">Awarded Projects</span>
+    <span class="card-title">Awarded Projects — Entity Match</span>
+    <span style="font-size:10px;color:var(--text2);margin-left:6px">vCust customer match per entity</span>
     <span class="filter-count" id="awardCount" style="margin-left:8px"></span>
     <button class="btn-export" style="margin-left:auto" onclick="exportAwards()">↓ Export</button>
   </div>
@@ -244,15 +258,36 @@ tr.clickable{cursor:pointer}
       <th>Project</th><th>Region</th><th>Size</th><th class="r">HVAC</th>
       <th>Contractor</th><th>MEP Contractor</th>
       <th>Appt Date</th><th>Expected Date</th>
-      <th>vCust (Co.)</th><th>vCust (MEP)</th>
-      <th>SE</th><th>Team</th><th>Pipeline Quotes</th>
+      <th>vCust (Co.)</th><th>vCust (MEP)</th><th>vCust (Client)</th>
+      <th>SE</th><th>Team</th><th>Cust Quotes</th>
     </tr></thead>
     <tbody id="awardTb"></tbody>
   </table>
   </div>
 </div>
 
-<!-- ── MATCHED CUSTOMERS + BAR CHART ─────────────────────────────────────── -->
+<!-- ── TABLE 2: PROJECT-PIPELINE MATCH ───────────────────────────────────── -->
+<div class="tbl-wrap" style="margin-bottom:14px">
+  <div class="tbl-toolbar">
+    <span class="card-title">Awarded Projects — Pipeline Match</span>
+    <span style="font-size:10px;color:var(--text2);margin-left:6px">project name matched to pipeline quotations</span>
+    <span class="filter-count" id="pipeCount" style="margin-left:8px"></span>
+    <button class="btn-export" style="margin-left:auto" onclick="exportPipeMatch()">↓ Export</button>
+  </div>
+  <div class="tbl-scroll" style="height:360px">
+  <table>
+    <thead><tr>
+      <th>Project</th><th>Region</th><th>Size</th><th class="r">HVAC</th>
+      <th>Contractor</th><th>MEP Contractor</th>
+      <th>Appt Date</th><th>Expected Date</th>
+      <th>Pipeline Match</th><th>SE(s)</th><th>Team(s)</th><th>Quotes</th>
+    </tr></thead>
+    <tbody id="pipeTb"></tbody>
+  </table>
+  </div>
+</div>
+
+<!-- ── MATCHED CUSTOMERS + BAR ────────────────────────────────────────────── -->
 <div class="two-col" style="margin-bottom:14px">
   <div class="tbl-wrap">
     <div class="tbl-toolbar">
@@ -263,10 +298,9 @@ tr.clickable{cursor:pointer}
     <div class="tbl-scroll-sm">
     <table>
       <thead><tr>
-        <th>Customer</th><th>SE</th><th>Team</th>
-        <th class="r">Awarded Proj.</th>
-        <th class="r">Pipeline Quotes</th>
-        <th class="r">Quote Value</th>
+        <th>Customer</th><th>Matched Entity</th><th>Role</th><th>SE</th><th>Team</th>
+        <th class="r">Awd. Proj.</th><th class="r">HVAC</th>
+        <th class="r">Quotes</th><th class="r">Quote Val</th>
       </tr></thead>
       <tbody id="custTb"></tbody>
     </table>
@@ -294,18 +328,20 @@ tr.clickable{cursor:pointer}
   </div>
 </div>
 
-<!-- ── QUOTE DRILLDOWN MODAL ──────────────────────────────────────────────── -->
-<div class="modal-overlay" id="quoteModal" onclick="if(event.target===this)closeQuoteModal()">
-  <div class="modal" style="width:min(700px,98%)">
+<!-- ── MODALS ─────────────────────────────────────────────────────────────── -->
+<!-- Customer-quotes modal -->
+<div class="modal-overlay" id="quoteModal" onclick="if(event.target===this)closeModal('quoteModal')">
+  <div class="modal" style="width:min(760px,98%)">
     <div class="modal-head">
       <div><h3 id="qmTitle">Pipeline Quotes</h3><p id="qmSub" style="font-size:11px;color:var(--text2)"></p></div>
-      <button class="modal-close" onclick="closeQuoteModal()">✕ Close</button>
+      <button class="modal-close" onclick="closeModal('quoteModal')">✕ Close</button>
     </div>
     <div class="modal-body">
       <div id="qmHighlight" style="margin-bottom:10px"></div>
       <div class="tbl-wrap">
         <table><thead><tr>
-          <th>Quotation No.</th><th>Project</th><th>Probability</th><th>Status</th><th>Valid From</th><th>SE</th><th class="r">Value</th><th>Match</th>
+          <th>Quo No.</th><th>Project</th><th>Customer</th><th>Misc. Customer</th>
+          <th>Probability</th><th>Status</th><th>Valid From</th><th>SE</th><th class="r">Value</th><th>Match</th>
         </tr></thead>
         <tbody id="qmTb"></tbody></table>
       </div>
@@ -313,330 +349,321 @@ tr.clickable{cursor:pointer}
   </div>
 </div>
 
+<!-- Pipeline-match modal -->
+<div class="modal-overlay" id="pipeModal" onclick="if(event.target===this)closeModal('pipeModal')">
+  <div class="modal" style="width:min(900px,98%)">
+    <div class="modal-head">
+      <div><h3 id="pmTitle">Pipeline Quotations</h3><p id="pmSub" style="font-size:11px;color:var(--text2)"></p></div>
+      <button class="modal-close" onclick="closeModal('pipeModal')">✕ Close</button>
+    </div>
+    <div class="modal-body">
+      <div class="tbl-wrap">
+        <table><thead><tr>
+          <th>Quo No.</th><th>Pipeline Project</th><th>Customer</th><th>Misc. Customer</th>
+          <th>Probability</th><th>Status</th><th>Valid From</th><th>Exp. Award</th>
+          <th>SE</th><th class="r">Q Gross Value</th><th>Match</th>
+        </tr></thead>
+        <tbody id="pmTb"></tbody></table>
+      </div>
+    </div>
+  </div>
+</div>
+
 <style>
-.date-mode-btn{font-size:11px;padding:4px 11px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--surface);color:var(--text2);cursor:pointer;font-family:inherit}
+.date-mode-btn{font-size:10px;padding:3px 9px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--surface);color:var(--text2);cursor:pointer;font-family:inherit}
 .date-mode-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.date-mode-btn.fc-btn.active{background:#7c3aed;color:#fff;border-color:#7c3aed}
 .dm-panel{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
-.pill-row{display:flex;flex-wrap:wrap;gap:5px}
-.qpill{font-size:10px;padding:3px 11px;border:1px solid var(--border2);border-radius:20px;color:var(--text2);cursor:pointer;background:var(--surface);user-select:none;font-family:inherit}
+.pill-row{display:flex;flex-wrap:wrap;gap:4px}
+.qpill{font-size:10px;padding:3px 10px;border:1px solid var(--border2);border-radius:20px;color:var(--text2);cursor:pointer;background:var(--surface);user-select:none;font-family:inherit}
 .qpill.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-.qpill.forecast{border-color:#8b5cf6;color:#6d28d9}
-.qpill.forecast.active{background:#8b5cf6;color:#fff;border-color:#8b5cf6}
+.qpill.fc{border-color:#8b5cf6;color:#6d28d9}
+.qpill.fc.active{background:#7c3aed;color:#fff;border-color:#7c3aed}
 .qlink{color:var(--accent);cursor:pointer;text-decoration:underline;font-size:10px}
-.qlink:hover{color:var(--text)}
 .assign-sel{font-size:11px;padding:3px 7px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--surface);color:var(--text);font-family:inherit;height:26px}
-.hl-row{background:var(--success-bg)!important}
-.hl-row td{color:var(--success)!important;font-weight:500}
+.hl-row td{background:var(--success-bg)!important;color:var(--success)!important;font-weight:500}
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script>
-// ── Globals ──────────────────────────────────────────────────────────────────
-var ALL_DATA = [];
-var FILTERED = [];
-var DATE_MODE = "year";
-var SEL_PERIODS = new Set();  // selected year/quarter/month strings
-var CHART_INST = null;
-var ENT_CHART  = null;
+var ALL_DATA=[], FILTERED=[];
+var A_MODE='year', F_MODE='year';
+var CHART_INST=null, ENT_CHART=null;
+var ROW_INDEX={}, PIPE_INDEX={};
+var TODAY=new Date(); TODAY.setHours(0,0,0,0);
 
-// Today for actual vs forecast split
-var TODAY = new Date();
-TODAY.setHours(0,0,0,0);
+// ── Date helpers ──────────────────────────────────────────────────────────────
+function pd(s){return s?new Date(s):null;}
+function isoY(d){return d?d.toISOString().slice(0,4):null;}
+function isoYM(d){return d?d.toISOString().slice(0,7):null;}
+function qtr(d){if(!d)return null;return 'Q'+(Math.floor(d.getMonth()/3)+1)+' '+d.getFullYear();}
+function mLabel(d){if(!d)return null;var m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];return m[d.getMonth()]+' '+d.getFullYear();}
+function mShort(d){var m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];return m[d.getMonth()]+"'"+String(d.getFullYear()).slice(2);}
 
-// ── Date helpers ─────────────────────────────────────────────────────────────
-function parseDate(s){ return s ? new Date(s) : null; }
-function isoYM(d){ return d ? d.toISOString().slice(0,7) : null; }
-function isoY(d){ return d ? d.toISOString().slice(0,4) : null; }
-function quarter(d){
-  if(!d) return null;
-  var q = Math.floor(d.getMonth()/3)+1;
-  return "Q"+q+" "+d.getFullYear();
-}
-function monthLabel(d){
-  if(!d) return null;
-  var m=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-  return m[d.getMonth()]+" "+d.getFullYear();
-}
-
-// For each row return the "active date" and whether it is forecast
-// Actual = Contractor Appointed if it exists (any date, we keep all)
-// Forecast = only Contractor Appointed Expected (used when no actual)
-function rowDate(r){
-  var appt = parseDate(r.appt_date);
-  var exp  = parseDate(r.expected_date);
-  if(appt) return {d: appt, forecast: false};
-  if(exp)  return {d: exp,  forecast: true};
-  return null;
-}
-
-// ── Build period pills ───────────────────────────────────────────────────────
+// ── Pill builders ─────────────────────────────────────────────────────────────
 function buildPills(){
-  // Collect all periods from data
-  var years={}, quarters={}, months={};
+  var aYears={},aQtrs={},aMonths={},fYears={},fQtrs={},fMonths={};
   ALL_DATA.forEach(function(r){
-    var rd = rowDate(r);
-    if(!rd) return;
-    var d=rd.d, fc=rd.forecast;
-    var y=isoY(d), q=quarter(d), m=isoYM(d);
-    if(!years[y])    years[y]    = {fc:fc,d:d};
-    if(!quarters[q]) quarters[q] = {fc:fc,d:d};
-    if(!months[m])   months[m]   = {fc:fc,d:d,label:monthLabel(d)};
+    var a=pd(r.appt_date), f=pd(r.expected_date);
+    if(a){
+      var y=isoY(a),q=qtr(a),m=isoYM(a);
+      if(!aYears[y])  aYears[y]  ={d:a};
+      if(!aQtrs[q])   aQtrs[q]   ={d:a,lbl:q};
+      if(!aMonths[m]) aMonths[m] ={d:a,lbl:mLabel(a)};
+    }
+    if(f){
+      var y=isoY(f),q=qtr(f),m=isoYM(f);
+      if(!fYears[y])  fYears[y]  ={d:f};
+      if(!fQtrs[q])   fQtrs[q]   ={d:f,lbl:q};
+      if(!fMonths[m]) fMonths[m] ={d:f,lbl:mLabel(f)};
+    }
   });
-
-  function makePills(container, items, keyFn, labelFn, fcFn){
-    var el = document.getElementById(container);
-    var sorted = Object.keys(items).sort(function(a,b){
-      return items[a].d - items[b].d;
-    });
-    el.innerHTML = sorted.map(function(k){
-      var fc = fcFn(items[k]);
-      var lbl = labelFn(k, items[k]);
-      return '<button class="qpill'+(fc?' forecast':'')+'" data-key="'+k+'" onclick="togglePill(this,\''+container+'\')">'+lbl+(fc?' &#9670;':'')+'</button>';
+  function fill(contId,items,fc){
+    var el=document.getElementById(contId);
+    var keys=Object.keys(items).sort(function(a,b){return items[a].d-items[b].d;});
+    el.innerHTML=keys.map(function(k){
+      var lbl=items[k].lbl||k;
+      return '<button class="qpill'+(fc?' fc':'')+'" data-key="'+k+'" onclick="togglePill(this)">'+lbl+'</button>';
     }).join('');
   }
-
-  makePills('yearPills',    years,    function(k){return k;}, function(k){return k;},    function(v){return v.fc;});
-  makePills('quarterPills', quarters, function(k){return k;}, function(k){return k;},    function(v){return v.fc;});
-  makePills('monthPills',   months,   function(k){return k;}, function(k,v){return v.label||k;}, function(v){return v.fc;});
+  fill('ApillYear',aYears,false); fill('ApillQuarter',aQtrs,false); fill('ApillMonth',aMonths,false);
+  fill('FpillYear',fYears,true);  fill('FpillQuarter',fQtrs,true);  fill('FpillMonth',fMonths,true);
 }
 
-function togglePill(btn, container){
-  btn.classList.toggle('active');
+function togglePill(btn){btn.classList.toggle('active');applyFilters();}
+
+function setMode(grp,mode){
+  var prefix=grp==='A'?'A':'F';
+  ['year','quarter','month','custom'].forEach(function(m){
+    var el=document.getElementById(prefix+'dm_'+m);
+    if(el) el.style.display=(m===mode)?'':'none';
+  });
+  document.querySelectorAll('#'+prefix+'tabs .date-mode-btn').forEach(function(b){
+    b.classList.toggle('active',b.getAttribute('onclick').includes("'"+mode+"'"));
+  });
+  if(grp==='A') A_MODE=mode; else F_MODE=mode;
   applyFilters();
 }
 
-function setDateMode(mode){
-  DATE_MODE = mode;
-  ['dmYear','dmQuarter','dmMonth','dmCustom'].forEach(function(id){
-    document.getElementById(id).style.display='none';
-  });
-  document.getElementById('dm'+mode.charAt(0).toUpperCase()+mode.slice(1)).style.display='flex';
-  document.querySelectorAll('.date-mode-btn').forEach(function(b){
-    b.classList.toggle('active', b.getAttribute('onclick').includes("'"+mode+"'"));
-  });
-  applyFilters();
+function getActive(containerId){
+  var out=[];
+  var el=document.getElementById(containerId);
+  if(!el) return out;
+  el.querySelectorAll('.qpill.active').forEach(function(p){out.push(p.dataset.key);});
+  return out;
 }
 
-function getActivePeriods(containerid){
-  var active = [];
-  var pills = document.getElementById(containerid);
-  if(!pills) return active;
-  pills.querySelectorAll('.qpill.active').forEach(function(p){ active.push(p.dataset.key); });
-  return active;
-}
-
-function rowInPeriod(r){
-  var rd = rowDate(r);
-  if(!rd) return false;
-  var d = rd.d;
-  if(DATE_MODE==='year'){
-    var sel = getActivePeriods('yearPills');
-    if(!sel.length) return true;
-    return sel.indexOf(isoY(d)) !== -1;
-  }
-  if(DATE_MODE==='quarter'){
-    var sel = getActivePeriods('quarterPills');
-    if(!sel.length) return true;
-    return sel.indexOf(quarter(d)) !== -1;
-  }
-  if(DATE_MODE==='month'){
-    var sel = getActivePeriods('monthPills');
-    if(!sel.length) return true;
-    return sel.indexOf(isoYM(d)) !== -1;
-  }
-  if(DATE_MODE==='custom'){
-    var from = document.getElementById('customFrom').value;
-    var to   = document.getElementById('customTo').value;
-    var ds   = d.toISOString().slice(0,10);
-    if(from && ds < from) return false;
-    if(to   && ds > to)   return false;
-    return true;
+// Row passes actual filter?
+function rowPassA(r){
+  var a=pd(r.appt_date);
+  if(!a) return false;  // no actual date → not in actual filter
+  if(A_MODE==='year'){var s=getActive('ApillYear');return !s.length||s.indexOf(isoY(a))!==-1;}
+  if(A_MODE==='quarter'){var s=getActive('ApillQuarter');return !s.length||s.indexOf(qtr(a))!==-1;}
+  if(A_MODE==='month'){var s=getActive('ApillMonth');return !s.length||s.indexOf(isoYM(a))!==-1;}
+  if(A_MODE==='custom'){
+    var from=document.getElementById('AcustomFrom').value,to=document.getElementById('AcustomTo').value;
+    var ds=a.toISOString().slice(0,10);
+    if(from&&ds<from)return false;if(to&&ds>to)return false;return true;
   }
   return true;
 }
 
-// ── Filter pipeline quotes by Valid From range ────────────────────────────────
-function filterQuotes(quotes){
-  var from = document.getElementById('pipFrom').value;
-  var to   = document.getElementById('pipTo').value;
-  if(!from && !to) return quotes;
+// Row passes expected filter?
+function rowPassF(r){
+  var f=pd(r.expected_date);
+  if(!f) return false;  // no expected date → not in forecast filter
+  if(F_MODE==='year'){var s=getActive('FpillYear');return !s.length||s.indexOf(isoY(f))!==-1;}
+  if(F_MODE==='quarter'){var s=getActive('FpillQuarter');return !s.length||s.indexOf(qtr(f))!==-1;}
+  if(F_MODE==='month'){var s=getActive('FpillMonth');return !s.length||s.indexOf(isoYM(f))!==-1;}
+  if(F_MODE==='custom'){
+    var from=document.getElementById('FcustomFrom').value,to=document.getElementById('FcustomTo').value;
+    var ds=f.toISOString().slice(0,10);
+    if(from&&ds<from)return false;if(to&&ds>to)return false;return true;
+  }
+  return true;
+}
+
+// ── Filter pipeline quotes by Valid From range ─────────────────────────────────
+function filterQ(quotes){
+  var from=document.getElementById('pipFrom').value,to=document.getElementById('pipTo').value;
+  if(!from&&!to)return quotes||[];
   return (quotes||[]).filter(function(q){
-    if(!q.valid_from) return true;
-    var vf = q.valid_from.slice(0,10);
-    if(from && vf < from) return false;
-    if(to   && vf > to)   return false;
-    return true;
+    if(!q.valid_from)return true;
+    var vf=q.valid_from.slice(0,10);
+    if(from&&vf<from)return false;if(to&&vf>to)return false;return true;
   });
 }
 
 // ── Main filter ───────────────────────────────────────────────────────────────
 function applyFilters(){
-  var fRegion  = document.getElementById('fRegion').value;
-  var fInd     = document.getElementById('fIndustry').value;
-  var fSize    = document.getElementById('fSize').value;
-  var fConstr  = document.getElementById('fConstr').value;
-  var fTeam    = document.getElementById('fTeam').value;
+  var fRegion=document.getElementById('fRegion').value;
+  var fInd=document.getElementById('fIndustry').value;
+  var fSize=document.getElementById('fSize').value;
+  var fConstr=document.getElementById('fConstr').value;
+  var fTeam=document.getElementById('fTeam').value;
 
-  FILTERED = ALL_DATA.filter(function(r){
-    if(!rowInPeriod(r)) return false;
-    if(fRegion && r.Region !== fRegion) return false;
-    if(fInd    && r.Industry !== fInd) return false;
-    if(fSize   && r['Project Size'] !== fSize) return false;
-    if(fConstr){
-      var cp = parseFloat(r['Construction Percentage'])||0;
-      var parts = fConstr.split('-');
-      if(cp < parseFloat(parts[0]) || cp > parseFloat(parts[1])) return false;
-    }
-    // Team filter: row has any entity matching the selected team
-    if(fTeam){
-      var teams = [r.co_team, r.mep_team, r.cl_team];
-      if(teams.indexOf(fTeam)===-1) return false;
-    }
+  // Check if any date pills selected in each filter
+  var aSelY=getActive('ApillYear'),aSelQ=getActive('ApillQuarter'),aSelM=getActive('ApillMonth');
+  var fSelY=getActive('FpillYear'),fSelQ=getActive('FpillQuarter'),fSelM=getActive('FpillMonth');
+  var aHasSel=(aSelY.length||aSelQ.length||aSelM.length||
+    (A_MODE==='custom'&&(document.getElementById('AcustomFrom').value||document.getElementById('AcustomTo').value)));
+  var fHasSel=(fSelY.length||fSelQ.length||fSelM.length||
+    (F_MODE==='custom'&&(document.getElementById('FcustomFrom').value||document.getElementById('FcustomTo').value)));
+
+  FILTERED=ALL_DATA.filter(function(r){
+    // Date filter: row must pass at least one of (actual-filter OR forecast-filter)
+    // If neither filter has selections, include all rows
+    var passA=rowPassA(r), passF=rowPassF(r);
+    if(aHasSel&&fHasSel){if(!passA&&!passF)return false;}
+    else if(aHasSel){if(!passA)return false;}
+    else if(fHasSel){if(!passF)return false;}
+    // other filters
+    if(fRegion&&r.Region!==fRegion)return false;
+    if(fInd&&r.Industry!==fInd)return false;
+    if(fSize&&r['Project Size']!==fSize)return false;
+    if(fConstr){var cp=parseFloat(r['Construction Percentage'])||0;var pts=fConstr.split('-');if(cp<parseFloat(pts[0])||cp>parseFloat(pts[1]))return false;}
+    if(fTeam&&[r.co_team,r.mep_team,r.cl_team].indexOf(fTeam)===-1)return false;
     return true;
   });
 
-  renderKPIs();
-  renderChart();
-  renderAwardTable();
-  renderCustomerTable();
-  renderEntChart();
-  renderUnmatchTable();
+  renderKPIs();renderChart();renderAwardTable();renderPipeTable();
+  renderCustomerTable();renderEntChart();renderUnmatchTable();
 }
 
-// ── KPI render ────────────────────────────────────────────────────────────────
+// ── KPIs ──────────────────────────────────────────────────────────────────────
 function renderKPIs(){
-  var total=FILTERED.length, totalHvac=0;
-  var matchedEntities=new Set(), matchedProjects=new Set();
-  var unmatchedEntities=new Set();
-  var quotesCount=0, quotesVal=0;
-  var quotedProjects=new Set();
-
+  var total=FILTERED.length,totalHvac=0;
+  var matchedEnt=new Set(),matchedProj=new Set(),unmatched=new Set();
+  var qCount=0,qVal=0,quotedProj=new Set();
   FILTERED.forEach(function(r){
-    var hvac=parseFloat(r.Hvac_SAR)||0;
-    totalHvac+=hvac;
-    // Matched check: any of co/mep/cl is strong or likely
-    var anyMatch = (r.co_match==='strong'||r.co_match==='likely'||
-                    r.mep_match==='strong'||r.mep_match==='likely'||
-                    r.cl_match==='strong'||r.cl_match==='likely');
-    if(anyMatch){ matchedProjects.add(r.Name); }
-    if(r.co_match==='strong'||r.co_match==='likely')  matchedEntities.add(r.co_no||r.co_name);
-    if(r.mep_match==='strong'||r.mep_match==='likely') matchedEntities.add(r.mep_no||r.mep_name);
-    if(r.cl_match==='strong'||r.cl_match==='likely')   matchedEntities.add(r.cl_no||r.cl_name);
-    if(!r.co_match||r.co_match==='none')  { if(r.Contractor)     unmatchedEntities.add(r.Contractor); }
-    if(!r.mep_match||r.mep_match==='none'){ if(r['MEP Contractor']) unmatchedEntities.add(r['MEP Contractor']); }
-
-    // Pipeline quotes (filtered by Valid From)
-    var allQ = filterQuotes((r.co_quotes||[]).concat(r.mep_quotes||[]).concat(r.cl_quotes||[]));
-    // Deduplicate by quotation_no
+    totalHvac+=parseFloat(r.Hvac_SAR)||0;
+    var any=(r.co_match==='strong'||r.co_match==='likely'||
+             r.mep_match==='strong'||r.mep_match==='likely'||
+             r.cl_match==='strong'||r.cl_match==='likely');
+    if(any)matchedProj.add(r.Name);
+    if(r.co_match==='strong'||r.co_match==='likely')  matchedEnt.add(r.co_no||r.co_name);
+    if(r.mep_match==='strong'||r.mep_match==='likely') matchedEnt.add(r.mep_no||r.mep_name);
+    if(r.cl_match==='strong'||r.cl_match==='likely')   matchedEnt.add(r.cl_no||r.cl_name);
+    if(!r.co_match||r.co_match==='none'){if(r.Contractor)unmatched.add(r.Contractor);}
+    if(!r.mep_match||r.mep_match==='none'){if(r['MEP Contractor'])unmatched.add(r['MEP Contractor']);}
+    var allQ=filterQ((r.co_quotes||[]).concat(r.mep_quotes||[]).concat(r.cl_quotes||[]));
     var seen={};
-    allQ.forEach(function(q){
-      var key=q.quotation_no||Math.random();
-      if(!seen[key]){
-        seen[key]=true;
-        quotesCount++;
-        quotesVal+=parseFloat(q.value_sar)||0;
-        if(q.project_name) quotedProjects.add(q.project_name);
-      }
-    });
+    allQ.forEach(function(q){var k=q.quotation_no||Math.random();if(!seen[k]){seen[k]=1;qCount++;qVal+=parseFloat(q.value_sar)||0;if(q.project_name)quotedProj.add(q.project_name);}});
   });
-
-  var matchedPct = total ? Math.round(matchedProjects.size/total*100) : 0;
-  var covPct     = matchedProjects.size ? Math.round(quotedProjects.size/matchedProjects.size*100) : 0;
-
-  document.getElementById('kAwarded').textContent    = total.toLocaleString();
-  document.getElementById('kAwardedSar').textContent = sarFmt(totalHvac)+' HVAC value';
-  document.getElementById('kEntities').textContent   = matchedEntities.size+unmatchedEntities.size;
-  document.getElementById('kMatched').textContent    = matchedEntities.size+' ('+matchedPct+'%)';
-  document.getElementById('kMatchedSar').textContent = matchedProjects.size+' projects with ≥1 match';
-  document.getElementById('kMatchedProj').textContent= matchedProjects.size.toLocaleString();
-  document.getElementById('kMatchedProjSar').textContent = matchedPct+'% of awarded projects';
-  document.getElementById('kQuotes').textContent     = quotesCount.toLocaleString();
-  document.getElementById('kQuotesSar').textContent  = sarFmt(quotesVal)+' quote value';
-  document.getElementById('kCoverage').textContent   = covPct+'%';
-  document.getElementById('kCoverageSub').textContent= quotedProjects.size+' of '+matchedProjects.size+' matched projects quoted';
+  var mPct=total?Math.round(matchedProj.size/total*100):0;
+  var cPct=matchedProj.size?Math.round(quotedProj.size/matchedProj.size*100):0;
+  document.getElementById('kAwarded').textContent=total.toLocaleString();
+  document.getElementById('kAwardedSar').textContent=sarFmt(totalHvac)+' HVAC';
+  document.getElementById('kEntities').textContent=(matchedEnt.size+unmatched.size).toLocaleString();
+  document.getElementById('kMatched').textContent=matchedEnt.size+' ('+mPct+'%)';
+  document.getElementById('kMatchedSub').textContent=matchedProj.size+' projects matched';
+  document.getElementById('kMatchedProj').textContent=matchedProj.size.toLocaleString();
+  document.getElementById('kMatchedProjSub').textContent=mPct+'% of awarded projects';
+  document.getElementById('kQuotes').textContent=qCount.toLocaleString();
+  document.getElementById('kQuotesSar').textContent=sarFmt(qVal)+' quote value';
+  document.getElementById('kCoverage').textContent=cPct+'%';
+  document.getElementById('kCoverageSub').textContent=quotedProj.size+' of '+matchedProj.size+' matched projects quoted';
 }
 
-// ── Monthly chart ─────────────────────────────────────────────────────────────
+// ── Chart ─────────────────────────────────────────────────────────────────────
 function renderChart(){
-  // Collect months M-20 to M+6 from today
   var months=[];
-  for(var i=-20;i<=6;i++){
-    var d=new Date(TODAY.getFullYear(), TODAY.getMonth()+i, 1);
-    months.push({key:isoYM(d), label:monthShort(d), forecast: i>0});
-  }
-  var hvacActual={}, hvacForecast={}, countMap={};
-  months.forEach(function(m){hvacActual[m.key]=0;hvacForecast[m.key]=0;countMap[m.key]=0;});
-
+  for(var i=-20;i<=6;i++){var d=new Date(TODAY.getFullYear(),TODAY.getMonth()+i,1);months.push({key:isoYM(d),lbl:mShort(d),fc:i>0});}
+  var hA={},hF={},cnt={};
+  months.forEach(function(m){hA[m.key]=0;hF[m.key]=0;cnt[m.key]=0;});
   ALL_DATA.forEach(function(r){
-    var rd=rowDate(r);
-    if(!rd) return;
-    var mk=isoYM(rd.d);
-    if(!(mk in hvacActual)) return;
+    var a=pd(r.appt_date),f=pd(r.expected_date);
     var hvac=parseFloat(r.Hvac_SAR)||0;
-    if(rd.forecast) hvacForecast[mk]+=hvac;
-    else            hvacActual[mk]+=hvac;
-    countMap[mk]++;
+    if(a){var mk=isoYM(a);if(mk in hA){hA[mk]+=hvac;cnt[mk]++;}}
+    else if(f){var mk=isoYM(f);if(mk in hF){hF[mk]+=hvac;cnt[mk]++;}}
   });
-
-  var labels  = months.map(function(m){return m.label;});
-  var actVals = months.map(function(m){return hvacActual[m.key]/1e6;});
-  var fcVals  = months.map(function(m){return hvacForecast[m.key]/1e6;});
-  var cntVals = months.map(function(m){return countMap[m.key];});
-
-  if(CHART_INST){ CHART_INST.destroy(); }
+  if(CHART_INST)CHART_INST.destroy();
   var ctx=document.getElementById('awardChart').getContext('2d');
-  CHART_INST=new Chart(ctx,{
-    type:'bar',
-    data:{
-      labels:labels,
-      datasets:[
-        {label:'Actual HVAC (SAR M)',data:actVals,backgroundColor:'#1d4ed8',borderRadius:3,yAxisID:'y'},
-        {label:'Forecast HVAC (SAR M)',data:fcVals,backgroundColor:'#bfdbfe',borderColor:'#93c5fd',borderWidth:1,borderDash:[4,3],borderRadius:3,yAxisID:'y'},
-        {label:'Project Count',data:cntVals,type:'line',borderColor:'#dc2626',backgroundColor:'#dc262620',borderWidth:2,pointRadius:3,yAxisID:'y2',tension:0.3}
-      ]
-    },
-    options:{
-      responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},
-      scales:{
-        x:{grid:{display:false},ticks:{font:{size:10},maxRotation:45}},
-        y:{position:'left',grid:{color:'#e5e7eb'},ticks:{font:{size:10},callback:function(v){return 'SAR '+v+'M';}}},
-        y2:{position:'right',grid:{display:false},ticks:{font:{size:10},stepSize:1}}
-      }
-    }
-  });
+  CHART_INST=new Chart(ctx,{type:'bar',data:{labels:months.map(function(m){return m.lbl;}),datasets:[
+    {label:'Actual HVAC',data:months.map(function(m){return hA[m.key]/1e6;}),backgroundColor:'#1d4ed8',borderRadius:3,yAxisID:'y'},
+    {label:'Forecast HVAC',data:months.map(function(m){return hF[m.key]/1e6;}),backgroundColor:'#bfdbfe',borderColor:'#93c5fd',borderWidth:1,borderRadius:3,yAxisID:'y'},
+    {label:'Count',data:months.map(function(m){return cnt[m.key];}),type:'line',borderColor:'#dc2626',borderWidth:2,pointRadius:3,yAxisID:'y2',tension:0.3}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},
+    scales:{x:{grid:{display:false},ticks:{font:{size:10},maxRotation:45}},
+      y:{position:'left',grid:{color:'#e5e7eb'},ticks:{font:{size:10},callback:function(v){return v+'M';}}},
+      y2:{position:'right',grid:{display:false},ticks:{font:{size:10},stepSize:1}}}}});
 }
 
-function monthShort(d){
-  var m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  return m[d.getMonth()]+'\''+String(d.getFullYear()).slice(2);
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function ddQ(quotes){var seen={},out=[];(quotes||[]).forEach(function(q){var k=q.quotation_no||q.project_name||Math.random();if(!seen[k]){seen[k]=1;out.push(q);}});return out;}
+
+function matchedEntityLabel(r){
+  var parts=[];
+  if(r.co_match==='strong'||r.co_match==='likely') parts.push('<span class="badge b-contractor" title="'+esc(r.co_entity||r.Contractor||'')+'">Co: '+esc((r.co_entity||r.Contractor||'').split(',')[0].trim().slice(0,20))+'</span>');
+  if(r.mep_match==='strong'||r.mep_match==='likely') parts.push('<span class="badge b-mep" title="'+esc(r.mep_entity||r['MEP Contractor']||'')+'">MEP: '+esc((r.mep_entity||r['MEP Contractor']||'').split(',')[0].trim().slice(0,20))+'</span>');
+  if(r.cl_match==='strong'||r.cl_match==='likely') parts.push('<span class="badge b-client" title="'+esc(r.cl_entity||r.Client||'')+'">Cl: '+esc((r.cl_entity||r.Client||'').split(',')[0].trim().slice(0,20))+'</span>');
+  return parts.join(' ')||'—';
 }
 
-// ── ENT index for drilldown ───────────────────────────────────────────────────
-var ROW_INDEX = {};
-
-// ── Awarded projects table ────────────────────────────────────────────────────
+// ── Table 1: Entity-vCust match ───────────────────────────────────────────────
 function renderAwardTable(){
   var tb=document.getElementById('awardTb');
   document.getElementById('awardCount').textContent=FILTERED.length.toLocaleString()+' projects';
-  if(!FILTERED.length){
-    tb.innerHTML='<tr><td colspan="13" style="text-align:center;color:var(--text3);padding:24px">No projects match filters</td></tr>';
-    return;
-  }
+  if(!FILTERED.length){tb.innerHTML='<tr><td colspan="14" style="text-align:center;color:var(--text3);padding:24px">No projects match filters</td></tr>';return;}
   ROW_INDEX={};
   var html=FILTERED.slice(0,200).map(function(r,i){
     ROW_INDEX[i]=r;
-    var rd=rowDate(r);
-    var apptStr = r.appt_date   ? '<span class="dim">'+r.appt_date+'</span>' : '—';
-    var expStr  = r.expected_date ? '<span style="color:#7c3aed;font-size:10px">'+r.expected_date+'</span>' : '—';
-    var coB     = matchBadge(r.co_match);
-    var mepB    = matchBadge(r.mep_match);
-    var seStr   = r.co_se || r.mep_se || r.cl_se || '—';
-    var tmStr   = r.co_team || r.mep_team || r.cl_team || '—';
-    var allQ    = filterQuotes((r.co_quotes||[]).concat(r.mep_quotes||[]).concat(r.cl_quotes||[]));
-    var qCount  = dedupeQuotes(allQ).length;
-    var qCell   = qCount ? '<span class="qlink" onclick="openQuoteModal('+i+')">'+qCount+' quotes</span>' : '<span class="dim">—</span>';
-    return '<tr>'
+    var apptStr=r.appt_date?'<span class="dim">'+r.appt_date+'</span>':'—';
+    var expStr=r.expected_date?'<span style="color:#7c3aed;font-size:10px">'+r.expected_date+'</span>':'—';
+    // vCust cols: show matched customer name + which ventures entity
+    function vCustCell(match,custName,entity){
+      if(match==='none'||!match)return'<span class="dim">—</span>';
+      var b=match==='strong'?'b-strong':'b-likely';
+      var tip=esc(entity||'')+(custName?' → '+esc(custName):'');
+      return'<span class="badge '+b+'" title="'+tip+'">'+(custName?esc(custName.slice(0,18)):esc((entity||'').slice(0,18)))+'</span>';
+    }
+    var allQ=filterQ((r.co_quotes||[]).concat(r.mep_quotes||[]).concat(r.cl_quotes||[]));
+    var qc=ddQ(allQ).length;
+    var qCell=qc?'<span class="qlink" onclick="openCustModal('+i+')">'+qc+' quotes</span>':'<span class="dim">—</span>';
+    var seStr=r.co_se||r.mep_se||r.cl_se||'—';
+    var tmStr=r.co_team||r.mep_team||r.cl_team||'—';
+    return'<tr>'
+      +'<td class="truncate" title="'+esc(r.Name||'')+'">'+esc(r.Name||'—')+'</td>'
+      +'<td><span class="badge b-status">'+esc(r.Region||'—')+'</span></td>'
+      +'<td><span class="badge b-none">'+esc(r['Project Size']||'—')+'</span></td>'
+      +'<td class="r">'+sarFmt(r.Hvac_SAR)+'</td>'
+      +'<td class="truncate dim" title="'+esc(r.Contractor||'')+'">'+esc(r.Contractor||'—')+'</td>'
+      +'<td class="truncate dim" title="'+esc(r['MEP Contractor']||'')+'">'+esc(r['MEP Contractor']||'—')+'</td>'
+      +'<td style="white-space:nowrap">'+apptStr+'</td>'
+      +'<td style="white-space:nowrap">'+expStr+'</td>'
+      +'<td>'+vCustCell(r.co_match,r.co_name,r.co_entity||r.Contractor)+'</td>'
+      +'<td>'+vCustCell(r.mep_match,r.mep_name,r.mep_entity||r['MEP Contractor'])+'</td>'
+      +'<td>'+vCustCell(r.cl_match,r.cl_name,r.cl_entity||r.Client)+'</td>'
+      +'<td style="font-size:10px;white-space:nowrap">'+esc(seStr)+'</td>'
+      +'<td style="font-size:10px">'+esc(tmStr)+'</td>'
+      +'<td>'+qCell+'</td>'
+      +'</tr>';
+  }).join('');
+  if(FILTERED.length>200)html+='<tr><td colspan="14" style="text-align:center;color:var(--text3);padding:10px;font-size:10px">+'+(FILTERED.length-200)+' more — export for full list</td></tr>';
+  tb.innerHTML=html;
+}
+
+// ── Table 2: Pipeline project-name match ──────────────────────────────────────
+function renderPipeTable(){
+  var tb=document.getElementById('pipeTb');
+  // Only rows that have cr1_all matches
+  var rows=FILTERED.filter(function(r){return r.cr1_all&&r.cr1_all.length;});
+  document.getElementById('pipeCount').textContent=rows.length.toLocaleString()+' projects with pipeline match';
+  if(!rows.length){tb.innerHTML='<tr><td colspan="12" style="text-align:center;color:var(--text3);padding:24px">No projects matched to pipeline by project name</td></tr>';return;}
+  PIPE_INDEX={};
+  var html=rows.slice(0,200).map(function(r,i){
+    PIPE_INDEX[i]=r;
+    var apptStr=r.appt_date?'<span class="dim">'+r.appt_date+'</span>':'—';
+    var expStr=r.expected_date?'<span style="color:#7c3aed;font-size:10px">'+r.expected_date+'</span>':'—';
+    var all=r.cr1_all||[];
+    // Collect unique SEs and teams across all matches
+    var ses=new Set(),teams=new Set();
+    all.forEach(function(q){if(q.se_name)ses.add(q.se_name);if(q.team)teams.add(q.team);});
+    var seStr=Array.from(ses).map(function(s){return'<span class="badge b-none" style="font-size:9px">'+esc(s)+'</span>';}).join(' ')||'—';
+    var tmStr=Array.from(teams).map(function(t){return'<span class="badge b-status" style="font-size:9px">'+esc(t)+'</span>';}).join(' ')||'—';
+    var hasStrong=all.some(function(q){return q.match_type==='strong';});
+    var matchBdg=hasStrong?'<span class="badge b-strong">Match</span>':'<span class="badge b-likely">Likely</span>';
+    return'<tr>'
       +'<td class="truncate" title="'+esc(r.Name||'')+'">'+esc(r.Name||'—')+'</td>'
       +'<td><span class="badge b-status">'+esc(r.Region||'—')+'</span></td>'
       +'<td><span class="badge b-none">'+esc(r['Project Size']||'—')+'</span></td>'
@@ -645,182 +672,157 @@ function renderAwardTable(){
       +'<td class="truncate dim">'+esc(r['MEP Contractor']||'—')+'</td>'
       +'<td style="white-space:nowrap">'+apptStr+'</td>'
       +'<td style="white-space:nowrap">'+expStr+'</td>'
-      +'<td>'+coB+'</td>'
-      +'<td>'+mepB+'</td>'
-      +'<td style="font-size:10px;white-space:nowrap">'+esc(seStr)+'</td>'
-      +'<td style="font-size:10px">'+esc(tmStr)+'</td>'
-      +'<td>'+qCell+'</td>'
+      +'<td>'+matchBdg+'</td>'
+      +'<td style="font-size:10px">'+seStr+'</td>'
+      +'<td style="font-size:10px">'+tmStr+'</td>'
+      +'<td><span class="qlink" onclick="openPipeModal('+i+')">'+all.length+' quotes</span></td>'
       +'</tr>';
   }).join('');
-  if(FILTERED.length>200) html+='<tr><td colspan="13" style="text-align:center;color:var(--text3);padding:10px;font-size:10px">+ '+(FILTERED.length-200)+' more (export for full list)</td></tr>';
   tb.innerHTML=html;
 }
 
-function dedupeQuotes(quotes){
-  var seen={}, out=[];
-  (quotes||[]).forEach(function(q){
-    var k=q.quotation_no||q.project_name||Math.random();
-    if(!seen[k]){ seen[k]=true; out.push(q); }
-  });
-  return out;
-}
-
-// ── Quote drilldown modal ─────────────────────────────────────────────────────
-function openQuoteModal(idx){
-  var r=ROW_INDEX[idx];
-  if(!r) return;
-  document.getElementById('qmTitle').textContent='Pipeline Quotes — '+(r.Name||'');
-  var matchedCust=r.co_name||r.mep_name||r.cl_name||'';
-  document.getElementById('qmSub').textContent='Customer: '+matchedCust+' · Valid From filter applied';
-
-  // CR1 highlight — did we quote THIS project directly?
-  var hlHtml='';
-  if(r.cr1_match==='strong'||r.cr1_match==='likely'){
-    hlHtml='<div style="background:var(--success-bg);border:1px solid #bbf7d0;border-radius:var(--radius);padding:8px 12px;margin-bottom:10px;font-size:11px">'
-      +'<span class="badge b-strong" style="margin-right:6px">Project Match</span>'
-      +'This exact ventures project was quoted in pipeline: <strong>'+esc(r.cr1_proj||'')+'</strong>'
-      +(r.cr1_quo?' &nbsp;·&nbsp; Quo: '+esc(r.cr1_quo):'')
-      +'</div>';
-  }
-  document.getElementById('qmHighlight').innerHTML=hlHtml;
-
-  var allQ = filterQuotes(dedupeQuotes((r.co_quotes||[]).concat(r.mep_quotes||[]).concat(r.cl_quotes||[])));
-  // Flag which quotes match the current ventures project name (CR1 match)
-  var cr1Quo = r.cr1_quo;
+// ── Customer modal ────────────────────────────────────────────────────────────
+function openCustModal(idx){
+  var r=ROW_INDEX[idx];if(!r)return;
+  document.getElementById('qmTitle').textContent='Customer Quotes — '+(r.Name||'');
+  var custName=r.co_name||r.mep_name||r.cl_name||'';
+  document.getElementById('qmSub').textContent='Matched customer: '+custName;
+  var allQ=ddQ(filterQ((r.co_quotes||[]).concat(r.mep_quotes||[]).concat(r.cl_quotes||[])));
+  var cr1Quo=r.cr1_quo;
   var tbody=document.getElementById('qmTb');
-  if(!allQ.length){
-    tbody.innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--text3);padding:20px">No pipeline quotes found for this customer</td></tr>';
-  } else {
+  if(!allQ.length){tbody.innerHTML='<tr><td colspan="10" style="text-align:center;color:var(--text3);padding:20px">No quotes found</td></tr>';
+  }else{
     tbody.innerHTML=allQ.map(function(q){
-      var isMatch=(cr1Quo && q.quotation_no===cr1Quo)||(r.cr1_proj && q.project_name===r.cr1_proj);
-      var rowCls=isMatch?' class="hl-row"':'';
-      var matchBadge=isMatch?'<span class="badge b-strong">Project match</span>':'<span class="badge b-none">Customer only</span>';
-      return '<tr'+rowCls+'>'
+      var isM=(cr1Quo&&q.quotation_no===cr1Quo)||(r.cr1_proj&&q.project_name===r.cr1_proj);
+      var cls=isM?' class="hl-row"':'';
+      var mb=isM?'<span class="badge b-strong">Project match</span>':'<span class="badge b-none">Customer only</span>';
+      return'<tr'+cls+'>'
         +'<td style="font-size:10px;color:var(--accent)">'+esc(q.quotation_no||'—')+'</td>'
-        +'<td class="truncate" style="max-width:180px">'+esc(q.project_name||'—')+'</td>'
+        +'<td class="truncate" style="max-width:150px">'+esc(q.project_name||'—')+'</td>'
+        +'<td style="font-size:10px">'+esc(q.customer_name||'—')+'</td>'
+        +'<td style="font-size:10px;color:var(--text2)">'+esc(q.misc_customer||'—')+'</td>'
         +'<td><span class="badge b-status">'+esc(q.probability||'—')+'</span></td>'
         +'<td>'+esc(q.status||'—')+'</td>'
         +'<td style="font-size:10px">'+esc(q.valid_from||'—')+'</td>'
         +'<td style="font-size:10px">'+esc(q.se_name||'—')+'</td>'
         +'<td class="r">'+sarFmt(q.value_sar)+'</td>'
-        +'<td>'+matchBadge+'</td>'
+        +'<td>'+mb+'</td>'
         +'</tr>';
     }).join('');
   }
   document.getElementById('quoteModal').classList.add('open');
 }
-function closeQuoteModal(){ document.getElementById('quoteModal').classList.remove('open'); }
+
+// ── Pipeline match modal ──────────────────────────────────────────────────────
+function openPipeModal(idx){
+  var r=PIPE_INDEX[idx];if(!r)return;
+  document.getElementById('pmTitle').textContent='Pipeline Quotations — '+(r.Name||'');
+  document.getElementById('pmSub').textContent='All pipeline projects matched to this ventures project by name';
+  var all=r.cr1_all||[];
+  var tbody=document.getElementById('pmTb');
+  if(!all.length){tbody.innerHTML='<tr><td colspan="11" style="text-align:center;color:var(--text3);padding:20px">No matches</td></tr>';
+  }else{
+    tbody.innerHTML=all.map(function(q){
+      var b=q.match_type==='strong'?'<span class="badge b-strong">Match</span>':'<span class="badge b-likely">Likely</span>';
+      return'<tr>'
+        +'<td style="font-size:10px;color:var(--accent)">'+esc(q.quotation_no||'—')+'</td>'
+        +'<td class="truncate" style="max-width:160px">'+esc(q.project_name||'—')+'</td>'
+        +'<td style="font-size:10px">'+esc(q.customer_name||'—')+'</td>'
+        +'<td style="font-size:10px;color:var(--text2)">'+esc(q.misc_customer||'—')+'</td>'
+        +'<td><span class="badge b-status">'+esc(q.probability||'—')+'</span></td>'
+        +'<td style="font-size:10px">'+esc(q.status||'—')+'</td>'
+        +'<td style="font-size:10px">'+esc(q.valid_from||'—')+'</td>'
+        +'<td style="font-size:10px">'+esc(q.expected_award||'—')+'</td>'
+        +'<td style="font-size:10px">'+esc(q.se_name||'—')+'</td>'
+        +'<td class="r">'+sarFmt(q.value_sar)+'</td>'
+        +'<td>'+b+'</td>'
+        +'</tr>';
+    }).join('');
+  }
+  document.getElementById('pipeModal').classList.add('open');
+}
+
+function closeModal(id){document.getElementById(id).classList.remove('open');}
 
 // ── Matched customers table ───────────────────────────────────────────────────
 function renderCustomerTable(){
   var custMap={};
   FILTERED.forEach(function(r){
-    function addCust(no,name,se,team,quotes){
-      if(!no&&!name) return;
+    function addC(no,name,se,team,entity,role,quotes){
+      if(!no&&!name)return;
       var k=no||name;
-      if(!custMap[k]) custMap[k]={name:name,se:se,team:team,projects:new Set(),quotes:[],quotesVal:0};
+      if(!custMap[k])custMap[k]={name:name,se:se,team:team,entity:entity,role:role,projects:new Set(),hvac:0,quotes:[],quotesVal:0};
       custMap[k].projects.add(r.Name);
-      var fq=filterQuotes(quotes||[]);
-      fq.forEach(function(q){custMap[k].quotes.push(q);custMap[k].quotesVal+=parseFloat(q.value_sar)||0;});
+      custMap[k].hvac+=parseFloat(r.Hvac_SAR)||0;
+      filterQ(quotes||[]).forEach(function(q){custMap[k].quotes.push(q);custMap[k].quotesVal+=parseFloat(q.value_sar)||0;});
     }
-    if(r.co_match==='strong'||r.co_match==='likely') addCust(r.co_no,r.co_name,r.co_se,r.co_team,r.co_quotes);
-    if(r.mep_match==='strong'||r.mep_match==='likely') addCust(r.mep_no,r.mep_name,r.mep_se,r.mep_team,r.mep_quotes);
-    if(r.cl_match==='strong'||r.cl_match==='likely') addCust(r.cl_no,r.cl_name,r.cl_se,r.cl_team,r.cl_quotes);
+    if(r.co_match==='strong'||r.co_match==='likely') addC(r.co_no,r.co_name,r.co_se,r.co_team,r.co_entity||r.Contractor,'Contractor',r.co_quotes);
+    if(r.mep_match==='strong'||r.mep_match==='likely') addC(r.mep_no,r.mep_name,r.mep_se,r.mep_team,r.mep_entity||r['MEP Contractor'],'MEP',r.mep_quotes);
+    if(r.cl_match==='strong'||r.cl_match==='likely') addC(r.cl_no,r.cl_name,r.cl_se,r.cl_team,r.cl_entity||r.Client,'Client',r.cl_quotes);
   });
   var custs=Object.values(custMap).sort(function(a,b){return b.projects.size-a.projects.size;});
   document.getElementById('custCount').textContent=custs.length+' customers';
   var tb=document.getElementById('custTb');
-  if(!custs.length){ tb.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--text3);padding:20px">No matched customers</td></tr>'; return; }
+  if(!custs.length){tb.innerHTML='<tr><td colspan="9" style="text-align:center;color:var(--text3);padding:20px">No matched customers</td></tr>';return;}
   tb.innerHTML=custs.map(function(c){
-    var qc=dedupeQuotes(c.quotes).length;
-    return '<tr>'
+    var roleBadge=c.role==='MEP'?'<span class="badge b-mep">MEP</span>':c.role==='Client'?'<span class="badge b-client">Client</span>':'<span class="badge b-contractor">Contr.</span>';
+    var qc=ddQ(c.quotes).length;
+    var entShort=(c.entity||'').split(',')[0].trim().slice(0,22);
+    return'<tr>'
       +'<td style="font-size:11px;font-weight:500">'+esc(c.name||'—')+'</td>'
+      +'<td style="font-size:10px" title="'+esc(c.entity||'')+'">'+esc(entShort)+'</td>'
+      +'<td>'+roleBadge+'</td>'
       +'<td style="font-size:10px">'+esc(c.se||'—')+'</td>'
       +'<td style="font-size:10px">'+esc(c.team||'—')+'</td>'
-      +'<td class="r">'+c.projects.size+'</td>'
-      +'<td class="r" style="color:var(--accent)">'+qc+'</td>'
-      +'<td class="r" style="font-size:10px">'+sarFmt(c.quotesVal)+'</td>'
+      +'<td class="r">'+c.projects.size+'<br><span class="dim" style="font-size:9px">'+sarFmt(c.hvac)+'</span></td>'
+      +'<td class="r" style="color:var(--accent)">'+qc+'<br><span class="dim" style="font-size:9px">'+sarFmt(c.quotesVal)+'</span></td>'
       +'</tr>';
   }).join('');
   window._CUST_DATA=custs;
 }
 
-// ── Top entities horizontal bar chart ─────────────────────────────────────────
+// ── Top entities chart ─────────────────────────────────────────────────────────
 function renderEntChart(){
-  // Aggregate entities from FILTERED
   var entMap={};
   FILTERED.forEach(function(r){
-    function addEnt(name,match,hvac){
-      if(!name) return;
-      var k=name;
-      if(!entMap[k]) entMap[k]={name:name,match:match,hvac:0};
-      if(match==='strong'||(match==='likely'&&entMap[k].match!=='strong')) entMap[k].match=match;
-      entMap[k].hvac+=hvac;
-    }
     var hvac=parseFloat(r.Hvac_SAR)||0;
-    if(r.Contractor) addEnt(r.Contractor,r.co_match,hvac);
-    if(r['MEP Contractor']) addEnt(r['MEP Contractor'],r.mep_match,hvac);
+    function ae(name,match){if(!name)return;if(!entMap[name])entMap[name]={name:name,match:match,hvac:0};if(match==='strong'||(match==='likely'&&entMap[name].match!=='strong'))entMap[name].match=match;entMap[name].hvac+=hvac;}
+    if(r.Contractor)ae(r.Contractor,r.co_match);
+    if(r['MEP Contractor'])ae(r['MEP Contractor'],r.mep_match);
   });
   var ents=Object.values(entMap).sort(function(a,b){return b.hvac-a.hvac;}).slice(0,10);
-  var labels=ents.map(function(e){return e.name.length>20?e.name.slice(0,18)+'…':e.name;});
-  var vals=ents.map(function(e){return e.hvac/1e6;});
-  var colors=ents.map(function(e){
-    if(e.match==='strong') return '#16a34a';
-    if(e.match==='likely') return '#d97706';
-    return '#dc2626';
-  });
-  if(ENT_CHART){ ENT_CHART.destroy(); }
+  if(ENT_CHART)ENT_CHART.destroy();
   var ctx=document.getElementById('entChart').getContext('2d');
-  ENT_CHART=new Chart(ctx,{
-    type:'bar',
-    data:{labels:labels,datasets:[{data:vals,backgroundColor:colors,borderRadius:3}]},
-    options:{
-      indexAxis:'y',responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return 'SAR '+c.raw.toFixed(1)+'M';}}}},
-      scales:{
-        x:{grid:{color:'#e5e7eb'},ticks:{font:{size:9},callback:function(v){return v+'M';}}},
-        y:{grid:{display:false},ticks:{font:{size:9}}}
-      }
-    }
-  });
+  ENT_CHART=new Chart(ctx,{type:'bar',data:{
+    labels:ents.map(function(e){return e.name.length>20?e.name.slice(0,18)+'…':e.name;}),
+    datasets:[{data:ents.map(function(e){return e.hvac/1e6;}),
+      backgroundColor:ents.map(function(e){return e.match==='strong'?'#16a34a':e.match==='likely'?'#d97706':'#dc2626';}),borderRadius:3}]
+  },options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return 'SAR '+c.raw.toFixed(1)+'M';}}}},
+    scales:{x:{grid:{color:'#e5e7eb'},ticks:{font:{size:9},callback:function(v){return v+'M';}}},y:{grid:{display:false},ticks:{font:{size:9}}}}}});
 }
 
-// ── Unmatched entities table ──────────────────────────────────────────────────
+// ── Unmatched ─────────────────────────────────────────────────────────────────
 function renderUnmatchTable(){
   var entMap={};
   FILTERED.forEach(function(r){
     var hvac=parseFloat(r.Hvac_SAR)||0;
-    function addUnmatched(name,role){
-      if(!name) return;
-      var parts=name.split(',').map(function(p){return p.trim();}).filter(Boolean);
-      parts.forEach(function(nm){
-        if(!entMap[nm]) entMap[nm]={name:nm,roles:new Set(),projects:new Set(),hvac:0};
-        entMap[nm].roles.add(role);
-        entMap[nm].projects.add(r.Name);
-        entMap[nm].hvac+=hvac;
-      });
-    }
-    if(!r.co_match||r.co_match==='none')   addUnmatched(r.Contractor,'Contractor');
-    if(!r.mep_match||r.mep_match==='none') addUnmatched(r['MEP Contractor'],'MEP');
+    function au(name,role){if(!name)return;(name+'').split(',').map(function(p){return p.trim();}).filter(Boolean).forEach(function(nm){
+      if(!entMap[nm])entMap[nm]={name:nm,roles:new Set(),projects:new Set(),hvac:0};
+      entMap[nm].roles.add(role);entMap[nm].projects.add(r.Name);entMap[nm].hvac+=hvac;});}
+    if(!r.co_match||r.co_match==='none')  au(r.Contractor,'Contractor');
+    if(!r.mep_match||r.mep_match==='none')au(r['MEP Contractor'],'MEP');
   });
   var ents=Object.values(entMap).sort(function(a,b){return b.hvac-a.hvac;});
   document.getElementById('unmatchCount').textContent=ents.length+' unmatched entities';
   var teams=['Central Projects','West','East','ACS-Central','ACS-West','Direct'];
   var tb=document.getElementById('unmatchTb');
-  if(!ents.length){ tb.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--text3);padding:20px">All entities matched!</td></tr>'; return; }
+  if(!ents.length){tb.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--text3);padding:20px">All matched!</td></tr>';return;}
   tb.innerHTML=ents.map(function(e){
-    var roleBadges=Array.from(e.roles).map(function(r){
-      if(r==='MEP') return '<span class="badge b-mep">MEP</span>';
-      return '<span class="badge b-contractor">Contractor</span>';
-    }).join(' ');
-    var opts=teams.map(function(t){return '<option>'+t+'</option>';}).join('');
-    return '<tr>'
-      +'<td style="font-size:11px">'+esc(e.name)+'</td>'
-      +'<td>'+roleBadges+'</td>'
-      +'<td class="r">'+e.projects.size+'</td>'
-      +'<td class="r">'+sarFmt(e.hvac)+'</td>'
-      +'<td><select class="assign-sel"><option value="">— Assign —</option>'+opts+'</select></td>'
-      +'</tr>';
+    var rb=Array.from(e.roles).map(function(r){return r==='MEP'?'<span class="badge b-mep">MEP</span>':'<span class="badge b-contractor">Contr.</span>';}).join(' ');
+    var opts=teams.map(function(t){return'<option>'+t+'</option>';}).join('');
+    return'<tr><td style="font-size:11px">'+esc(e.name)+'</td><td>'+rb+'</td><td class="r">'+e.projects.size+'</td><td class="r">'+sarFmt(e.hvac)+'</td>'
+      +'<td><select class="assign-sel"><option value="">— Assign —</option>'+opts+'</select></td></tr>';
   }).join('');
 }
 
@@ -828,47 +830,51 @@ function renderUnmatchTable(){
 function exportAwards(){
   if(!FILTERED.length){alert('No data.');return;}
   var rows=FILTERED.map(function(r){
-    var allQ=dedupeQuotes(filterQuotes((r.co_quotes||[]).concat(r.mep_quotes||[]).concat(r.cl_quotes||[])));
-    return{
-      'Project':r.Name||'','Region':r.Region||'','Industry':r.Industry||'',
-      'Project Size':r['Project Size']||'','HVAC (SAR)':parseFloat(r.Hvac_SAR)||0,
+    var allQ=ddQ(filterQ((r.co_quotes||[]).concat(r.mep_quotes||[]).concat(r.cl_quotes||[])));
+    return{'Project':r.Name||'','Region':r.Region||'','HVAC (SAR)':parseFloat(r.Hvac_SAR)||0,
       'Contractor':r.Contractor||'','MEP Contractor':r['MEP Contractor']||'',
       'Appt Date':r.appt_date||'','Expected Date':r.expected_date||'',
-      'vCust (Co.)':r.co_name||'','Co. SE':r.co_se||'','Co. Team':r.co_team||'',
-      'vCust (MEP)':r.mep_name||'','MEP SE':r.mep_se||'',
-      'Pipeline Quotes':allQ.length
-    };
+      'vCust (Co.)':r.co_name||'','Matched Entity (Co.)':r.co_entity||'','Co. SE':r.co_se||'','Co. Team':r.co_team||'',
+      'vCust (MEP)':r.mep_name||'','Matched Entity (MEP)':r.mep_entity||'',
+      'vCust (Client)':r.cl_name||'','Matched Entity (Client)':r.cl_entity||'',
+      'Customer Quotes':allQ.length,'CR1 Pipeline Match':r.cr1_proj||''};
   });
-  var ws=XLSX.utils.json_to_sheet(rows);
-  var wb=XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb,ws,'Awards');
-  XLSX.writeFile(wb,'award_tracker_'+xlsxDate()+'.xlsx');
+  var ws=XLSX.utils.json_to_sheet(rows);var wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'Awards');XLSX.writeFile(wb,'award_tracker_'+xlsxDate()+'.xlsx');
+}
+
+function exportPipeMatch(){
+  var rows=FILTERED.filter(function(r){return r.cr1_all&&r.cr1_all.length;});
+  if(!rows.length){alert('No data.');return;}
+  var out=[];
+  rows.forEach(function(r){(r.cr1_all||[]).forEach(function(q){
+    out.push({'Ventures Project':r.Name||'','Region':r.Region||'','HVAC (SAR)':parseFloat(r.Hvac_SAR)||0,
+      'Appt Date':r.appt_date||'','Expected Date':r.expected_date||'',
+      'Quo No.':q.quotation_no||'','Pipeline Project':q.project_name||'',
+      'Customer':q.customer_name||'','Misc Customer':q.misc_customer||'',
+      'Probability':q.probability||'','Status':q.status||'',
+      'Valid From':q.valid_from||'','SE':q.se_name||'','Team':q.team||'',
+      'Q Gross Value (SAR)':parseFloat(q.value_sar)||0,'Match Type':q.match_type||''});
+  });});
+  var ws=XLSX.utils.json_to_sheet(out);var wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'Pipeline Match');XLSX.writeFile(wb,'pipeline_match_'+xlsxDate()+'.xlsx');
 }
 
 function exportCustomers(){
-  var custs=window._CUST_DATA||[];
-  if(!custs.length){alert('No data.');return;}
-  var rows=custs.map(function(c){
-    return{'Customer':c.name||'','SE':c.se||'','Team':c.team||'',
-           'Awarded Projects':c.projects.size,'Pipeline Quotes':dedupeQuotes(c.quotes).length,
-           'Quote Value (SAR)':c.quotesVal};
-  });
-  var ws=XLSX.utils.json_to_sheet(rows);
-  var wb=XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb,ws,'Customers');
-  XLSX.writeFile(wb,'matched_customers_'+xlsxDate()+'.xlsx');
+  var custs=window._CUST_DATA||[];if(!custs.length){alert('No data.');return;}
+  var rows=custs.map(function(c){return{
+    'Customer':c.name||'','Matched Entity':c.entity||'','Role':c.role||'','SE':c.se||'','Team':c.team||'',
+    'Awarded Projects':c.projects.size,'Awarded HVAC (SAR)':c.hvac,'Pipeline Quotes':ddQ(c.quotes).length,'Quote Value (SAR)':c.quotesVal};});
+  var ws=XLSX.utils.json_to_sheet(rows);var wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'Customers');XLSX.writeFile(wb,'matched_customers_'+xlsxDate()+'.xlsx');
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────
 fetch('data_awards.json')
   .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
-  .then(function(data){
-    ALL_DATA=data;
-    buildPills();
-    applyFilters();
-  })
+  .then(function(data){ALL_DATA=data;buildPills();applyFilters();})
   .catch(function(err){
-    document.getElementById('awardTb').innerHTML='<tr><td colspan="13" style="color:var(--danger);padding:20px">Failed to load data: '+err.message+'</td></tr>';
+    document.getElementById('awardTb').innerHTML='<tr><td colspan="14" style="color:var(--danger);padding:20px">Failed to load: '+err.message+'</td></tr>';
   });
 </script>
 
