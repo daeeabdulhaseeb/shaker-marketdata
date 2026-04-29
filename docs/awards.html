@@ -136,7 +136,7 @@ tr.clickable{cursor:pointer}
 <a href="coverage.html" class="nav-link ">Contractors Gap</a>
 <a href="pipeline_xref.html" class="nav-link ">Pipeline Search</a>
 <a href="awards.html" class="nav-link active">Award Tracker</a>
-  <span class="nav-right">Updated 28 Apr 2026, 11:22</span>
+  <span class="nav-right">Updated 29 Apr 2026, 11:09</span>
 </nav>
 
 <div class="page">
@@ -211,7 +211,7 @@ tr.clickable{cursor:pointer}
   </div>
   <div class="filter-sep"></div>
   <div class="filter-group"><span class="filter-label">Team</span>
-    <select id="fTeam" onchange="applyFilters()"><option value="">All Teams</option><option value="ACS Team">ACS Team</option><option value="Central Projects Team">Central Projects Team</option><option value="Direct Sales Channel">Direct Sales Channel</option><option value="ESCO">ESCO</option><option value="East">East</option><option value="Manager Applied">Manager Applied</option><option value="Other">Other</option><option value="West">West</option></select>
+    <select id="fTeam" onchange="applyFilters()"><option value="">All Teams</option><option value="ACS - Central ">ACS - Central </option><option value="ACS - EAST">ACS - EAST</option><option value="ACS Team">ACS Team</option><option value="Central Projects">Central Projects</option><option value="Central Projects Team">Central Projects Team</option><option value="Direct Sales Channel">Direct Sales Channel</option><option value="ESCO">ESCO</option><option value="East">East</option><option value="Manager Applied">Manager Applied</option><option value="Other">Other</option><option value="Others">Others</option><option value="Planning">Planning</option><option value="WEST">WEST</option><option value="West">West</option></select>
   </div>
   <div class="filter-sep"></div>
   <div class="filter-group">
@@ -685,8 +685,15 @@ function openCustModal(idx){
   var custName=r.co_name||r.mep_name||r.cl_name||'';
   document.getElementById('qmSub').textContent='Matched customer: '+custName;
   var cust=DETAIL.cust||{};
-  var coK=r.co_no?String(r.co_no):''; var mepK=r.mep_no?String(r.mep_no):''; var clK=r.cl_no?String(r.cl_no):'';
-  var allQ=ddQ(filterQ((cust[coK]||[]).concat(cust[mepK]||[]).concat(cust[clK]||[])));
+  function custQ(no,name){
+    var k1=no?String(no):''; var k2=name?(name+'').toLowerCase():'';
+    var q1=cust[k1]||[]; var q2=cust[k2]||[];
+    // merge, dedupe by quotation_no
+    var seen={},out=[];
+    q1.concat(q2).forEach(function(q){var k=q.q||Math.random();if(!seen[k]){seen[k]=1;out.push(q);}});
+    return out;
+  }
+  var allQ=ddQ(filterQ(custQ(r.co_no,r.co_name).concat(custQ(r.mep_no,r.mep_name)).concat(custQ(r.cl_no,r.cl_name))));
   var cr1Quo=r.cr1_quo;
   var tbody=document.getElementById('qmTb');
   if(!allQ.length){tbody.innerHTML='<tr><td colspan="10" style="text-align:center;color:var(--text3);padding:20px">No quotes found</td></tr>';
